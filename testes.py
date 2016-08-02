@@ -13,7 +13,47 @@ Created on Thu Jul 28 15:08:38 2016
 #    today = datetime.date.today()
 #    mylist.append(today)
 #    print mylist[0] # imprime o objeto data, não o container
-#
+
+
+import string
+p = ws.cell('A5').value
+x = p.encode('utf-8')
+x = string.split(x, ',')
+x = x[1]    # Data do IPDO
+
+
+######## Encontra a primeira e a ultima linha não vazia
+from openpyxl import Workbook
+from openpyxl import load_workbook
+
+wb = load_workbook('IPDO.xlsx') 
+
+ws = wb['Tabela1']
+
+tam = ws.max_row + 1
+primeira_linha = 0
+ultima_linha = 0
+for item in xrange(1, tam):
+    celula_valor = ws.cell(row=item, column = 1).value  
+    if (celula_valor is not None) and (primeira_linha == 0):
+        primeira_linha = item
+    elif (celula_valor is not None) and (primeira_linha is not 0):
+        ultima_linha = item
+        
+        
+#    wb = Workbook()
+
+    # overwrite the current document template
+    wb.save('IPDO.xlsx') 
+
+
+
+
+
+
+
+
+
 
 
 
@@ -41,16 +81,10 @@ soup = BeautifulSoup(html_doc, 'html.parser')
 print(soup.prettify())
 
 
-
-
-
-
 head_tag = soup.head
 head_tag
 # <head><title>The Dormouse's story</title></head>
 
-head_tag.contents
-[<title>The Dormouse's story</title>]
 
 title_tag = head_tag.contents[0]
 title_tag
@@ -100,35 +134,10 @@ for each in spans: #iterate over loop [above sections]
     else:
         print each.prettify()
     
+    
 for row in soup.find_all('div',attrs={"class" : "reviewText"}):
     print row.text
     
- 
-#http://stackoverflow.com/questions/26463704/get-text-from-div-without-any-tags-and-special-characters-python   
-soup = BeautifulSoup(html)   
-print ' '.join(soup.stripped_strings)
-
-
-print ' '.join(soup.body.stripped_strings)
-
-
-
-
-
-html = """
-... <p>
-...     <strong class="offender">YOB:</strong> 1987<br />
-...     <strong class="offender">RACE:</strong> WHITE<br />
-...     <strong class="offender">GENDER:</strong> FEMALE<br />
-...     <strong class="offender">HEIGHT:</strong> 5'05''<br />
-...     <strong class="offender">WEIGHT:</strong> 118<br />
-...     <strong class="offender">EYE COLOR:</strong> GREEN<br />
-...     <strong class="offender">HAIR COLOR:</strong> BROWN<br />
-... </p>
-... """
->>> soup = BeautifulSoup(html)
->>> for div_tag in soup.find_all('div'):
-        print div_tag.text, div_tag.next_sibling
         
         
 # extrai em um vetor todos os div com  style="top:314px"
@@ -138,15 +147,15 @@ x =t[0].contents
 resp= ';' .join(x[1].stripped_strings)
 
 
+
+
 # extrai valores considerando dois atributos da tag div
 #http://stackoverflow.com/questions/35140158/using-beautifulsoup-to-find-tag-with-two-specific-styles
 import re
 y = html_extraido.find('div', style=re.compile(r'left:284px.*?top:314px'))
 
 
-
-
-
+# Antess
 import re
 y = html_extraido.find('div', style=re.compile(r'left:284px.*?top:314px'))
 x =y.contents
@@ -159,7 +168,7 @@ p = p + ' '
 p = p + ' ' .join(x[2].stripped_strings)
 z =p.encode('utf-8')
 
-
+### Depoissss
 left = 'left:' + '284px'
 top =  'top:' + '314px'
 import re
