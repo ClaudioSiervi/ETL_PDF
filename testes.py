@@ -160,12 +160,18 @@ p = p + ' ' .join(x[2].stripped_strings)
 z =p.encode('utf-8')
 
 
+left = 'left:' + '284px'
+top =  'top:' + '314px'
+import re
+y = html_extraido.find('div', style=re.compile(r''+ left+'.*?'+top))
+x =y.contents
 p =''
 tam = len(x)
 for item in xrange(0, tam):
     p = p + ' ' .join(x[item].stripped_strings)
     p = p + ' '
-z =p.encode('utf-8')
+
+z = p.encode('utf-8')
 print z
     
     
