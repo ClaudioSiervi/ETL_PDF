@@ -10,7 +10,7 @@ Created on Fri Jun 24 11:03:06 2016
 # Convert pdf to text
 # http://stackoverflow.com/questions/5725278/how-do-i-use-pdfminer-as-a-library
 
-class Extrair_Transformar_Carregar:
+class Carregar_Transformar_Extrair:
     
 
     # Desbloqueia um pdf com senha
@@ -24,7 +24,7 @@ class Extrair_Transformar_Carregar:
     
     
     
-    def converte_pdf_para_texto(self, path):
+    def pdf_para_texto(self, path):
     # Converte um arquivo pdf para texto
         from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
         from pdfminer.converter import TextConverter
@@ -56,7 +56,7 @@ class Extrair_Transformar_Carregar:
     
 
 
-    def converte_pdf_para_html(self, path):
+    def pdf_para_html(self, path):
         from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
         from pdfminer.converter import HTMLConverter
         from pdfminer.converter import TextConverter
@@ -87,52 +87,7 @@ class Extrair_Transformar_Carregar:
         return str
 
 
-    def salva_texto_em_txt(self, texto, nome_arquivo_saida):
-    # Salva o texto extraído do pdf em um arquivo texto
-        self.arquivo_texto = open(nome_arquivo_saida, "w")
-        self.status_escrita = self.arquivo_texto.write(texto)
-        self.arquivo_texto.close()
-        
-        
-    def salva_texto_em_html(self, texto, nome_arquivo_saida):
-    # Salva o texto extraído do pdf em um arquivo texto
-        self.arquivo_texto = open(nome_arquivo_saida, "w")
-        self.status_escrita = self.arquivo_texto.write(texto)
-        self.arquivo_texto.close()
-        
-        
-        
-    def salva_texto_em_xlsx(self):
-        #from openpyxl import Workbook
-        from openpyxl import load_workbook
-        
-        wb = load_workbook('IPDO.xlsx') 
-        ws = wb['Tabela1']
-        
-        [p, u] = self.linha_nao_vazia(ws)
-        
-        # overwrite the current document template
-        #wb.save('IPDO.xlsx')     
-        
-        
-        
-    def linha_nao_vazia(self, ws):
-        ######## Encontra a primeira e a ultima linha não vazia
-    
-        self.tam = ws.max_row + 1
-        self.primeira_linha = 0
-        self.ultima_linha = 0
-        
-        for item in xrange(1, self.tam):
-            self.celula_valor = ws.cell(row=item, column = 1).value  
-            if (self.celula_valor is not None) and (self.primeira_linha == 0):
-                self.primeira_linha = item
-            elif (self.celula_valor is not None) and (self.primeira_linha is not 0):
-                self.ultima_linha = item
-        return self.primeira_linha, self.ultima_linha     
-        
-        
-        
+
 
         
         

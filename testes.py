@@ -15,6 +15,36 @@ Created on Thu Jul 28 15:08:38 2016
 #    print mylist[0] # imprime o objeto data, não o container
 
 
+
+## Serve apenas para criar novos arquivos.
+#import xlsxwriter
+#
+#workbook = xlsxwriter.Workbook('IPDO.xlsx')
+#ws_resultado = workbook.add_worksheet('Tabela1')
+#   
+from openpyxl import load_workbook  
+import string
+#        try:
+wb = load_workbook('IPDO.xlsx') 
+ws = wb['Tabela1']
+
+[plinha, ulinha] = self.linha_nao_vazia(ws)
+
+prevista = string.split(texto[0],';')  
+verificada = string.split(texto[1],';')
+percent_sin = string.split(texto[2],';')
+
+tam = len(prevista)
+conta_valores = 0
+for cont in xrange(ulinha,tam):         
+    indice = 'B'+ str(cont)            
+    ws[indice] = float(prevista[conta_valores])
+    conta_valores = conta_valores + 1
+
+wb.save('IPDO.xlsx') 
+
+
+
 import string
 p = ws.cell('A5').value
 x = p.encode('utf-8')
@@ -33,6 +63,7 @@ ws = wb['Tabela1']
 tam = ws.max_row + 1
 primeira_linha = 0
 ultima_linha = 0
+
 for item in xrange(1, tam):
     celula_valor = ws.cell(row=item, column = 1).value  
     if (celula_valor is not None) and (primeira_linha == 0):
@@ -40,11 +71,10 @@ for item in xrange(1, tam):
     elif (celula_valor is not None) and (primeira_linha is not 0):
         ultima_linha = item
         
-        
-#    wb = Workbook()
-
-    # overwrite the current document template
-    wb.save('IPDO.xlsx') 
+if (ultima_linha == 0):
+    ultima_linha = primeira_linha
+    
+wb.save('IPDO.xlsx') # sobrescreve resultados
 
 
 
