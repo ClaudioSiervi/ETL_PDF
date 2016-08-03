@@ -6,8 +6,25 @@ Created on Tue Aug 02 17:37:43 2016
 """
 
 class ExtraiTextoBalancoEnergia():
-    
+#    import re
+#    import string
+#    from bs4 import BeautifulSoup
 
+    def data_arquivo_entrada(self, objeto_bs, tag, top_num):
+        import string
+        
+        top_tx =  'top:' +  top_num + 'px'  #314px'
+        
+        tag_encontrada = objeto_bs.select(tag+'[style*="'+top_tx+'"]')
+        conteudo_tag = tag_encontrada[0].contents
+        
+        texto_extraido_unicode = ' ' .join(conteudo_tag[0].stripped_strings)
+        texto_extraido_str = texto_extraido_unicode.encode('utf-8')
+        texto_extraido_str = string.split(texto_extraido_str, ',')
+        texto_extraido_str = texto_extraido_str[1]    # Data do IPDO       
+
+        return texto_extraido_str
+        
     # Extrai os dados da operação diária programada e verificada das 
         #tags html do Balanço de Energia
     def sistema_interligado(self, objeto_bs, tag, left_num, top_num):        

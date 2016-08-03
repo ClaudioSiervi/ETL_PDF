@@ -45,11 +45,19 @@ wb.save('IPDO.xlsx')
 
 
 
+
+
+
+from bs4 import BeautifulSoup
 import string
-p = ws.cell('A5').value
-x = p.encode('utf-8')
-x = string.split(x, ',')
-x = x[1]    # Data do IPDO
+bs_html = BeautifulSoup(html_extraido, 'html.parser')
+t = bs_html.select('div[style*="top:189px"]')
+x =t[0].contents
+p = ' ' .join(x[0].stripped_strings)
+z = p.encode('utf-8')
+z = string.split(z, ',')
+z = z[1]    # Data do IPDO
+
 
 
 ######## Encontra a primeira e a ultima linha não vazia

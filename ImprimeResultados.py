@@ -21,6 +21,23 @@ class ImprimeArquivosTexto():
         self.arquivo_texto.close()
         
         
+        
+    def data_em_xlsx(self, data):
+        from openpyxl import load_workbook  
+        
+        #        try:
+        wb = load_workbook('IPDO.xlsx') 
+        ws = wb['Tabela1']
+        
+        [plinha, ulinha] = self.linha_nao_vazia(ws)
+        ulinha =ulinha+1        
+        
+        indice = 'A'+str(ulinha)            
+        ws[indice] = data
+        wb.save('IPDO.xlsx')
+        
+        
+    
     def texto_em_xlsx(self, texto):
         
         #from openpyxl import Workbook
@@ -31,19 +48,36 @@ class ImprimeArquivosTexto():
         ws = wb['Tabela1']
         
         [plinha, ulinha] = self.linha_nao_vazia(ws)
+#        ulinha = ulinha +1
         
         prevista = string.split(texto[0],';')  
         verificada = string.split(texto[1],';')
-        percent_sin = string.split(texto[2],';')
+#        percent_sin = string.split(texto[2],';')
         
         tam = len(prevista)
         conta_valores = 0
         print tam
         print prevista
-        for cont in xrange(1,tam):         
-            indice = 'B'+ str(ulinha + cont)            
-            ws[indice] = float(prevista[conta_valores])
+        for cont in xrange(1,tam):
+            letra = self.get_column_letter(cont + 1)
+            #print letra
+            indice = letra + str(ulinha)            
+            ws[indice] = prevista[conta_valores]
+#            ws[indice] = float(prevista[conta_valores])            
             conta_valores = conta_valores + 1
+        
+        tam = len(verificada) + cont
+        conta_valores = 0
+        print tam
+        print verificada
+        for cont in xrange(cont, tam):
+            letra = self.get_column_letter(cont + 2)
+            #print letra
+            indice = letra + str(ulinha)            
+            ws[indice] = verificada[conta_valores]
+#            ws[indice] = float(verificada[conta_valores])
+            conta_valores = conta_valores + 1
+              
         
         print conta_valores        
         wb.save('IPDO.xlsx')   # sobrescreve resultados
@@ -78,5 +112,28 @@ class ImprimeArquivosTexto():
                       
         return self.primeira_linha, self.ultima_linha     
         
-        
+    
+    # http://openpyxl.readthedocs.io/en/2.3.3/_modules/openpyxl/utils.html    
+    def get_column_letter(self, col_idx):
+        """Convert a column number into a column letter (3 -> 'C')
+    
+        Right shift the column col_idx by 26 to find column letters in reverse
+        order.  These numbers are 1-based, and can be converted to ASCII
+        ordinals by adding 64.
+    
+        """
+        # these indicies corrospond to A -> ZZZ and include all allowed
+        # columns
+        if not 1 <= col_idx <= 18278:
+            raise ValueError("Invalid column index {0}".format(col_idx))
+        letters = []
+        while col_idx > 0:
+            col_idx, remainder = divmod(col_idx, 26)
+            # check for exact division and borrow if needed
+            if remainder == 0:
+                remainder = 26
+                col_idx -= 1
+            letters.append(chr(remainder+64))
+        return ''.join(reversed(letters))
+            
         
