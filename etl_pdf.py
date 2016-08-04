@@ -59,12 +59,12 @@ class Carregar_Transformar_Extrair:
     def pdf_para_html(self, path):
         from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
         from pdfminer.converter import HTMLConverter
-        from pdfminer.converter import TextConverter
+#        from pdfminer.converter import TextConverter
         from pdfminer.layout import LAParams
         from pdfminer.pdfpage import PDFPage
         from cStringIO import StringIO
-        import re
-        import csv
+#        import re
+#        import csv
         
         
         rsrcmgr = PDFResourceManager()

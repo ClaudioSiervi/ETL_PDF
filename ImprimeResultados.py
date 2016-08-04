@@ -68,7 +68,7 @@ class ImprimeArquivosTexto():
         
         tam = len(verificada) + cont
         conta_valores = 0
-        print tam
+#        print tam
         print verificada
         for cont in xrange(cont, tam):
             letra = self.get_column_letter(cont + 2)

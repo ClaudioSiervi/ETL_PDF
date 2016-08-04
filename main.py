@@ -34,7 +34,6 @@ for dia in xrange(01,32):
     mapeia.data_relatorio(html_extraido)
     mapeia.resumo_balanco_energia(html_extraido)
     
-    
     salva = ImprimeArquivosTexto()
     salva.texto_em_html(html_extraido, 'texto_extraido.html')
 
