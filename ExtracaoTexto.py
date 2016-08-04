@@ -8,15 +8,16 @@ Created on Tue Aug 02 17:37:43 2016
 class ExtraiTextoBalancoEnergia():
 #    import re
 #    import string
-#    from bs4 import BeautifulSoup
+    from bs4 import BeautifulSoup
 
-    def data_arquivo_entrada(self, objeto_bs, tag, top_num):
+    def data_arquivo_entrada(self, objeto_bs, tag, top_tx):
         import string
+        import re
+#        top_tx =  'top:' +  top_num + 'px'  #314px'
         
-        top_tx =  'top:' +  top_num + 'px'  #314px'
-        
-        tag_encontrada = objeto_bs.select(tag+'[style*="'+top_tx+'"]')
-        conteudo_tag = tag_encontrada[0].contents
+
+        tag_encontrada = objeto_bs.find('div', style=re.compile(r'top:18[0-9]|19[0-9]px'))
+        conteudo_tag = tag_encontrada.contents
         
         texto_extraido_unicode = ' ' .join(conteudo_tag[0].stripped_strings)
         texto_extraido_str = texto_extraido_unicode.encode('utf-8')
@@ -27,13 +28,11 @@ class ExtraiTextoBalancoEnergia():
         
     # Extrai os dados da operação diária programada e verificada das 
         #tags html do Balanço de Energia
-    def sistema_interligado(self, objeto_bs, tag, left_num, top_num):        
+    def sistema_interligado(self, objeto_bs, tag, left_tx, top_tx):        
         import re        
-       
-        #tag ='div'
-        left_tx = 'left:' + left_num + 'px' #'284px'
-        top_tx =  'top:' +  top_num + 'px'  #314px'
-        
+#        #tag ='div'
+#        left_tx = 'left:' + left_num + 'px' #'284px'
+#        top_tx =  'top:' +  top_num + 'px'  #314px'
         tag_encontrada = objeto_bs.find(tag, style=re.compile(r''+ left_tx+'.*?'+top_tx))
         conteudo_tag = tag_encontrada.contents
         texto_extraido_unicode =''

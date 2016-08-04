@@ -60,6 +60,7 @@ z = z[1]    # Data do IPDO
 
 
 
+
 ######## Encontra a primeira e a ultima linha não vazia
 from openpyxl import Workbook
 from openpyxl import load_workbook
@@ -114,7 +115,7 @@ and they lived at the bottom of a well.</p>
 """
 
 
-soup = BeautifulSoup(html_doc, 'html.parser')
+soup = BeautifulSoup(html_extraido, 'html.parser')
 
 print(soup.prettify())
 
@@ -187,6 +188,10 @@ resp= ';' .join(x[1].stripped_strings)
 
 
 
+^(?=.*\bjack\b)(?=.*\bjames\b).*$
+
+
+
 # extrai valores considerando dois atributos da tag div
 #http://stackoverflow.com/questions/35140158/using-beautifulsoup-to-find-tag-with-two-specific-styles
 import re
@@ -205,6 +210,8 @@ p = p + ' ' .join(x[1].stripped_strings)
 p = p + ' '
 p = p + ' ' .join(x[2].stripped_strings)
 z =p.encode('utf-8')
+
+
 
 ### Depoissss
 left = 'left:' + '284px'
