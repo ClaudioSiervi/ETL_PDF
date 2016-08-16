@@ -21,7 +21,7 @@ class ImprimeArquivosTexto():
         self.arquivo_texto.close()
         
         
-        
+    # Imprime a data do IPDO    
     def data_em_xlsx(self, data):
         from openpyxl import load_workbook  
         
@@ -37,7 +37,8 @@ class ImprimeArquivosTexto():
         wb.save('IPDO.xlsx')
         
         
-    
+    #texto_em_xlsx
+    # balanco_energia_sin
     def texto_em_xlsx(self, texto):
         
         #from openpyxl import Workbook

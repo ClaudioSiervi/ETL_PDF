@@ -9,11 +9,16 @@ import re
 import string
 #from bs4 import BeautifulSoup
     
-class ExtraiTextoBalancoEnergia():
+    # Página 1
+class BalancoEnergia():
 
 
+     # Extrai a data do arquivo do IPDO
     def data_arquivo_entrada(self, objeto_bs, tag, top_tx):
-
+    # objeto_bs --> objeto beautifulsoup
+    # tag       --> tag html buscada
+    # top_tx    --> coordenadas do top
+    
         tag_encontrada = objeto_bs.find('div', style=re.compile(r''+top_tx))
         conteudo_tag = tag_encontrada.contents
         
@@ -25,9 +30,12 @@ class ExtraiTextoBalancoEnergia():
         return texto_extraido_str
         
         
-    # Extrai os dados da operação diária programada e verificada do Balanço de Energia
+    # Extrai os dados do resumo do Balanço de Energia (programado e verificado)
     def sistema_interligado(self, objeto_bs, tag, left_tx, top_tx):        
-
+    # objeto_bs --> objeto beautifulsoup
+    # tag       --> tag html buscada
+    # top_tx    --> coordenadas do top
+    
         tag_encontrada = objeto_bs.find(tag, style=re.compile(r''+ left_tx+'.*?'+top_tx))
         conteudo_tag = tag_encontrada.contents
         texto_extraido_unicode =''
@@ -40,3 +48,11 @@ class ExtraiTextoBalancoEnergia():
         
 #        print texto_extraido_str
         return texto_extraido_str       
+
+
+    # Página 2
+class Subsistemas():
+    
+    def fontes(self):
+        extrir = 1
+        

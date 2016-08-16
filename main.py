@@ -13,7 +13,7 @@ import os
 
 caminho = os.getcwd()
 caminho = str(caminho) + '\Scripts-py'
-for dia in xrange(01,32):
+for dia in xrange(31,32):
     if (dia <10):
         nome_arquivo_entrada = caminho + '\IPDO-0'+str(dia)+'-05-2016'
     else:

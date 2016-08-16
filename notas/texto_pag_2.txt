@@ -1,0 +1,326 @@
+ <div style="position:absolute; top:941px;"><a name="2">Page 2</a></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:28px; top:987px; width:190px; height:11px;"><span style="font-family: Arial,Bold; font-size:11px">2 - Balanço de Energia Detalhado
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:78px; top:1091px; width:101px; height:59px;"><span style="font-family: Arial,Bold; font-size:11px">Norte
+<br></span><span style="font-family: Arial,Bold; font-size:8px">Produção (MWmed/dia)
+<br>Hidro
+<br>Termo (**)
+<br>Total
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:131px; top:1119px; width:30px; height:30px;"><span style="font-family: Arial,Bold; font-size:8px">8,46%
+<br>4,02%
+<br>12,47%
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:176px; top:1119px; width:22px; height:30px;"><span style="font-family: Arial,Bold; font-size:8px">4.108
+<br>1.951
+<br>6.059
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:79px; top:1156px; width:80px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">Carga (MWmed) (*)
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:176px; top:1156px; width:22px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">4.823
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:216px; top:1119px; width:22px; height:30px;"><span style="font-family: Arial,Bold; font-size:8px">4.057
+<br>1.965
+<br>6.022
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:216px; top:1156px; width:22px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">4.852
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:252px; top:1143px; width:22px; height:17px;"><span style="font-family: Arial,Bold; font-size:8px">1.236
+<br>1.170
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:325px; top:1144px; width:22px; height:17px;"><span style="font-family: Arial,Bold; font-size:8px">3.010
+<br>2.780
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:73px; top:1173px; width:154px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">Energia Afluente ENA               </span><span style="font-family: Arial,Bold; font-size:7px">MWmed
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:165px; top:1172px; width:25px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">5.725 
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:73px; top:1187px; width:18px; height:20px;"><span style="font-family: Arial,Bold; font-size:8px">53%
+<br>46%
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:100px; top:1188px; width:107px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">da MLT bruta no mês até o dia
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:100px; top:1201px; width:134px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">da MLT armazenável no mês até o dia
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:72px; top:1213px; width:89px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">Energia Armazenada
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:72px; top:1226px; width:180px; height:17px;"><span style="font-family: Arial,Bold; font-size:8px">No dia                    MWmês                     %  
+<br>Desvio dia anterior
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:117px; top:1226px; width:25px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">9.728 
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:219px; top:1226px; width:17px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">64,7
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:127px; top:1246px; width:10px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">53
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:151px; top:1247px; width:63px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">MWmês            
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:229px; top:1246px; width:20px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">0,4%
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:358px; top:1004px; width:46px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">LEGENDA:
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:411px; top:1004px; width:70px; height:18px;"><span style="font-family: Arial,Bold; font-size:7px">          Verificado
+<br>          Programado
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:437px; top:1091px; width:52px; height:11px;"><span style="font-family: Arial,Bold; font-size:11px">Nordeste
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:382px; top:1109px; width:100px; height:52px;"><span style="font-family: Arial,Bold; font-size:8px">Produção (MWmed/dia)
+<br>Hidro
+<br>Termo (**)
+<br>Eólica
+<br>Total
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:434px; top:1120px; width:30px; height:41px;"><span style="font-family: Arial,Bold; font-size:8px">5,17%
+<br>3,99%
+<br>3,56%
+<br>12,71%
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:481px; top:1120px; width:22px; height:41px;"><span style="font-family: Arial,Bold; font-size:8px">2.510
+<br>1.936
+<br>1.728
+<br>6.174
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:382px; top:1167px; width:80px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">Carga (MWmed) (*)
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:481px; top:1166px; width:22px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">9.184
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:520px; top:1120px; width:22px; height:41px;"><span style="font-family: Arial,Bold; font-size:8px">2.451
+<br>2.075
+<br>1.979
+<br>6.505
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:521px; top:1166px; width:22px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">9.285
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:382px; top:1180px; width:158px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">Energia Afluente ENA                 </span><span style="font-family: Arial,Bold; font-size:7px">MWmed
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:476px; top:1180px; width:25px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">1.788 
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:388px; top:1193px; width:18px; height:20px;"><span style="font-family: Arial,Bold; font-size:8px">25%
+<br>24%
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:418px; top:1195px; width:107px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">da MLT bruta no mês até o dia
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:418px; top:1206px; width:134px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">da MLT armazenável no mês até o dia
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:573px; top:1189px; width:38px; height:12px;"><span style="font-family: ABCDEE+Calibri; font-size:12px">Sudeste
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:380px; top:1220px; width:195px; height:32px;"><span style="font-family: Arial,Bold; font-size:8px">Energia Armazenada
+<br>No dia                    MWmês                    %          
+<br>Desvio dia anterior
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:422px; top:1232px; width:30px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">17.100 
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:523px; top:1231px; width:17px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">33,0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:54px; top:1285px; width:103px; height:11px;"><span style="font-family: Arial,Bold; font-size:11px">ITAIPU Binacional
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:56px; top:1304px; width:98px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">Produção para o Brasil
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:44px; top:1323px; width:24px; height:30px;"><span style="font-family: Arial,Bold; font-size:8px">50 HZ
+<br>60 Hz
+<br>Total
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:85px; top:1314px; width:40px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">(MWmed)
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:92px; top:1323px; width:22px; height:30px;"><span style="font-family: Arial,Bold; font-size:8px">4.926
+<br>4.498
+<br>9.424
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:144px; top:1323px; width:22px; height:30px;"><span style="font-family: Arial,Bold; font-size:8px">5.054
+<br>4.525
+<br>9.579
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:50px; top:1382px; width:112px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">Intercâmbio Internacional 
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:93px; top:1398px; width:30px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">Import.
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:146px; top:1398px; width:31px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">Export.
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:236px; top:1303px; width:22px; height:19px;"><span style="font-family: Arial,Bold; font-size:8px">9.424
+<br>9.579
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:271px; top:1256px; width:22px; height:18px;"><span style="font-family: Arial,Bold; font-size:8px">1.774
+<br>1.610
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:271px; top:1388px; width:18px; height:11px;"><span style="font-family: Arial,Bold; font-size:11px">Sul
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:573px; top:1250px; width:45px; height:56px;"><span style="font-family: ABCDEE+Calibri; font-size:12px">Norte
+<br>Nordeste
+<br>Sul
+<br>Sudeste
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:434px; top:1254px; width:13px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">-57
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:459px; top:1255px; width:63px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">MWmês            
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:524px; top:1253px; width:23px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">-0,1%
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:402px; top:1291px; width:126px; height:11px;"><span style="font-family: Arial,Bold; font-size:11px">Sudeste/Centro-Oeste
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:385px; top:1311px; width:100px; height:52px;"><span style="font-family: Arial,Bold; font-size:8px">Produção (MWmed/dia)
+<br>Hidro
+<br>Termo (**)
+<br>Nuclear
+<br>Total
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:436px; top:1321px; width:30px; height:42px;"><span style="font-family: Arial,Bold; font-size:8px">28,11%
+<br>9,57%
+<br>4,15%
+<br>41,84%
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:385px; top:1369px; width:80px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">Carga (MWmed) (*)
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:475px; top:1322px; width:27px; height:54px;"><span style="font-family: Arial,Bold; font-size:8px">13.657
+<br>4.651
+<br>2.015
+<br>20.323
+<br>27.085
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:520px; top:1321px; width:27px; height:54px;"><span style="font-family: Arial,Bold; font-size:8px">14.161
+<br>4.628
+<br>1.990
+<br>20.779
+<br>28.447
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:385px; top:1383px; width:156px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">Energia Afluente ENA                </span><span style="font-family: Arial,Bold; font-size:7px">MWmed
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:478px; top:1383px; width:30px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">34.268 
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:391px; top:1394px; width:18px; height:20px;"><span style="font-family: Arial,Bold; font-size:8px">91%
+<br>77%
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:422px; top:1396px; width:107px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">da MLT bruta no mês até o dia
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:422px; top:1408px; width:134px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">da MLT armazenável no mês até o dia
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:384px; top:1420px; width:89px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">Energia Armazenada
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:384px; top:1434px; width:195px; height:19px;"><span style="font-family: Arial,Bold; font-size:8px">116.844 
+<br>No dia                    MWmês                  %            
+<br>Desvio dia anterior
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:521px; top:1434px; width:17px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">57,6
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:436px; top:1456px; width:15px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">102
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:462px; top:1455px; width:61px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">MWmês           
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:527px; top:1455px; width:20px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">0,0%
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:405px; top:1499px; width:18px; height:17px;"><span style="font-family: Arial,Bold; font-size:8px">-888
+<br>-301
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:40px; top:1406px; width:38px; height:17px;"><span style="font-family: Arial,Bold; font-size:7px">Paraguai 
+<br>Aracy
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:41px; top:1425px; width:41px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">Uruguai    
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:37px; top:1435px; width:51px; height:63px;"><span style="font-family: Arial,Bold; font-size:7px">Rivera
+<br>Melo
+<br>Argentina
+<br>Garabi I
+<br>Garabi II  
+<br>Uruguaiana
+<br></span><span style="font-family: Arial,Bold; font-size:8px">Total
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:103px; top:1415px; width:4px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:103px; top:1434px; width:4px; height:17px;"><span style="font-family: Arial,Bold; font-size:7px">0
+<br>0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:103px; top:1463px; width:4px; height:37px;"><span style="font-family: Arial,Bold; font-size:7px">0
+<br>0
+<br>0
+<br>0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:124px; top:1415px; width:4px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:124px; top:1434px; width:4px; height:17px;"><span style="font-family: Arial,Bold; font-size:7px">0
+<br>0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:124px; top:1463px; width:4px; height:37px;"><span style="font-family: Arial,Bold; font-size:7px">0
+<br>0
+<br>0
+<br>0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:120px; top:1504px; width:5px; height:17px;"><span style="font-family: Arial,Bold; font-size:8px">0
+<br>0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:149px; top:1415px; width:4px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:149px; top:1434px; width:4px; height:17px;"><span style="font-family: Arial,Bold; font-size:7px">0
+<br>0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:149px; top:1463px; width:4px; height:37px;"><span style="font-family: Arial,Bold; font-size:7px">0
+<br>0
+<br>0
+<br>0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:171px; top:1415px; width:4px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:171px; top:1434px; width:4px; height:17px;"><span style="font-family: Arial,Bold; font-size:7px">0
+<br>0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:171px; top:1463px; width:4px; height:37px;"><span style="font-family: Arial,Bold; font-size:7px">0
+<br>0
+<br>0
+<br>0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:197px; top:1408px; width:100px; height:54px;"><span style="font-family: Arial,Bold; font-size:8px">Produção (MWmed/dia)
+<br>Hidro
+<br>Termo (**)
+<br>Eólica
+<br>Total
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:246px; top:1419px; width:30px; height:42px;"><span style="font-family: Arial,Bold; font-size:8px">11,90%
+<br>1,17%
+<br>0,51%
+<br>13,58%
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:197px; top:1466px; width:78px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">Carga (MWmed)(*)
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:298px; top:1419px; width:22px; height:42px;"><span style="font-family: Arial,Bold; font-size:8px">5.781
+<br>567
+<br>250
+<br>6.598
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:298px; top:1466px; width:22px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">7.486
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:336px; top:1419px; width:22px; height:42px;"><span style="font-family: Arial,Bold; font-size:8px">6.467
+<br>444
+<br>580
+<br>7.491
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:336px; top:1466px; width:22px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">7.792
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:196px; top:1480px; width:156px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">Energia Afluente ENA                </span><span style="font-family: Arial,Bold; font-size:7px">MWmed
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:287px; top:1481px; width:25px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">9.313 
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:194px; top:1493px; width:23px; height:20px;"><span style="font-family: Arial,Bold; font-size:8px">108%
+<br>99%
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:225px; top:1494px; width:107px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">da MLT bruta no mês até o dia
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:225px; top:1507px; width:134px; height:7px;"><span style="font-family: Arial,Bold; font-size:7px">da MLT armazenável no mês até o dia
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:195px; top:1519px; width:194px; height:31px;"><span style="font-family: Arial,Bold; font-size:8px">Energia Armazenada
+<br></span><span style="font-family: Arial,Bold; font-size:8px">No dia                    MWmês                  %            
+<br>Desvio dia anterior
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:239px; top:1531px; width:30px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">17.773 
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:333px; top:1531px; width:17px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">89,0
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:256px; top:1553px; width:10px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">79
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:274px; top:1553px; width:63px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">MWmês            
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:337px; top:1553px; width:20px; height:8px;"><span style="font-family: Arial,Bold; font-size:8px">0,3%
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:32px; top:1603px; width:515px; height:29px;"><span style="font-family: Arial,Bold; font-size:8px">(*)    Carga = Consumo + Perdas
+<br>(**)   Este valor inclui todas as usinas Tipo I, Tipo II-A, conjuntos e parcelas das usinas Tipo-III que são consideradas na 
+<br>programação da geração.
+<br></span></div>
+    <div style="position:absolute; border: textbox 1px solid; writing-mode:lr-tb; left:25px; top:1737px; width:236px; height:13px;"><span style="font-family: Arial,Bold; font-size:5px">OPERADOR NACIONAL DO SISTEMA ELÉTRICO ONS/CNOS
+<br></span><span style="font-family: Arial,Bold; font-size:5px">INFORMATIVO PRELIMINAR DA OPERAÇÃO DO DIA - 01/05/2016 (domingo)  Pag. 2
