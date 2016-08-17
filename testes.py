@@ -229,4 +229,28 @@ z = p.encode('utf-8')
 print z
     
     
+import re
+import string
+from ExtracaoTexto import BalancoEnergia, Subsistemas       
+from DicionarioTexto import DicionarioRegEx
+from bs4 import BeautifulSoup
+    
+objeto_bs = BeautifulSoup(html_extraido, 'html.parser')
+tag = 'div'
+dados = Subsistemas()    
+dic = DicionarioRegEx()
+
+top_tx =  dic.sudeste['fontes_tp'] 
+left_tx = dic.sudeste['fontes_lf']
+tag_encontrada = objeto_bs.find(tag, style=re.compile(r''+ left_tx+'.*?'+top_tx))
+conteudo_tag = tag_encontrada.contents
+texto_extraido_unicode =''
+tam = len(conteudo_tag)
+for item in xrange(0, tam):
+    texto_extraido_unicode = texto_extraido_unicode + ';' .join(conteudo_tag[item].stripped_strings)
+    texto_extraido_unicode = texto_extraido_unicode + ';'
+
+texto_extraido_str = texto_extraido_unicode.encode('utf-8')
+
+texto_extraido_str = string.split(texto_extraido_str, ';')
     

@@ -10,7 +10,7 @@ Created on Fri Jun 24 11:03:06 2016
 # Convert pdf to text
 # http://stackoverflow.com/questions/5725278/how-do-i-use-pdfminer-as-a-library
 
-class Carregar_Transformar_Extrair:
+class ExtrairTransformarCarregar:
     
 
     # Desbloqueia um pdf com senha

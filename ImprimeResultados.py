@@ -39,7 +39,7 @@ class ImprimeArquivosTexto():
         
     #texto_em_xlsx
     # balanco_energia_sin
-    def texto_em_xlsx(self, texto):
+    def resumo_balanco_em_xlsx(self, texto):
         
         #from openpyxl import Workbook
         from openpyxl import load_workbook  
@@ -92,6 +92,8 @@ class ImprimeArquivosTexto():
 #            print 'A planilha deve estar aberta =)'
 #            pass
 #            
+        
+        
         
         
     def linha_nao_vazia(self, ws):
