@@ -245,10 +245,8 @@ tag = 'div'
 dados = Subsistemas()    
 dic = DicionarioRegEx()
 
-#top_tx =  dic.sudeste['fontes_tp'] 
-#left_tx = dic.sudeste['fontes_lf']
-top_tx =  dic.sudeste['ear_tp']
-left_tx = dic.sudeste['ear_lf'] 
+top_tx =  dic.norte['fontes_tp']
+left_tx = dic.norte['fontes_lf'] 
 #
 #mapeia = ExtrairTransformarCarregar()
 #texto_extraido_str = mapeia.extrai_dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)

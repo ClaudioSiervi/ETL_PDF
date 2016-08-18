@@ -36,23 +36,30 @@ class MapeiaTexto():
     # TODO mapear o  balanço de energia por subsistema    
     def balanco_por_subsistema(self, objeto_bs):
         
-        dic = DicionarioRegEx()
-        self.sudeste = self.balanco_energetico_detalhado(objeto_bs, dic.sudeste)
-        self.sul = self.balanco_energetico_detalhado(objeto_bs, dic.sul)
-        return self.sudeste
+       dic = DicionarioRegEx()
+        ## TODO separar a caga da produção SE
+       self.sudeste = self.balanco_energetico_detalhado('Sudeste', objeto_bs, dic.sudeste)
+       self.sul = self.balanco_energetico_detalhado('Sul', objeto_bs, dic.sul)
+       self.nordeste = self.balanco_energetico_detalhado('Nordeste', objeto_bs, dic.nordeste)                
+        ## TODO arrumar a extração de fontes de energia       
+       self.norte = self.balanco_energetico_detalhado('Norte', objeto_bs, dic.norte)                
+      
+       return self.sudeste, self.sul, self.nordeste, self.norte
         
         
-    def balanco_energetico_detalhado(self, objeto_bs, dic):
+        
+    def balanco_energetico_detalhado(self, nome_subsis, objeto_bs, dic):
         
         tag = 'div'
         dados = Subsistemas()    
-        #        self.nome_subis = 'Sudeste' 
+        
+        self.nome_subis = nome_subsis 
         #                                                  (objeto_bs, tag, left_tx, top_tx):  
         self.fontes = dados.fontes(objeto_bs, tag, dic['fontes_lf'], dic['fontes_tp'] )
         
         self.producao_vf = dados.producao(objeto_bs, tag, dic['prod_verif_lf'], dic['prod_verif_tp'] )
         self.producao_pg = dados.producao(objeto_bs, tag, dic['prod_prog_lf'], dic['prod_prog_tp'] )
-        ## TODO separar a caga da produção SE
+
         self.carga_vf = dados.carga(objeto_bs, tag, dic['carga_verif_lf'], dic['carga_verif_tp'] )
         self.carga_pg = dados.carga(objeto_bs, tag, dic['carga_prog_lf'], dic['carga_prog_tp'] )
 
