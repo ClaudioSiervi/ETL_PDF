@@ -38,7 +38,8 @@ for dia in xrange(1,2):
     
     salva.data_em_xlsx(mapeia.data_relatorio(objeto_bs)) 
     salva.resumo_balanco_em_xlsx(mapeia.resumo_balanco_energia(objeto_bs))
-#    mapeia.balanco_por_subsistema(objeto_bs)        
+    
+    se = mapeia.balanco_por_subsistema(objeto_bs)        
     
     salva.texto_em_html(html_extraido, 'texto_extraido.html')
     

@@ -9,6 +9,7 @@ Created on Fri Jun 24 11:03:06 2016
 
 # Convert pdf to text
 # http://stackoverflow.com/questions/5725278/how-do-i-use-pdfminer-as-a-library
+import string
 
 class ExtrairTransformarCarregar:
     
@@ -87,6 +88,26 @@ class ExtrairTransformarCarregar:
         return str
 
 
+
+    # extrai dados de um objeto bs a partir da posição dos elementos da tag desejada
+    def dados_objeto_bs(self, objeto_bs, tag, left_tx, top_tx):   
+        import re
+    # objeto_bs --> objeto beautifulsoup
+    # tag       --> tag html buscada
+    # top_tx    --> coordenadas do top
+    
+        tag_encontrada = objeto_bs.find(tag, style=re.compile(r''+ left_tx+'.*?'+top_tx))
+        conteudo_tag = tag_encontrada.contents
+        texto_extraido_unicode =''
+        tam = len(conteudo_tag)
+        for item in xrange(0, tam):
+            texto_extraido_unicode = texto_extraido_unicode + ';' .join(conteudo_tag[item].stripped_strings)
+            texto_extraido_unicode = texto_extraido_unicode + ';'
+        
+        texto_extraido_str = texto_extraido_unicode.encode('utf-8')
+                
+#        print texto_extraido_str
+        return texto_extraido_str       
 
 
         

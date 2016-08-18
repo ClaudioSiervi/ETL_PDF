@@ -7,11 +7,11 @@ Created on Tue Aug 02 17:37:43 2016
 
 import re
 import string
+from etl_pdf import ExtrairTransformarCarregar
 #from bs4 import BeautifulSoup
     
     # Página 1
 class BalancoEnergia():
-
 
      # Extrai a data do arquivo do IPDO
     def data_arquivo_entrada(self, objeto_bs, tag, top_tx):
@@ -36,43 +36,84 @@ class BalancoEnergia():
     # tag       --> tag html buscada
     # top_tx    --> coordenadas do top
     
-        tag_encontrada = objeto_bs.find(tag, style=re.compile(r''+ left_tx+'.*?'+top_tx))
-        conteudo_tag = tag_encontrada.contents
-        texto_extraido_unicode =''
-        tam = len(conteudo_tag)
-        for item in xrange(0, tam):
-            texto_extraido_unicode = texto_extraido_unicode + ';' .join(conteudo_tag[item].stripped_strings)
-            texto_extraido_unicode = texto_extraido_unicode + ';'
+        extrair = ExtrairTransformarCarregar()
+        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
-        texto_extraido_str = texto_extraido_unicode.encode('utf-8')
+        return texto_extraido_str
         
-#        print texto_extraido_str
-        return texto_extraido_str       
-
+        
+############################################################################
 
     # Página 2
 class Subsistemas():
+    
     
     def fontes(self, objeto_bs, tag, left_tx, top_tx):        
     # objeto_bs --> objeto beautifulsoup
     # tag       --> tag html buscada
     # top_tx    --> coordenadas do top
     
-        tag_encontrada = objeto_bs.find(tag, style=re.compile(r''+ left_tx+'.*?'+top_tx))
-        conteudo_tag = tag_encontrada.contents
-        texto_extraido_unicode =''
-        tam = len(conteudo_tag)
-        for item in xrange(0, tam):
-            texto_extraido_unicode = texto_extraido_unicode + ';' .join(conteudo_tag[item].stripped_strings)
-            texto_extraido_unicode = texto_extraido_unicode + ';'
+        extrair = ExtrairTransformarCarregar()
+        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
-        texto_extraido_str = texto_extraido_unicode.encode('utf-8')
+        texto_extraido_str = string.split(texto_extraido_str, ';')
         
         dim = len(texto_extraido_str)
-        # retira [0]=Produção(MWmed/dia), [dim-1]='Total', [dim]='' 
-        self.fontes = texto_extraido_str[1:(dim-2)]       
+        fontes_extraidas = texto_extraido_str[1:(dim-2)]  # retira [0]=Produção(MWmed/dia), [dim-1]='Total', [dim]=''        
         
         print 'fontes' 
-        print texto_extraido_str
-        return texto_extraido_str
+        print fontes_extraidas
+        return fontes_extraidas
+    
+    
+    def producao(self, objeto_bs, tag, left_tx, top_tx):
         
+        extrair = ExtrairTransformarCarregar()
+        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+        
+        texto_extraido_str = string.split(texto_extraido_str, ';')
+        
+        dim = len(texto_extraido_str)
+        producao_extraida = texto_extraido_str[0:(dim-1)]  # retira [dim]=''
+        
+        return producao_extraida
+        
+        
+    def carga(self, objeto_bs, tag, left_tx, top_tx):
+        
+        extrair = ExtrairTransformarCarregar()
+        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+        
+        texto_extraido_str = string.split(texto_extraido_str, ';')
+        
+        dim = len(texto_extraido_str)
+        carga_extraida = texto_extraido_str[0:(dim-1)]  # retira [dim]=''
+        
+        return carga_extraida
+
+    
+    # Energia Natural Afluente
+    def ena(self, objeto_bs, tag, left_tx, top_tx):
+        
+        extrair = ExtrairTransformarCarregar()
+        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+        
+        texto_extraido_str = string.split(texto_extraido_str, ';')
+        
+        dim = len(texto_extraido_str)
+        ena_extraida = texto_extraido_str[0:(dim-1)]  # retira [dim]=''
+        
+        return ena_extraida
+        
+    
+    # Energia Armazenada nos Reservatórios
+    def ear(self, objeto_bs, tag, left_tx, top_tx):
+        
+        extrair = ExtrairTransformarCarregar()
+        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+        
+        texto_extraido_str = string.split(texto_extraido_str, ';')
+        
+        ear_extraida = texto_extraido_str[0:1]
+        
+        return ear_extraida

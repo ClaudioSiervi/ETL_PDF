@@ -229,10 +229,15 @@ z = p.encode('utf-8')
 print z
     
     
+    
+    
+    
+    
 import re
 import string
 from ExtracaoTexto import BalancoEnergia, Subsistemas       
 from DicionarioTexto import DicionarioRegEx
+from etl_pdf import ExtrairTransformarCarregar
 from bs4 import BeautifulSoup
     
 objeto_bs = BeautifulSoup(html_extraido, 'html.parser')
@@ -240,8 +245,14 @@ tag = 'div'
 dados = Subsistemas()    
 dic = DicionarioRegEx()
 
-top_tx =  dic.sudeste['fontes_tp'] 
-left_tx = dic.sudeste['fontes_lf']
+#top_tx =  dic.sudeste['fontes_tp'] 
+#left_tx = dic.sudeste['fontes_lf']
+top_tx =  dic.sudeste['ear_tp']
+left_tx = dic.sudeste['ear_lf'] 
+#
+#mapeia = ExtrairTransformarCarregar()
+#texto_extraido_str = mapeia.extrai_dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+
 tag_encontrada = objeto_bs.find(tag, style=re.compile(r''+ left_tx+'.*?'+top_tx))
 conteudo_tag = tag_encontrada.contents
 texto_extraido_unicode =''

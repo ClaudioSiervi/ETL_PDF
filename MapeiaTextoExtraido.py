@@ -36,13 +36,35 @@ class MapeiaTexto():
     # TODO mapear o  balanço de energia por subsistema    
     def balanco_por_subsistema(self, objeto_bs):
         
+        dic = DicionarioRegEx()
+        self.sudeste = self.balanco_energetico_detalhado(objeto_bs, dic.sudeste)
+        self.sul = self.balanco_energetico_detalhado(objeto_bs, dic.sul)
+        return self.sudeste
+        
+        
+    def balanco_energetico_detalhado(self, objeto_bs, dic):
+        
         tag = 'div'
         dados = Subsistemas()    
-        dic = DicionarioRegEx()
-    
-        self.fontes = dados.fontes(objeto_bs, tag, dic.sudeste['fontes_lf'], dic.sudeste['fontes_tp'] )
+        #        self.nome_subis = 'Sudeste' 
+        #                                                  (objeto_bs, tag, left_tx, top_tx):  
+        self.fontes = dados.fontes(objeto_bs, tag, dic['fontes_lf'], dic['fontes_tp'] )
         
+        self.producao_vf = dados.producao(objeto_bs, tag, dic['prod_verif_lf'], dic['prod_verif_tp'] )
+        self.producao_pg = dados.producao(objeto_bs, tag, dic['prod_prog_lf'], dic['prod_prog_tp'] )
+        ## TODO separar a caga da produção SE
+        self.carga_vf = dados.carga(objeto_bs, tag, dic['carga_verif_lf'], dic['carga_verif_tp'] )
+        self.carga_pg = dados.carga(objeto_bs, tag, dic['carga_prog_lf'], dic['carga_prog_tp'] )
 
+        self.ena_vf = dados.ena(objeto_bs, tag, dic['ena_lf'], dic['ena_tp'] )
+        
+        self.ear_vf = dados.ear(objeto_bs, tag, dic['ear_lf'], dic['ear_tp'] )
+
+
+#        
+        return self.fontes, self.producao_vf, self.producao_pg, self.carga_vf, self.carga_pg, self.ena_vf, self.ear_vf
+          
+        
 #    def fontes(self, objeto_bs, tag, left_tx, top_tx):      
 #        
 ##        

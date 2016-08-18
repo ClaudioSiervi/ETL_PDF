@@ -4,8 +4,12 @@ Created on Tue Aug 02 19:20:17 2016
 
 @author: Claudio
 """
+from openpyxl import load_workbook
+#from openpyxl import Workbook
+import string
 
 class ImprimeArquivosTexto():
+    
     
     def texto_em_txt(self, texto, nome_arquivo_saida):
     # Salva o texto extraído do pdf em um arquivo texto
@@ -23,7 +27,6 @@ class ImprimeArquivosTexto():
         
     # Imprime a data do IPDO    
     def data_em_xlsx(self, data):
-        from openpyxl import load_workbook  
         
         #        try:
         wb = load_workbook('IPDO.xlsx') 
@@ -37,23 +40,17 @@ class ImprimeArquivosTexto():
         wb.save('IPDO.xlsx')
         
         
-    #texto_em_xlsx
-    # balanco_energia_sin
-    def resumo_balanco_em_xlsx(self, texto):
         
-        #from openpyxl import Workbook
-        from openpyxl import load_workbook  
-        import string
+    # Imprime o resumo do balanço energético    
+    def resumo_balanco_em_xlsx(self, texto):
         #        try:
         wb = load_workbook('IPDO.xlsx') 
         ws = wb['Tabela1']
         
         [plinha, ulinha] = self.linha_nao_vazia(ws)
-#        ulinha = ulinha +1
         
         prevista = string.split(texto[0],';')  
         verificada = string.split(texto[1],';')
-#        percent_sin = string.split(texto[2],';')
         
         tam = len(prevista)
         conta_valores = 0
@@ -61,37 +58,44 @@ class ImprimeArquivosTexto():
         print prevista
         for cont in xrange(1,tam):
             letra = self.get_column_letter(cont + 1)
-            #print letra
             indice = letra + str(ulinha)            
-            ws[indice] = prevista[conta_valores]
-#            ws[indice] = float(prevista[conta_valores])            
+            ws[indice] = prevista[conta_valores]       
             conta_valores = conta_valores + 1
         
         tam = len(verificada) + cont
         conta_valores = 0
-#        print tam
-        print verificada
+               
         for cont in xrange(cont, tam):
             letra = self.get_column_letter(cont + 2)
-            #print letra
             indice = letra + str(ulinha)            
             ws[indice] = verificada[conta_valores]
-#            ws[indice] = float(verificada[conta_valores])
             conta_valores = conta_valores + 1
               
+        print verificada       
+        print conta_valores      
         
-        print conta_valores        
         wb.save('IPDO.xlsx')   # sobrescreve resultados
     #        return plinha, ulinha
-#            pass
-        ##
-            # ------------
+
 #        except:
 #            print '------------------------------------------------------------'
-#            print 'ERRO: Não foi possível salvar os resultados na planilha.xlsx'
-#            print 'A planilha deve estar aberta =)'
-#            pass
-#            
+#            print 'ERRO: Não foi possível salvar os resultados na planilha.xlsx'         
+        
+        
+        
+        def resumo_subsistema_em_xlsx(self, data):
+        
+            wb = load_workbook('IPDO.xlsx') 
+            ws = wb['pag2']
+            
+            [plinha, ulinha] = self.linha_nao_vazia(ws)
+            ulinha =ulinha+1        
+            
+            indice = 'A'+str(ulinha)            
+            ws[indice] = data
+            wb.save('IPDO.xlsx')
+        
+        
         
         
         
@@ -99,15 +103,15 @@ class ImprimeArquivosTexto():
     def linha_nao_vazia(self, ws):
         ######## Encontra a primeira e a ultima linha não vazia
     
-        self.tam = ws.max_row + 1
+        tam = ws.max_row + 1
         self.primeira_linha = 0
         self.ultima_linha = 0
         
-        for item in xrange(1, self.tam):
-            self.celula_valor = ws.cell(row=item, column = 1).value  
-            if (self.celula_valor is not None) and (self.primeira_linha == 0):
+        for item in xrange(1, tam):
+            celula_valor = ws.cell(row=item, column = 1).value  
+            if (celula_valor is not None) and (self.primeira_linha == 0):
                 self.primeira_linha = item
-            elif (self.celula_valor is not None) and (self.primeira_linha is not 0):
+            elif (celula_valor is not None) and (self.primeira_linha is not 0):
                 self.ultima_linha = item
                                 
             if (self.ultima_linha == 0):
