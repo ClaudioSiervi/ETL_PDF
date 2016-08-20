@@ -6,20 +6,56 @@ Created on Thu Jul 28 23:53:44 2016
 """
 
 
-
+from etl_pdf import ExtrairTransformarCarregar
 from ExtracaoTexto import BalancoEnergia, Subsistemas       
 from DicionarioTexto import DicionarioRegEx
+from bs4 import BeautifulSoup
 
-class MapeiaTexto():
+
+class ArquivoIPDO():
+    
+    def __init__(self, nome_arquivo_entrada):
+        self.__init__ = self.mapeia_texto( nome_arquivo_entrada)
+    
+    
+    def mapeia_texto(self, nome_arquivo_entrada):
+        
+        
+        # exemplo:  nome_arquivo_entrada = 'IPDO-22-06-2016.pdf'
+        nome_arquivo_saida = nome_arquivo_entrada + '-unlocked.pdf'
+        # exemplo:  nome_arquivo_entrada = 'IPDO-22-06-2016.pdf'
+        nome_arquivo_entrada = nome_arquivo_entrada + '.pdf'
+    
+        converte = ExtrairTransformarCarregar()
+        converte.desbloqueia(nome_arquivo_entrada, nome_arquivo_saida)
+        
+        self.html_extraido = converte.pdf_para_html(nome_arquivo_saida)    
+        
+        from ImprimeResultados import ImprimeArquivosTexto
+        imprime = ImprimeArquivosTexto()
+        imprime.texto_em_html(self.html_extraido, 'texto_extraido.html')
+        
+        objeto_bs = BeautifulSoup(self.html_extraido, 'html.parser')
+        
+        self.data_relatorio = self.data_relatorio(objeto_bs)
+        self.resumo_balanco_energia = self.resumo_balanco_energia(objeto_bs)
+        self.balanco_por_subsistema = self.balanco_por_subsistema(objeto_bs)
+        
+       
+    
+    
     
     def data_relatorio(self, objeto_bs):
+##TODO criar classe arquivo (dados comubs)
+#       arquivo = Arquivo()    
+    #  arquivo.mapeia_texo()
 
         dados = BalancoEnergia()    
         dic = DicionarioRegEx()
-        self.data_arquivo = dados.data_arquivo_entrada(objeto_bs, 'div', dic.geral['data_ipdo_tp'])
+        data_arquivo = dados.data_arquivo_entrada(objeto_bs, 'div', dic.geral['data_ipdo_tp'])
         
-        print self.data_arquivo 
-        return self.data_arquivo    
+        print data_arquivo 
+        return data_arquivo    
       
       
     # Dados da página 1 
