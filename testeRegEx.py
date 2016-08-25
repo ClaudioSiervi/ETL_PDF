@@ -5,26 +5,40 @@ Created on Fri Aug 19 17:16:21 2016
 @author: Claudio
 """
 
-dic = {
-    'fontes_tp' : 'top:(138[0-9]|139[0-9]|140[0-9]|141[0-9]|142[0-9]|143[0-9])px', 
-    'fontes_lf' : 'left:(16[0-9]|17[0-9]|18[0-9]|19[0-9]|20[0-9]|21[0-9]|22[0-9])px',
-
-    'prod_verif_tp' : 'top:(139[0-9]|140[0-9]|141[0-9]|142[0-9]|143[0-9]|144[0-9])px', 
-    'prod_verif_lf' : 'left:(27[0-9]|28[0-9]|29[0-9]|29[0-9]|30[0-9]|31[0-9])px',
-    'prod_prog_tp' : 'top:(139[0-9]|140[0-9]|141[0-9]|142[0-9]|143[0-9]|144[0-9])px', 
-    'prod_prog_lf' : 'left:(32[0-9]|33[0-9]|34[0-9]|35[0-9]|36[0-9])px',
-
-    'carga_verif_tp' : 'top:(143[0-9]|144[0-9]|145[0-9]|146[0-9]|147[0-9]|148[0-9])px', 
-    'carga_verif_lf' : 'left:(27[0-9]|28[0-9]|29[0-9]|29[0-9]|30[0-9]|31[0-9])px',
-    'carga_prog_tp' : 'top:(143[0-9]|144[0-9]|145[0-9]|146[0-9]|147[0-9]|148[0-9])px', 
-    'carga_prog_lf' : 'left:(32[0-9]|33[0-9]|34[0-9]|35[0-9]|36[0-9])px',
-
-    'ena_tp' : 'top:(145[0-9]|146[0-9]|147[0-9]|148[0-9]|149[0-9]|150[0-9])px', 
-    'ena_lf' : 'left:(26[0-9]|27[0-9]|28[0-9]|29[0-9]|30[0-9]|31[0-9])px',
-
-    'ear_tp' : 'top:(150[0-9]|151[0-9]|152[0-9]|153[0-9]|154[0-9]|155[0-9])px', 
-    'ear_lf' : 'left:(21[0-9]|22[0-9]|23[0-9]|24[0-9]|25[0-9]|26[0-9])px'
+                # nordeste
+fontes = {
+    'fontes_tp' : 'top:(110[0-9]|111[0-9])px', 
+    'fontes_lf' : 'left:(35[0-9]|36[0-9]|37[0-9]|38[0-9]|39[0-9])px',
+}
+producao = {
+    'prod_verif_tp' : 'top:(111[0-9]|112[0-9]|113[0-9]|114[0-9])px', 
+    'prod_verif_lf' : 'left:(44[0-9]|45[0-9]|46[0-9]|47[0-9]|48[0-9])px',
+    'prod_prog_tp' : 'top:(111[0-9]|112[0-9]|113[0-9]|114[0-9])px',  
+    'prod_prog_lf' : 'left:(48[0-9]|49[0-9]|50[0-9]|51[0-9]|52[0-9])px',
     }
+carga = { # Nordeste
+    'carga_verif_tp' : 'top:(114[0-9]|115[0-9]|116[0-9]|117[0-9])px', 
+    'carga_verif_lf' : 'left:(45[0-9]|46[0-9]|47[0-9]|48[0-9])px',
+    
+    'carga_prog_tp' : 'top:(114[0-9]|115[0-9]|116[0-9])px', 
+    'carga_prog_lf' : 'left:(49[0-9]|50[0-9]|51[0-9]|52[0-9])px',
+}
+ena = {
+    'ena_tp' : 'top:(116[0-9]|117[0-9]|118[0-5])px', 
+    'ena_lf' : 'left:(44[0-9]|45[0-9]|46[0-9]|47[0-9]|48[0-9])px',
+}
+ear = {
+    'ear_tp' : 'top:(120[0-9]|121[0-9]|122[0-9]|123[0-9])px', 
+    'ear_lf' : 'left:(40[0-9]|41[0-9]|42[0-9]|43[0-9])px'
+    }
+
+dic ={ }
+dic.update(fontes)
+dic.update(producao)
+dic.update(carga)
+dic.update(ena)
+dic.update(ear)
+
     
 import os
 from bs4 import BeautifulSoup
@@ -56,11 +70,41 @@ html_extraido = converte.pdf_para_html(nome_arquivo_saida)
 
 objeto_bs = BeautifulSoup(html_extraido, 'html.parser')
 
+fontes = subsistema.fontes(objeto_bs, tag, dic['fontes_lf'], dic['fontes_tp'] )
+
+#print fontes
+
 producao_vf = subsistema.producao(objeto_bs, tag, dic['prod_verif_lf'], dic['prod_verif_tp'] )
 producao_pg = subsistema.producao(objeto_bs, tag, dic['prod_prog_lf'], dic['prod_prog_tp'] )
+
 
 print 'produção_vf  ->' + str(len(producao_vf)) + str(producao_vf)
 print 'produção_pg  ->' + str(len(producao_pg)) + str(producao_pg)
 
+if ((len(producao_vf)==5) & (len(producao_pg)==5)):
+    carga_vf = [producao_vf.pop()]
+    carga_pg = [producao_pg.pop()]
+
+    print 'carga_vf  ->' + str(len(carga_vf)) + '- ' + str(carga_vf)
+    print 'carga_pg  ->' + str(len(carga_pg)) + '- ' + str(carga_pg)
+   
+elif ((len(producao_vf)==4) & (len(producao_pg)==4)):  
+    carga_vf = subsistema.producao(objeto_bs, tag, dic['carga_verif_lf'], dic['carga_verif_tp'] )
+    carga_pg = subsistema.producao(objeto_bs, tag, dic['carga_prog_lf'], dic['carga_prog_tp'] )
+    
+    print '5'
+    print 'carga_vf  ->' + str(len(carga_vf)) + str(carga_vf)
+    print 'carga_pg  ->' + str(len(carga_pg)) + str(carga_pg)
+    
+else:
+    print 'Erro ao ler a carga.'
+    print 'O arquivo deve ter mudado de estrutura.'
+
+
+ena_vf = subsistema.ena(objeto_bs, tag, dic['ena_lf'], dic['ena_tp'] )
+print 'ena_vf -->' + str(ena_vf)
+
+ear_vf = subsistema.ear(objeto_bs, tag, dic['ear_lf'], dic['ear_tp'] )
+print 'ear_vf -->' + str(ear_vf)
 #carga_vf = subsistema.carga(objeto_bs, tag, dic['carga_verif_lf'], dic['carga_verif_tp'] )
 #carga_pg = subsistema.carga(objeto_bs, tag, dic['carga_prog_lf'], dic['carga_prog_tp'] )
