@@ -66,25 +66,26 @@ class ArquivoIPDO():
         
     # TODO mapear o  balanço de energia por subsistema    
     def balanco_por_subsistema(self, objeto_bs):
-        
-       dic = DicionarioRegEx()
 
-       self.sudeste = self.balanco_energetico_detalhado('Sudeste', dic.geral['num_fontes_sudeste'], objeto_bs, dic.sudeste)
-       self.sul = self.balanco_energetico_detalhado('Sul', dic.geral['num_fontes_sul'], objeto_bs, dic.sul)
-       self.nordeste = self.balanco_energetico_detalhado('Nordeste', dic.geral['num_fontes_nordeste'], objeto_bs, dic.nordeste)                
-        ## TODO arrumar a extração de fontes de energia       
-       self.norte = self.balanco_energetico_detalhado('Norte', dic.geral['num_fontes_norte'], objeto_bs, dic.norte)                
+        dicionario = DicionarioRegEx()
+        
+        self.sudeste = self.balanco_energetico_detalhado(dicionario.sudeste, objeto_bs)
+        self.sul = self.balanco_energetico_detalhado(dicionario.sul, objeto_bs)
+        self.nordeste = self.balanco_energetico_detalhado( dicionario.nordeste, objeto_bs)                      
+        self.norte = self.balanco_energetico_detalhado(dicionario.norte,  objeto_bs)                
       
-       return self.sudeste, self.sul, self.nordeste, self.norte
+        return self.sudeste, self.sul, self.nordeste, self.norte
         
         
         
-    def balanco_energetico_detalhado(self, nome_subsis, num_fontes, objeto_bs, dic):
+    def balanco_energetico_detalhado(self, dic, objeto_bs, ):
         
-        tag = 'div'
+        tag = 'div'        
         subsistema = Subsistemas()    
+
+        self.nome_subistema = dic['nome']
         
-        self.nome_subistema = nome_subsis 
+        num_fontes = dic['num_fontes']
         print self.nome_subistema
         #                                                  (objeto_bs, tag, left_tx, top_tx):  
         self.fontes = subsistema.fontes(objeto_bs, tag, dic['fontes_lf'], dic['fontes_tp'] )
@@ -100,7 +101,7 @@ class ArquivoIPDO():
             print 'carga_vf -->'+ str(self.carga_vf)
             print 'carga_pg -->'+ str(self.carga_pg)
             
-        ## lê carga com a expressão regular
+        ## lê a carga a partir de uma expressão regular
         elif ((len(self.producao_vf)==(num_fontes+1)) and (len(self.producao_pg)==(num_fontes+1))):  
             self.carga_vf = subsistema.carga(objeto_bs, tag, dic['carga_verif_lf'], dic['carga_verif_tp'] )
             self.carga_pg = subsistema.carga(objeto_bs, tag, dic['carga_prog_lf'], dic['carga_prog_tp'] )

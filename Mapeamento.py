@@ -12,11 +12,8 @@ class DicionarioRegEx:
     # Organizar 
     
     geral = {
-    'data_ipdo_tp' : 'top:(18[0-9]|19[0-9])px',
-    'num_fontes_sudeste' : 3,
-    'num_fontes_sul' : 3,
-    'num_fontes_nordeste' : 3,
-    'num_fontes_norte' : 2
+    'data_ipdo_tp' : 'top:(18[0-9]|19[0-9])px'
+
     }
 
     # Página 1
@@ -29,6 +26,9 @@ class DicionarioRegEx:
     
     
     sudeste = {
+    'nome' : 'sudeste',
+    'num_fontes' : 3,
+    
     'fontes_tp' : 'top:(128[0-9]|129[0-9]|130[0-9]|131[0-9]|132[0-9])px', 
     'fontes_lf' : 'left:(35[0-9]|36[0-9]|37[0-9]|38[0-9]|39[0-9])px',
 
@@ -51,6 +51,9 @@ class DicionarioRegEx:
 
 
     sul = {
+    'nome' : 'sul',
+    'num_fontes' : 3,
+
     'fontes_tp' : 'top:(138[0-9]|139[0-9]|140[0-9]|141[0-9]|142[0-9]|143[0-9])px', 
     'fontes_lf' : 'left:(17[0-9]|18[0-9]|19[0-9]|20[0-9])px',
 
@@ -73,6 +76,9 @@ class DicionarioRegEx:
     
 ## TODO erro aqui
     nordeste = {
+    'nome' : 'nordeste',
+    'num_fontes' : 3,
+    
     'fontes_tp' : 'top:(110[0-9]|111[0-9])px', 
     'fontes_lf' : 'left:(35[0-9]|36[0-9]|37[0-9]|38[0-9]|39[0-9])px',
 
@@ -96,24 +102,27 @@ class DicionarioRegEx:
     
     
     norte = {
-    'fontes_tp' : 'top:(108[6-9]|109[0-6])px', 
-    'fontes_lf' : 'left:(7[3-9]|8[0-3])px',
+    'nome' : 'norte',
+    'num_fontes' : 2,
+    
+    'fontes_tp' : 'top:(107[0-9]|108[0-9]|109[0-9])px', 
+    'fontes_lf' : 'left:(6[0-9]|7[0-9]|8[0-9]|9[0-9])px',
 
-    'prod_verif_tp' : 'top:(111[5-9]|112[0-5])px', 
-    'prod_verif_lf' : 'left:(17[0-9])px',
-    'prod_prog_tp' : 'top:(111[5-9]|112[0-5])px',  
-    'prod_prog_lf' : 'left:(21[0-9])px',
+    'prod_verif_tp' : 'top:(110[0-9]|111[0-9]|112[0-9])px', 
+    'prod_verif_lf' : 'left:(16[0-9]|17[0-9])px',
+    'prod_prog_tp' : 'top:(110[0-9]|111[0-9]|112[0-9])px',  
+    'prod_prog_lf' : 'left:(20[0-9]|21[0-9]|22[0-9])px',
 
-    'carga_verif_tp' : 'top:(115[0-9])px', 
-    'carga_verif_lf' : 'left:(17[0-9])px',
-    'carga_prog_tp' : 'top:(115[0-9])px', 
-    'carga_prog_lf' : 'left:(21[0-9])px',
+    'carga_verif_tp' : 'top:(114[0-9]|115[0-9])px', 
+    'carga_verif_lf' : 'left:(16[0-9]|17[0-9])px',
+    'carga_prog_tp' : 'top:(114[0-9]|115[0-9])px', 
+    'carga_prog_lf' : 'left:(20[0-9]|21[0-9])px',
 
-    'ena_tp' : 'top:(116[6-9]|117[0-6])px', 
-    'ena_lf' : 'left:(16[0-9])px',
+    'ena_tp' : 'top:(115[0-9]|116[0-9]|117[0-9])px', 
+    'ena_lf' : 'left:(14[0-9]|15[0-9]|16[0-9])px',
 
-    'ear_tp' : 'top:(122[6-9]|123[0-6])px', 
-    'ear_lf' : 'left:(11[3-9]|12[0-3])px'
+    'ear_tp' : 'top:(120[0-9]|121[0-9]|122[0-9]|123[0-9])px', 
+    'ear_lf' : 'left:(10[0-9]|11[0-9]|12[0-9])px',
     }
     
 #        
