@@ -47,58 +47,58 @@ class ImprimeArquivosTexto():
         wb = load_workbook('IPDO.xlsx') 
         ws = wb['Tabela1']
         
-        [plinha, ulinha] = self.linha_nao_vazia(ws)
+        [primeira_linha, ultima_linha] = self.linha_nao_vazia(ws)
         
-        prevista = string.split(texto[0],';')  
-        verificada = string.split(texto[1],';')
+        energia_prevista = string.split(texto[0],';')  
+        energia_verificada = string.split(texto[1],';')
         
-        tam = len(prevista)
+        num_elementos_prevista = len(energia_prevista) # Número de elementos do resumo
         conta_valores = 0
-        print tam
-        print prevista
-        for cont in xrange(1,tam):
-            letra = self.get_column_letter(cont + 1)
-            indice = letra + str(ulinha)            
-            ws[indice] = prevista[conta_valores]       
+        print num_elementos_prevista
+        print energia_prevista
+        
+        for conta_coluna_pg in xrange(1, num_elementos_prevista):
+            letra = self.get_column_letter(conta_coluna_pg + 1)
+            indice = letra + str(ultima_linha)            
+            ws[indice] = energia_prevista[conta_valores]       
             conta_valores = conta_valores + 1
         
-        tam = len(verificada) + cont
-        conta_valores = 0
-               
-        for cont in xrange(cont, tam):
-            letra = self.get_column_letter(cont + 2)
-            indice = letra + str(ulinha)            
-            ws[indice] = verificada[conta_valores]
+        num_elementos_verificada = len(energia_verificada) + conta_coluna_pg
+        print conta_coluna_pg        
+        print num_elementos_verificada
+        conta_valores = 0       
+        
+        for conta_coluna_vf in xrange(conta_coluna_pg, num_elementos_verificada):
+            letra = self.get_column_letter(conta_coluna_vf + 2)
+            indice = letra + str(ultima_linha)            
+            ws[indice] = energia_verificada[conta_valores]
             conta_valores = conta_valores + 1
-              
-        print verificada       
-        print conta_valores      
+        
+        print energia_verificada       
+        print conta_valores              
         
         wb.save('IPDO.xlsx')   # sobrescreve resultados
     #        return plinha, ulinha
 
 #        except:
 #            print '------------------------------------------------------------'
-#            print 'ERRO: Não foi possível salvar os resultados na planilha.xlsx'         
+#            print 'ERRO: Não foi possível salvar os resultados na planilha.xlsx'               
         
         
+    def balanco_energia_detalhado_em_xlsx(self, data):
+    
+        wb = load_workbook('IPDO.xlsx') 
+        ws = wb['BalançoEnergéticoDetalhado']
         
-        def resumo_subsistema_em_xlsx(self, data):
+        [plinha, ulinha] = self.linha_nao_vazia(ws)
+        ulinha =ulinha+1        
         
-            wb = load_workbook('IPDO.xlsx') 
-            ws = wb['pag2']
-            
-            [plinha, ulinha] = self.linha_nao_vazia(ws)
-            ulinha =ulinha+1        
-            
-            indice = 'A'+str(ulinha)            
-            ws[indice] = data
-            wb.save('IPDO.xlsx')
+        indice = 'A'+str(ulinha)            
+        ws[indice] = data
         
+        wb.save('IPDO.xlsx')
         
-        
-        
-        
+
         
     def linha_nao_vazia(self, ws):
         ######## Encontra a primeira e a ultima linha não vazia
@@ -119,6 +119,7 @@ class ImprimeArquivosTexto():
                       
         return self.primeira_linha, self.ultima_linha     
         
+
     
     # http://openpyxl.readthedocs.io/en/2.3.3/_modules/openpyxl/utils.html    
     def get_column_letter(self, col_idx):

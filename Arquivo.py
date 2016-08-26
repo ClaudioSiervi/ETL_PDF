@@ -49,7 +49,7 @@ class ArquivoIPDO():
         dic = DicionarioRegEx()
         data_arquivo = subsistema.data_arquivo_entrada(objeto_bs, 'div', dic.geral['data_ipdo_tp'])
         
-        print data_arquivo 
+#        print data_arquivo 
         return data_arquivo    
       
       
@@ -110,14 +110,15 @@ class ArquivoIPDO():
             print 'carga_pg -->'+ str(self.carga_pg)
             
         else:
-            print 'Erro ao ler a carga.' + self.nome_subistema
+            print 'Erro ao ler a carga do subsistema ->' + self.nome_subistema
             print 'O arquivo deve ter mudado de estrutura.'    
 
-        self.ena_vf = subsistema.ena(objeto_bs, tag, dic['ena_lf'], dic['ena_tp'] )
+        self.energia_natural_afluente_vf = subsistema.ena(objeto_bs, tag, dic['ena_lf'], dic['ena_tp'] )
         
-        self.ear_vf = subsistema.ear(objeto_bs, tag, dic['ear_lf'], dic['ear_tp'] )
+        self.energia_armazenada_reservatorio_vf = subsistema.ear(objeto_bs, tag, dic['ear_lf'], dic['ear_tp'] )
 
 
-        return self.fontes, self.producao_vf, self.producao_pg, self.carga_vf, self.carga_pg, self.ena_vf, self.ear_vf
+        return self.fontes, self.producao_vf, self.producao_pg, self.carga_vf, self.carga_pg, \
+                self.energia_natural_afluente_vf, self.energia_armazenada_reservatorio_vf
           
         

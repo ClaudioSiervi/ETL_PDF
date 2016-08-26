@@ -62,7 +62,7 @@ class Subsistemas():
         dim = len(texto_extraido_str)
         fontes_extraidas = texto_extraido_str[1:(dim-2)]  # retira [0]=Produção(MWmed/dia), [dim-1]='Total', [dim]=''        
         
-        print 'fontes : '
+#        print 'fontes : '
         print fontes_extraidas
         return fontes_extraidas
     
