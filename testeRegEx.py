@@ -41,12 +41,12 @@ dic.update(ear)
     
 import os
 from bs4 import BeautifulSoup
-from etl_pdf import ExtrairTransformarCarregar
+from etl_pdf import Ferramentas
 from ExtracaoTexto import Subsistemas   
 
 #arquivo_ipdo = ArquivoIPDO(nome_arquivo_entrada)
 subsistema = Subsistemas()    
-converte = ExtrairTransformarCarregar()
+converte = Ferramentas()
 caminho = os.getcwd()
 
 caminho = os.getcwd()

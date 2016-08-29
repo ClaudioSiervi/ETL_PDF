@@ -11,7 +11,7 @@ Created on Fri Jun 24 11:03:06 2016
 # http://stackoverflow.com/questions/5725278/how-do-i-use-pdfminer-as-a-library
 import string
 
-class ExtrairTransformarCarregar:
+class Ferramentas:
     
 
     # Desbloqueia um pdf com senha
@@ -110,8 +110,52 @@ class ExtrairTransformarCarregar:
         return texto_extraido_str       
 
 
+
         
+    def linha_nao_vazia(self, ws):
+        ######## Encontra a primeira e a ultima linha não vazia
+    
+        tam = ws.max_row + 1
+        self.primeira_linha = 0
+        self.ultima_linha = 0
         
+        for item in xrange(1, tam):
+            celula_valor = ws.cell(row=item, column = 1).value  
+            if (celula_valor is not None) and (self.primeira_linha == 0):
+                self.primeira_linha = item
+            elif (celula_valor is not None) and (self.primeira_linha is not 0):
+                self.ultima_linha = item
+                                
+            if (self.ultima_linha == 0):
+                self.ultima_linha = self.primeira_linha
+                      
+        return self.primeira_linha, self.ultima_linha     
+        
+
+    
+    # http://openpyxl.readthedocs.io/en/2.3.3/_modules/openpyxl/utils.html    
+    def retorna_letra_da_coluna(self, col_idx):
+        """Convert a column number into a column letter (3 -> 'C')
+    
+        Right shift the column col_idx by 26 to find column letters in reverse
+        order.  These numbers are 1-based, and can be converted to ASCII
+        ordinals by adding 64.
+    
+        """
+        # these indicies corrospond to A -> ZZZ and include all allowed
+        # columns
+        if not 1 <= col_idx <= 18278:
+            raise ValueError("Invalid column index {0}".format(col_idx))
+        letters = []
+        while col_idx > 0:
+            col_idx, remainder = divmod(col_idx, 26)
+            # check for exact division and borrow if needed
+            if remainder == 0:
+                remainder = 26
+                col_idx -= 1
+            letters.append(chr(remainder+64))
+        return ''.join(reversed(letters))
+                       
         
          
                 

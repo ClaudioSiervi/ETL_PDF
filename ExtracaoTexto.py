@@ -7,7 +7,7 @@ Created on Tue Aug 02 17:37:43 2016
 
 import re
 import string
-from etl_pdf import ExtrairTransformarCarregar
+from etl_pdf import Ferramentas
 #from bs4 import BeautifulSoup
     
      # Página 1
@@ -36,7 +36,7 @@ class BalancoEnergia():
     # tag       --> tag html buscada
     # top_tx    --> coordenadas do top
     
-        extrair = ExtrairTransformarCarregar()
+        extrair = Ferramentas()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         return texto_extraido_str
@@ -54,22 +54,21 @@ class Subsistemas():
     # tag       --> tag html buscada
     # top_tx    --> coordenadas do top
     
-        extrair = ExtrairTransformarCarregar()
+        extrair = Ferramentas()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         texto_extraido_str = string.split(texto_extraido_str, ';')
         
         dim = len(texto_extraido_str)
         fontes_extraidas = texto_extraido_str[1:(dim-2)]  # retira [0]=Produção(MWmed/dia), [dim-1]='Total', [dim]=''        
-        
-#        print 'fontes : '
-        print fontes_extraidas
+
+#        print fontes_extraidas
         return fontes_extraidas
     
     
     def producao(self, objeto_bs, tag, left_tx, top_tx):
         
-        extrair = ExtrairTransformarCarregar()
+        extrair = Ferramentas()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         texto_extraido_str = string.split(texto_extraido_str, ';')
@@ -82,7 +81,7 @@ class Subsistemas():
         
     def carga(self, objeto_bs, tag, left_tx, top_tx):
         
-        extrair = ExtrairTransformarCarregar()
+        extrair = Ferramentas()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         texto_extraido_str = string.split(texto_extraido_str, ';')
@@ -96,7 +95,7 @@ class Subsistemas():
     # Energia Natural Afluente
     def ena(self, objeto_bs, tag, left_tx, top_tx):
         
-        extrair = ExtrairTransformarCarregar()
+        extrair = Ferramentas()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         texto_extraido_str = string.split(texto_extraido_str, ';')
@@ -110,7 +109,7 @@ class Subsistemas():
     # Energia Armazenada nos Reservatórios
     def ear(self, objeto_bs, tag, left_tx, top_tx):
         
-        extrair = ExtrairTransformarCarregar()
+        extrair = Ferramentas()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         texto_extraido_str = string.split(texto_extraido_str, ';')

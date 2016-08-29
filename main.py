@@ -20,20 +20,24 @@ for dia in xrange(22,23):
     else:
         nome_arquivo_entrada = caminho + '\IPDO-'+str(dia)+'-05-2016'
      
-        
-     ##TODO --> Organizar impressões sequencialmente em um arquivo único
+             ##TODO --> Organizar impressões sequencialmente em um arquivo único
     arquivo_ipdo = ArquivoIPDO(nome_arquivo_entrada)
        
-    print arquivo_ipdo.data_relatorio
-    
-    imprime = ImprimeArquivosTexto()
-    
-    imprime.texto_em_html(arquivo_ipdo.html_extraido, 'texto_extraido.html')
-        
-    imprime.data_em_xlsx(arquivo_ipdo.data_relatorio) 
-    imprime.resumo_balanco_em_xlsx(arquivo_ipdo.resumo_balanco_energia)
-    
-    se = arquivo_ipdo.balanco_por_subsistema       
+    print arquivo_ipdo.sudeste
+    print arquivo_ipdo.sul
+    print arquivo_ipdo.nordeste
+    print arquivo_ipdo.norte
+
+   
+#    
+#    imprime = ImprimeArquivosTexto()
+#    
+#    imprime.texto_em_html(arquivo_ipdo.html_extraido, 'texto_extraido.html')
+#        
+#    imprime.data_em_xlsx(arquivo_ipdo.data_relatorio) 
+#    imprime.resumo_balanco_em_xlsx(arquivo_ipdo.resumo_balanco_energia)
+#    
+#    se = arquivo_ipdo.balanco_por_subsistema       
 #    
     
 
