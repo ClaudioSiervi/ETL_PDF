@@ -8,16 +8,12 @@ Created on Tue Aug 02 17:37:43 2016
 import re
 import string
 from etl_pdf import Ferramentas
-#from bs4 import BeautifulSoup
-    
+
      # Página 1
 class BalancoEnergia():
 
      # Extrai a data do arquivo do IPDO
     def data_arquivo_entrada(self, objeto_bs, tag, top_tx):
-    # objeto_bs --> objeto beautifulsoup
-    # tag       --> tag html buscada
-    # top_tx    --> coordenadas do top
     
         tag_encontrada = objeto_bs.find('div', style=re.compile(r''+top_tx))
         conteudo_tag = tag_encontrada.contents
@@ -32,9 +28,6 @@ class BalancoEnergia():
         
     # Extrai os dados do resumo do Balanço de Energia (programado e verificado)
     def resumo_sin(self, objeto_bs, tag, left_tx, top_tx):        
-    # objeto_bs --> objeto beautifulsoup
-    # tag       --> tag html buscada
-    # top_tx    --> coordenadas do top
     
         extrair = Ferramentas()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
@@ -46,24 +39,18 @@ class BalancoEnergia():
 ############################################################################
 
     # Página 2
-class Subsistemas():
+class DadosBalancoEnergeticoDetalhado():
     
     
-    def fontes(self, objeto_bs, tag, left_tx, top_tx):        
-    # objeto_bs --> objeto beautifulsoup
-    # tag       --> tag html buscada
-    # top_tx    --> coordenadas do top
+    def fontes(self, objeto_bs, tag, left_tx, top_tx):    
     
         extrair = Ferramentas()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
-        texto_extraido_str = string.split(texto_extraido_str, ';')
-        
         dim = len(texto_extraido_str)
         fontes_extraidas = texto_extraido_str[1:(dim-2)]  # retira [0]=Produção(MWmed/dia), [dim-1]='Total', [dim]=''        
 
-#        print fontes_extraidas
-        return fontes_extraidas
+        return fontes_extraidas   
     
     
     def producao(self, objeto_bs, tag, left_tx, top_tx):
@@ -71,11 +58,11 @@ class Subsistemas():
         extrair = Ferramentas()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
-        texto_extraido_str = string.split(texto_extraido_str, ';')
-        
         dim = len(texto_extraido_str)
         producao_extraida = texto_extraido_str[0:(dim-1)]  # retira [dim]=''
         
+#        total = producao_extraida.pop()
+    
         return producao_extraida
         
         
@@ -83,8 +70,6 @@ class Subsistemas():
         
         extrair = Ferramentas()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
-        
-        texto_extraido_str = string.split(texto_extraido_str, ';')
         
         dim = len(texto_extraido_str)
         carga_extraida = texto_extraido_str[0:(dim-1)]  # retira [dim]=''
@@ -98,8 +83,6 @@ class Subsistemas():
         extrair = Ferramentas()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
-        texto_extraido_str = string.split(texto_extraido_str, ';')
-        
         dim = len(texto_extraido_str)
         ena_extraida = texto_extraido_str[0:(dim-1)]  # retira [dim]=''
         
@@ -111,8 +94,6 @@ class Subsistemas():
         
         extrair = Ferramentas()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
-        
-        texto_extraido_str = string.split(texto_extraido_str, ';')
         
         ear_extraida = texto_extraido_str[0:1]
         

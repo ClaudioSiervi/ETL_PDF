@@ -1,48 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Aug 19 17:16:21 2016
+Created on Mon Aug 29 12:20:38 2016
 
 @author: Claudio
 """
 
-                # norte
-fontes = {
-    'fontes_tp' : 'top:(107[0-9]|108[0-9]|109[0-9])px', 
-    'fontes_lf' : 'left:(6[0-9]|7[0-9]|8[0-9]|9[0-9])px',
-}
-producao = {
-    'prod_verif_tp' : 'top:(110[0-9]|111[0-9]|112[0-9])px', 
-    'prod_verif_lf' : 'left:(16[0-9]|17[0-9])px',
-    'prod_prog_tp' : 'top:(110[0-9]|111[0-9]|112[0-9])px',  
-    'prod_prog_lf' : 'left:(20[0-9]|21[0-9]|22[0-9])px',
-    }
-carga = { 
-    'carga_verif_tp' : 'top:(114[0-9]|115[0-9])px', 
-    'carga_verif_lf' : 'left:(16[0-9]|17[0-9])px',
-    'carga_prog_tp' : 'top:(114[0-9]|115[0-9])px', 
-    'carga_prog_lf' : 'left:(20[0-9]|21[0-9])px',
-}
-ena = {
-    'ena_tp' : 'top:(115[0-9]|116[0-9]|117[0-9])px', 
-    'ena_lf' : 'left:(14[0-9]|15[0-9]|16[0-9])px',
-}
-ear = {
-    'ear_tp' : 'top:(120[0-9]|121[0-9]|122[0-9]|123[0-9])px', 
-    'ear_lf' : 'left:(10[0-9]|11[0-9]|12[0-9])px',
-    }
-
-dic ={ }
-dic.update(fontes)
-dic.update(producao)
-dic.update(carga)
-dic.update(ena)
-dic.update(ear)
-
-    
 import os
 from bs4 import BeautifulSoup
 from etl_pdf import Ferramentas
+from openpyxl import load_workbook
 from ExtracaoTexto import DadosBalancoEnergeticoDetalhado   
+from Mapeamento import DicionarioRegEx
 
 #arquivo_ipdo = ArquivoIPDO(nome_arquivo_entrada)
 subsistema = DadosBalancoEnergeticoDetalhado()    
@@ -52,7 +20,7 @@ caminho = os.getcwd()
 caminho = os.getcwd()
 caminho = str(caminho) + '\Scripts-py'
 
-for dia in xrange(22,23):
+for dia in xrange(01,02):
     if (dia <10):
         nome_arquivo_entrada = caminho + '\IPDO-0'+str(dia)+'-05-2016'
     else:
@@ -66,9 +34,10 @@ nome_arquivo_entrada = nome_arquivo_entrada + '.pdf'
 tag='div'
 
 html_extraido = converte.pdf_para_html(nome_arquivo_saida)
-
 objeto_bs = BeautifulSoup(html_extraido, 'html.parser')
 
+dic = DicionarioRegEx()
+dic = dic.norte
 fontes = subsistema.fontes(objeto_bs, tag, dic['fontes_lf'], dic['fontes_tp'] )
 
 #print fontes
@@ -100,10 +69,37 @@ else:
     print 'O arquivo deve ter mudado de estrutura.'
 
 
-ena_vf = subsistema.ena(objeto_bs, tag, dic['ena_lf'], dic['ena_tp'] )
-print 'ena_vf -->' + str(ena_vf)
+#ena_vf = subsistema.ena(objeto_bs, tag, dic['ena_lf'], dic['ena_tp'] )
+#print 'ena_vf -->' + str(ena_vf)
+#
+#ear_vf = subsistema.ear(objeto_bs, tag, dic['ear_lf'], dic['ear_tp'] )
+#print 'ear_vf -->' + str(ear_vf)
 
-ear_vf = subsistema.ear(objeto_bs, tag, dic['ear_lf'], dic['ear_tp'] )
-print 'ear_vf -->' + str(ear_vf)
-#carga_vf = subsistema.carga(objeto_bs, tag, dic['carga_verif_lf'], dic['carga_verif_tp'] )
-#carga_pg = subsistema.carga(objeto_bs, tag, dic['carga_prog_lf'], dic['carga_prog_tp'] )
+
+#wb = load_workbook('IPDO.xlsx')
+#ws = wb['BalancoEnergeticoDetalhado']
+#
+#ferramenta = Ferramentas()
+#[primeira_linha, ultima_linha] = ferramenta.linha_nao_vazia(ws)
+#ultima_linha += 1
+##num_elementos_pg = len(producao_vf) # Número de elementos do resumo
+##conta_valores = 0
+#
+#
+##letra = ferramenta.retorna_letra_da_coluna(2)
+#indice = 'B' + str(ultima_linha)     #Ghidro
+#ws[indice] = producao_vf[0]       
+#indice = 'C' + str(ultima_linha)     #Gtermo  
+#ws[indice] = producao_vf[1] 
+#indice = 'D' + str(ultima_linha)     #Gnuclear  
+#ws[indice] = producao_vf[2] 
+#indice = 'G' + str(ultima_linha)      #Total 
+#ws[indice] = producao_vf[3] 
+#
+#indice = 'H' + str(ultima_linha)      #Total 
+#ws[indice] = carga_vf[0] 
+#
+##
+##
+##conta_valores = conta_valores + 1
+#wb.save('IPDO.xlsx')   # sobrescreve resultados   
