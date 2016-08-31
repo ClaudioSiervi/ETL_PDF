@@ -92,6 +92,12 @@ class ArquivoIPDO():
         qtd_fontes = dic['num_fontes']
 #                                                          (objeto_bs, tag, left_tx, top_tx):  
         fontes = balanco_energetico_detalhado.fontes(self.objeto_bs, tag, dic['fontes_lf'], dic['fontes_tp'] )
+        teste = {}
+        teste = {'teste':fontes[0]}
+        print teste
+        if (teste['teste'] == 'Produção (MWmed/dia)'):
+            print 'aeee'        
+        
 ## TODO mapear a energia gerada por cada fonte        
         producao_vf = balanco_energetico_detalhado.producao(self.objeto_bs, tag, dic['prod_verif_lf'], dic['prod_verif_tp'] )
         producao_pg = balanco_energetico_detalhado.producao(self.objeto_bs, tag, dic['prod_prog_lf'], dic['prod_prog_tp'] )

@@ -23,10 +23,10 @@ for dia in xrange(22,23):
              ##TODO --> Organizar impressões sequencialmente em um arquivo único
     arquivo_ipdo = ArquivoIPDO(nome_arquivo_entrada)
        
-    print arquivo_ipdo.sudeste
-    print arquivo_ipdo.sul
-    print arquivo_ipdo.nordeste
-    print arquivo_ipdo.norte
+#    print arquivo_ipdo.sudeste
+#    print arquivo_ipdo.sul
+#    print arquivo_ipdo.nordeste
+#    print arquivo_ipdo.norte
 
    
 #    

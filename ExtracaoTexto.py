@@ -12,6 +12,7 @@ from etl_pdf import Ferramentas
      # Página 1
 class BalancoEnergia():
 
+
      # Extrai a data do arquivo do IPDO
     def data_arquivo_entrada(self, objeto_bs, tag, top_tx):
     
@@ -33,7 +34,6 @@ class BalancoEnergia():
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         return texto_extraido_str
-        
 
         
 ############################################################################

@@ -103,13 +103,13 @@ class Ferramentas:
             texto_extraido_unicode = texto_extraido_unicode + ';' .join(conteudo_tag[item].stripped_strings)
             texto_extraido_unicode = texto_extraido_unicode + ';'
         texto_extraido_str = string.split(texto_extraido_unicode.encode('utf-8'), ';')
-        print texto_extraido_str         
-        
-        tam = len(texto_extraido_str)
-        texto_utf8 = []
-        for item in xrange(0, tam):
-            texto_utf8.append(texto_extraido_str[item])
-        print texto_utf8
+#        print texto_extraido_str[0]         
+#        
+#        tam = len(texto_extraido_str)-1 # tira ultima posição
+#        texto_utf8 = []
+#        for item in xrange(0, tam):
+#            texto_utf8.append(texto_extraido_str[item])
+#        print texto_utf8
 #        print texto.decode('utf-8')
               
         return texto_extraido_str       
