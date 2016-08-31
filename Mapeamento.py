@@ -7,7 +7,7 @@ Created on Mon Aug 01 21:31:22 2016
 
 #      tp --> top
 #      fl --> left
-class DicionarioRegEx:
+class DicionarioRegEx():
     
     # Organizar 
     
@@ -140,3 +140,29 @@ class DicionarioRegEx:
 #        'internacional-sul_tp' : 'left:(27[0-9]|28[0-9])px',
 #        'internacional-sul_lf' : 'left:(27[0-9]|28[0-9])px',
 #        }
+    
+
+class DicionarioStrings():
+    
+    subsistesmas ={
+        'SE' : 'sudeste',
+        'S'  : 'sul',        
+        'NE' : 'nordeste',
+        'N'  : 'norte',
+        
+        'sudeste' : 'SE',
+        'sul' : 'S',
+        'nordeste' : ' NE',
+        'norte' : 'N'
+    }    
+    
+    fontes_energia = {
+        1 : 'Hidro',
+        2 : 'Termo',
+        3 : 'Eólica',
+        4 : 'Nuclear',
+#        5 : 'Solar',
+        
+    }
+        
+    

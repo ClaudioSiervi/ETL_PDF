@@ -83,34 +83,49 @@ class ArquivoIPDO():
     def balanco_energetico_detalhado_por_subsistema(self, dic):
         
         tag = 'div'        
-        
         balanco_energetico_detalhado = DadosBalancoEnergeticoDetalhado()    
         
-#        subsistema ={}    
+        subsistema = {
+        'nome':'', 
+        'energia':{
+            'hidro':{
+                'programada':'', 'verificada':''},
+            'termo':{
+                'programada':'', 'verificada':''}
+                  }, 
+        'carga':{
+            'programada':'', 'verificada':''}, 
+        'ena':{
+            'programada':'', 'verificada':''}, 
+        'ear':{
+            'programada':'', 'verificada':''}
+            }  
+        
+       
         nome_subistema = dic['nome']
-        num_fontes = dic['num_fontes']
         qtd_fontes = dic['num_fontes']
+        
+#        subsistema['nome'] = dic['nome']
+#        subsistema['energia'][fontes[0]] = 1
 #                                                          (objeto_bs, tag, left_tx, top_tx):  
         fontes = balanco_energetico_detalhado.fontes(self.objeto_bs, tag, dic['fontes_lf'], dic['fontes_tp'] )
-        teste = {}
-        teste = {'teste':fontes[0]}
-        print teste
-        if (teste['teste'] == 'Produção (MWmed/dia)'):
-            print 'aeee'        
+#        teste = {}
+#        teste = {'teste':fontes[0]}
+ 
         
 ## TODO mapear a energia gerada por cada fonte        
         producao_vf = balanco_energetico_detalhado.producao(self.objeto_bs, tag, dic['prod_verif_lf'], dic['prod_verif_tp'] )
         producao_pg = balanco_energetico_detalhado.producao(self.objeto_bs, tag, dic['prod_prog_lf'], dic['prod_prog_tp'] )
         
         ##  separa a caga da produção
-        if ((len(producao_vf)==(num_fontes+2) and (len(producao_pg)==(num_fontes+2)))):
-            carga_vf = [producao_vf.pop(num_fontes+1)]
-            carga_pg = [producao_pg.pop(num_fontes+1)]
+        if ((len(producao_vf)==(qtd_fontes+2) and (len(producao_pg)==(qtd_fontes+2)))):
+            carga_vf = [producao_vf.pop(qtd_fontes+1)]
+            carga_pg = [producao_pg.pop(qtd_fontes+1)]
 #            print 'carga_vf -->'+ str(self.carga_vf)
 #            print 'carga_pg -->'+ str(self.carga_pg)
             
         ## lê a carga a partir de uma expressão regular
-        elif ((len(producao_vf)==(num_fontes+1)) and (len(producao_pg)==(num_fontes+1))):  
+        elif ((len(producao_vf)==(qtd_fontes+1)) and (len(producao_pg)==(qtd_fontes+1))):  
             carga_vf = balanco_energetico_detalhado.carga(self.objeto_bs, tag, dic['carga_verif_lf'], dic['carga_verif_tp'] )
             carga_pg = balanco_energetico_detalhado.carga(self.objeto_bs, tag, dic['carga_prog_lf'], dic['carga_prog_tp'] )
             
@@ -122,6 +137,12 @@ class ArquivoIPDO():
             print 'Erro ao ler a carga do subsistema ->' + nome_subistema
             print 'O arquivo deve ter mudado de estrutura.'    
 
+        print fontes
+        print producao_pg
+        print producao_vf
+        print carga_pg
+        print carga_vf
+        
         energia_natural_afluente_vf = balanco_energetico_detalhado.ena(self.objeto_bs, tag, dic['ena_lf'], dic['ena_tp'] )
         energia_armazenada_reservatorio_vf = balanco_energetico_detalhado.ear(self.objeto_bs, tag, dic['ear_lf'], dic['ear_tp'] )
 

@@ -8,6 +8,7 @@ Created on Tue Aug 02 17:37:43 2016
 import re
 import string
 from etl_pdf import Ferramentas
+from Mapeamento import DicionarioStrings
 
      # Página 1
 class BalancoEnergia():
@@ -48,7 +49,12 @@ class DadosBalancoEnergeticoDetalhado():
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         dim = len(texto_extraido_str)
-        fontes_extraidas = texto_extraido_str[1:(dim-2)]  # retira [0]=Produção(MWmed/dia), [dim-1]='Total', [dim]=''        
+        fontes_extraidas = texto_extraido_str[1:(dim-1)]  # retira [0]=Produção(MWmed/dia), [dim-1]=''       
+#       tratamento de excessão(quando há strings a mais no div)
+        if (fontes_extraidas[0] == 'Produção (MWmed/dia)'):
+            dim = len(fontes_extraidas)
+            fontes_extraidas = fontes_extraidas[1:(dim)]
+        
 
         return fontes_extraidas   
     
@@ -61,8 +67,6 @@ class DadosBalancoEnergeticoDetalhado():
         dim = len(texto_extraido_str)
         producao_extraida = texto_extraido_str[0:(dim-1)]  # retira [dim]=''
         
-#        total = producao_extraida.pop()
-    
         return producao_extraida
         
         
