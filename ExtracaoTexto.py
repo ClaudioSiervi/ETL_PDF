@@ -7,11 +7,35 @@ Created on Tue Aug 02 17:37:43 2016
 
 import re
 import string
-from etl_pdf import Ferramentas
-from Mapeamento import DicionarioStrings
+#from etl_pdf import Ferramentas
+#from Mapeamento import DicionarioStrings
 
+
+
+class ExtrairDados():
+    
+    # extrai dados de um objeto bs a partir da posição dos elementos da tag desejada
+    def dados_objeto_bs(self, objeto_bs, tag, left_tx, top_tx):   
+#        import re
+
+        tag_encontrada = objeto_bs.find(tag, style=re.compile(r''+ left_tx+'.*?'+top_tx))             
+        conteudo_tag = tag_encontrada.contents          
+        
+        texto_extraido_unicode =''
+        tam = len(conteudo_tag)
+        for item in xrange(0, tam):
+            # extrai o texto do objeto conteudo_tag
+            texto_extraido_unicode = texto_extraido_unicode + ';' .join(conteudo_tag[item].stripped_strings)
+            texto_extraido_unicode = texto_extraido_unicode + ';'
+        
+        texto_extraido_str = string.split(texto_extraido_unicode.encode('utf-8'), ';')
+              
+        return texto_extraido_str
+
+
+############################################################################
      # Página 1
-class BalancoEnergia():
+class BalancoEnergeticoResumido():
 
 
      # Extrai a data do arquivo do IPDO
@@ -31,48 +55,65 @@ class BalancoEnergia():
     # Extrai os dados do resumo do Balanço de Energia (programado e verificado)
     def resumo_sin(self, objeto_bs, tag, left_tx, top_tx):        
     
-        extrair = Ferramentas()
+        extrair = ExtrairDados()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         return texto_extraido_str
 
         
 ############################################################################
-
     # Página 2
-class DadosBalancoEnergeticoDetalhado():
+class BalancoEnergeticoDetalhado():
     
     
-    def fontes(self, objeto_bs, tag, left_tx, top_tx):    
+    def recupera_fontes(self, objeto_bs, tag, left_tx, top_tx):    
     
-        extrair = Ferramentas()
-        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+        extrair = ExtrairDados()
         
-        dim = len(texto_extraido_str)
-        fontes_extraidas = texto_extraido_str[1:(dim-1)]  # retira [0]=Produção(MWmed/dia), [dim-1]=''       
-#       tratamento de excessão(quando há strings a mais no div)
-        if (fontes_extraidas[0] == 'Produção (MWmed/dia)'):
-            dim = len(fontes_extraidas)
-            fontes_extraidas = fontes_extraidas[1:(dim)]
-        
+       
+        fontes = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
 
-        return fontes_extraidas   
+        fontes_json ={}
+
+        subsistemas = ['Sudeste', 'Sul', 'Nordeste', 'Norte']        
+        #   tratamento de strings    
+        for item in list(fontes):
+            if item in subsistemas:      
+                fontes.remove(item)
+                continue
+            
+            elif((item == 'Produção (MWmed/dia)') or (item == '')):
+                fontes.remove(item)
+                continue
+            
+            elif (item == 'Termo (**)'):
+                item = 'Termo'
+                
+            print item
+            #
+            fontes_json[item] = ""
+            
+        return fontes, fontes_json   
     
     
+    # Produção de energia programada e verificada por subsistema
     def producao(self, objeto_bs, tag, left_tx, top_tx):
         
-        extrair = Ferramentas()
+        extrair = ExtrairDados()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         dim = len(texto_extraido_str)
         producao_extraida = texto_extraido_str[0:(dim-1)]  # retira [dim]=''
         
+        
+        
         return producao_extraida
         
         
+    # Carga demandada por subsistema    
     def carga(self, objeto_bs, tag, left_tx, top_tx):
         
-        extrair = Ferramentas()
+        extrair = ExtrairDados()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         dim = len(texto_extraido_str)
@@ -84,7 +125,7 @@ class DadosBalancoEnergeticoDetalhado():
     # Energia Natural Afluente
     def ena(self, objeto_bs, tag, left_tx, top_tx):
         
-        extrair = Ferramentas()
+        extrair = ExtrairDados()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         dim = len(texto_extraido_str)
@@ -96,7 +137,7 @@ class DadosBalancoEnergeticoDetalhado():
     # Energia Armazenada nos Reservatórios
     def ear(self, objeto_bs, tag, left_tx, top_tx):
         
-        extrair = Ferramentas()
+        extrair = ExtrairDados()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         ear_extraida = texto_extraido_str[0:1]

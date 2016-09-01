@@ -85,40 +85,13 @@ class Ferramentas:
         device.close()
         str = retstr.getvalue()
         retstr.close()
-        return str
-
-
-
-    # extrai dados de um objeto bs a partir da posição dos elementos da tag desejada
-    def dados_objeto_bs(self, objeto_bs, tag, left_tx, top_tx):   
-        import re
-
-        tag_encontrada = objeto_bs.find(tag, style=re.compile(r''+ left_tx+'.*?'+top_tx))             
-        conteudo_tag = tag_encontrada.contents          
-        
-        texto_extraido_unicode =''
-        tam = len(conteudo_tag)
-        for item in xrange(0, tam):
-            # extrai o texto do objeto conteudo_tag
-            texto_extraido_unicode = texto_extraido_unicode + ';' .join(conteudo_tag[item].stripped_strings)
-            texto_extraido_unicode = texto_extraido_unicode + ';'
-        texto_extraido_str = string.split(texto_extraido_unicode.encode('utf-8'), ';')
-#        print texto_extraido_str[0]         
-#        
-#        tam = len(texto_extraido_str)-1 # tira ultima posição
-#        texto_utf8 = []
-#        for item in xrange(0, tam):
-#            texto_utf8.append(texto_extraido_str[item])
-#        print texto_utf8
-#        print texto.decode('utf-8')
-              
-        return texto_extraido_str       
+        return str   
 
 
 
         
     def linha_nao_vazia(self, ws):
-        ######## Encontra a primeira e a ultima linha não vazia
+        ######## Encontra a primeira e a ultima linha não vazias
     
         tam = ws.max_row + 1
         self.primeira_linha = 0

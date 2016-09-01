@@ -8,7 +8,7 @@ Created on Thu Jul 28 23:53:44 2016
 
 from etl_pdf import Ferramentas
 from ImprimeResultados import ImprimeArquivosTexto
-from ExtracaoTexto import BalancoEnergia, DadosBalancoEnergeticoDetalhado       
+from ExtracaoTexto import BalancoEnergeticoResumido, BalancoEnergeticoDetalhado       
 from Mapeamento import DicionarioRegEx
 
 from bs4 import BeautifulSoup
@@ -44,9 +44,10 @@ class ArquivoIPDO():
 
 
 #####-------------     
+
     def extrair_data_relatorio(self):
 
-        subsistema = BalancoEnergia()    
+        subsistema = BalancoEnergeticoResumido()    
         dic = DicionarioRegEx()
         
         data_arquivo = subsistema.data_arquivo_entrada(self.objeto_bs, 'div', dic.geral['data_ipdo_tp'])
@@ -58,7 +59,7 @@ class ArquivoIPDO():
     # Dados da página 1 
     def extrair_balanco_energetico_resumido(self):
 
-        subsistema = BalancoEnergia()
+        subsistema = BalancoEnergeticoResumido()
         dic = DicionarioRegEx()
         
         programado = subsistema.resumo_sin(self.objeto_bs, 'div', dic.balanco['programado_lf'] , dic.balanco['programado_tp'])        
@@ -80,27 +81,29 @@ class ArquivoIPDO():
         return self.sudeste, self.sul, self.nordeste, self.norte
         
         
+        
+        
     def balanco_energetico_detalhado_por_subsistema(self, dic):
         
         tag = 'div'        
-        balanco_energetico_detalhado = DadosBalancoEnergeticoDetalhado()    
+        balanco_energetico_detalhado = BalancoEnergeticoDetalhado()    
         
-        subsistema = {
-        'nome':'', 
-        'energia':{
-            'hidro':{
-                'programada':'', 'verificada':''},
-            'termo':{
-                'programada':'', 'verificada':''}
-                  }, 
-        'carga':{
-            'programada':'', 'verificada':''}, 
-        'ena':{
-            'programada':'', 'verificada':''}, 
-        'ear':{
-            'programada':'', 'verificada':''}
-            }  
-        
+#        subsistema = {
+#        'nome':'', 
+#        'energia':{
+#            'hidro':{
+#                'programada':'', 'verificada':''},
+#            'termo':{
+#                'programada':'', 'verificada':''}
+#                  }, 
+#        'carga':{
+#            'programada':'', 'verificada':''}, 
+#        'ena':{
+#            'programada':'', 'verificada':''}, 
+#        'ear':{
+#            'programada':'', 'verificada':''}
+#            }  
+#        
        
         nome_subistema = dic['nome']
         qtd_fontes = dic['num_fontes']
@@ -108,7 +111,7 @@ class ArquivoIPDO():
 #        subsistema['nome'] = dic['nome']
 #        subsistema['energia'][fontes[0]] = 1
 #                                                          (objeto_bs, tag, left_tx, top_tx):  
-        fontes = balanco_energetico_detalhado.fontes(self.objeto_bs, tag, dic['fontes_lf'], dic['fontes_tp'] )
+        [fontes_lista, fontes_json]  = balanco_energetico_detalhado.recupera_fontes(self.objeto_bs, tag, dic['fontes_lf'], dic['fontes_tp'] )
 #        teste = {}
 #        teste = {'teste':fontes[0]}
  
@@ -137,7 +140,13 @@ class ArquivoIPDO():
             print 'Erro ao ler a carga do subsistema ->' + nome_subistema
             print 'O arquivo deve ter mudado de estrutura.'    
 
-        print fontes
+        for indice, fonte in enumerate(fontes_lista):
+            fontes_json[fonte] = {
+                'programada' : producao_pg[indice], 
+                'verificada' : producao_vf[indice]
+                }
+
+        print fontes_json
         print producao_pg
         print producao_vf
         print carga_pg
@@ -146,7 +155,7 @@ class ArquivoIPDO():
         energia_natural_afluente_vf = balanco_energetico_detalhado.ena(self.objeto_bs, tag, dic['ena_lf'], dic['ena_tp'] )
         energia_armazenada_reservatorio_vf = balanco_energetico_detalhado.ear(self.objeto_bs, tag, dic['ear_lf'], dic['ear_tp'] )
 
-        return nome_subistema, qtd_fontes, fontes, producao_pg, producao_vf, \
+        return nome_subistema, qtd_fontes, fontes_json, producao_pg, producao_vf, \
                 carga_vf, carga_pg, energia_natural_afluente_vf, \
                 energia_armazenada_reservatorio_vf
           

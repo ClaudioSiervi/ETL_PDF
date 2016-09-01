@@ -7,7 +7,7 @@ Created on Wed Jul 27 22:15:01 2016
 
 
 from Arquivo import ArquivoIPDO
-from ImprimeResultados import ImprimeArquivosTexto
+#from ImprimeResultados import ImprimeArquivosTexto
 
 import os
 
