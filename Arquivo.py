@@ -17,8 +17,13 @@ from bs4 import BeautifulSoup
 
 class ArquivoIPDO():
     
+    
+    
+    # construtor
     def __init__(self, nome_arquivo_entrada):
         self.__init__ = self.mapeia_texto(nome_arquivo_entrada)
+        self.dados_extraidos = self.arquivo_ipdo
+        self.log_dados_extraidos = self.log_arquivo_ipdo
 
 
     def mapeia_texto(self, nome_arquivo_entrada):
@@ -28,6 +33,8 @@ class ArquivoIPDO():
         nome_arquivo_entrada = nome_arquivo_entrada + '.pdf'
     
         ferramenta = Ferramentas()
+        
+        self.log_arquivo_ipdo = {}        
         
         ferramenta.desbloqueia(nome_arquivo_entrada, nome_arquivo_saida)
         
@@ -53,7 +60,6 @@ class ArquivoIPDO():
         imprimir = ImprimeArquivosTexto()
         
         imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
-        
         imprimir.balanco_energia_resumido_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_resumido"])
 
       
@@ -62,12 +68,12 @@ class ArquivoIPDO():
     def extrair_balanco_energetico_resumido(self):
 
         balanco_resumido = BalancoEnergeticoResumido()    
-        dic = DicionarioRegEx()
+        dicionario = DicionarioRegEx()
         
-        data_arquivo_ipdo = balanco_resumido.extrair_data_arquivo_ipdo(self.objeto_bs, 'div', dic.geral['data_ipdo_tp'])
+        data_arquivo_ipdo = balanco_resumido.extrair_data_arquivo_ipdo(self.objeto_bs, 'div', dicionario.geral['data_ipdo_tp'])
         
-        programada = balanco_resumido.extrair_dados_sistema(self.objeto_bs, 'div', dic.balanco['programado_lf'] , dic.balanco['programado_tp'])        
-        verificada = balanco_resumido.extrair_dados_sistema(self.objeto_bs, 'div', dic.balanco['verificado_lf'], dic.balanco['verificado_tp'])      
+        programada = balanco_resumido.extrair_dados_sistema(self.objeto_bs, 'div', dicionario.balanco['programado_lf'] , dicionario.balanco['programado_tp'])        
+        verificada = balanco_resumido.extrair_dados_sistema(self.objeto_bs, 'div', dicionario.balanco['verificado_lf'], dicionario.balanco['verificado_tp'])      
         
         arquivo_ipdo = {}
         arquivo_ipdo = {"geral":{"data_arquivo":data_arquivo_ipdo}}
@@ -117,9 +123,15 @@ class ArquivoIPDO():
         subsistema[regex['nome']]['qtd_fontes'] = {'programada':regex['qtd_programada_fontes'], 'verificada':len(fontes_lista)-1} # -1 -> retira Total
 
         if subsistema[regex['nome']]['qtd_fontes']['programada'] <> subsistema[regex['nome']]['qtd_fontes']['verificada']:
+            
+            self.log_arquivo_ipdo["fontes"] = "Erro: A quantidade de fontes verificadas é diferente da quantidade programada."            
+            self.log_arquivo_ipdo["fontes"]["verificada"] = subsistema[regex["nome"]]["qtd_fontes"]["verificada"]
+            self.log_arquivo_ipdo["fontes"]["programada"] = subsistema[regex["nome"]]["qtd_fontes"]["programada"]            
+            
             print 'Erro: A quantidade de fontes verificadas é diferente da quantidade programada.'
             print 'programada ->'  + str(subsistema[regex['nome']]['qtd_fontes']['programada'])
             print 'verificada ->'  + str(subsistema[regex['nome']]['qtd_fontes']['verificada'])
+            
             import sys            
             sys.exit()     
         

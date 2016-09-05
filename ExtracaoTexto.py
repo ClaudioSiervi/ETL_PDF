@@ -70,7 +70,6 @@ class BalancoEnergeticoDetalhado():
     
         extrair = ExtrairDados()
         
-       
         fontes_lista = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
 
         fontes_json ={}
