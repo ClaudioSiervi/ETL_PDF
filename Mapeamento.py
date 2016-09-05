@@ -27,7 +27,7 @@ class DicionarioRegEx():
     
     sudeste = {
     'nome' : 'sudeste',
-    'num_fontes' : 3,
+    'qtd_programada_fontes' : 3,
     
     'fontes_tp' : 'top:(128[0-9]|129[0-9]|130[0-9]|131[0-9]|132[0-9])px', 
     'fontes_lf' : 'left:(35[0-9]|36[0-9]|37[0-9]|38[0-9]|39[0-9])px',
@@ -52,7 +52,7 @@ class DicionarioRegEx():
 
     sul = {
     'nome' : 'sul',
-    'num_fontes' : 3,
+    'qtd_programada_fontes' : 3,
 
     'fontes_tp' : 'top:(138[0-9]|139[0-9]|140[0-9]|141[0-9]|142[0-9]|143[0-9])px', 
     'fontes_lf' : 'left:(17[0-9]|18[0-9]|19[0-9]|20[0-9])px',
@@ -77,7 +77,7 @@ class DicionarioRegEx():
 ## TODO erro aqui
     nordeste = {
     'nome' : 'nordeste',
-    'num_fontes' : 3,
+    'qtd_programada_fontes' : 3,
     
     'fontes_tp' : 'top:(110[0-9]|111[0-9])px', 
     'fontes_lf' : 'left:(35[0-9]|36[0-9]|37[0-9]|38[0-9]|39[0-9])px',
@@ -103,7 +103,7 @@ class DicionarioRegEx():
     
     norte = {
     'nome' : 'norte',
-    'num_fontes' : 2,
+    'qtd_programada_fontes' : 2,
     
     'fontes_tp' : 'top:(107[0-9]|108[0-9]|109[0-9])px', 
     'fontes_lf' : 'left:(6[0-9]|7[0-9]|8[0-9]|9[0-9])px',

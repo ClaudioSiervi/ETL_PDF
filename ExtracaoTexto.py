@@ -71,29 +71,29 @@ class BalancoEnergeticoDetalhado():
         extrair = ExtrairDados()
         
        
-        fontes = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+        fontes_lista = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
 
         fontes_json ={}
 
         subsistemas = ['Sudeste', 'Sul', 'Nordeste', 'Norte']        
         #   tratamento de strings    
-        for item in list(fontes):
+        for item in list(fontes_lista):
             if item in subsistemas:      
-                fontes.remove(item)
+                fontes_lista.remove(item)
                 continue
             
             elif((item == 'Produção (MWmed/dia)') or (item == '')):
-                fontes.remove(item)
+                fontes_lista.remove(item)
                 continue
             
-            elif (item == 'Termo (**)'):
-                item = 'Termo'
-                
+#            elif (item == 'Termo (**)'):
+#                fontes_lista[item] = 'Termo'
+#                item = 'Termo'
             print item
-            #
+
             fontes_json[item] = ""
             
-        return fontes, fontes_json   
+        return fontes_lista, fontes_json   
     
     
     # Produção de energia programada e verificada por subsistema
@@ -104,8 +104,6 @@ class BalancoEnergeticoDetalhado():
         
         dim = len(texto_extraido_str)
         producao_extraida = texto_extraido_str[0:(dim-1)]  # retira [dim]=''
-        
-        
         
         return producao_extraida
         

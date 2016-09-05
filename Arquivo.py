@@ -39,7 +39,8 @@ class ArquivoIPDO():
         self.data_relatorio = self.extrair_data_relatorio()#(objeto_bs)
         self.balanco_energetico_resumido = self.extrair_balanco_energetico_resumido()#()(objeto_bs)
         self.balanco_energetico_detalhado = self.extrair_balanco_energetico_detalhado()#(objeto_bs)
-
+        
+        print self.balanco_energetico_detalhado
         #self.balanco_detalhado = self.extra_balanco()
 
 
@@ -77,85 +78,81 @@ class ArquivoIPDO():
         self.sul = self.balanco_energetico_detalhado_por_subsistema(dicionario.sul)
         self.nordeste = self.balanco_energetico_detalhado_por_subsistema( dicionario.nordeste)                      
         self.norte = self.balanco_energetico_detalhado_por_subsistema(dicionario.norte)                
-      
-        return self.sudeste, self.sul, self.nordeste, self.norte
+        
+        self.sistema_interligado_nacional = {}
+        self.sistema_interligado_nacional['subsistemas'] = {'sudeste' :'', 'sul':'', 'nordeste':'', 'norte':''}
+        self.sistema_interligado_nacional['subsistemas']['sudeste'] = self.sudeste['sudeste']
+        self.sistema_interligado_nacional['subsistemas']['sul'] =  self.sul['sul']  
+        self.sistema_interligado_nacional['subsistemas']['nordeste'] =  self.nordeste['nordeste']
+        self.sistema_interligado_nacional['subsistemas']['norte'] =  self.norte['norte']
+        
+        print self.sistema_interligado_nacional['subsistemas'] 
+#        return self.sudeste, self.sul, self.nordeste, self.norte
+        return self.sistema_interligado_nacional['subsistemas']
         
         
         
         
-    def balanco_energetico_detalhado_por_subsistema(self, dic):
+    def balanco_energetico_detalhado_por_subsistema(self, regex):
         
         tag = 'div'        
         balanco_energetico_detalhado = BalancoEnergeticoDetalhado()    
         
-#        subsistema = {
-#        'nome':'', 
-#        'energia':{
-#            'hidro':{
-#                'programada':'', 'verificada':''},
-#            'termo':{
-#                'programada':'', 'verificada':''}
-#                  }, 
-#        'carga':{
-#            'programada':'', 'verificada':''}, 
-#        'ena':{
-#            'programada':'', 'verificada':''}, 
-#        'ear':{
-#            'programada':'', 'verificada':''}
-#            }  
-#        
-       
-        nome_subistema = dic['nome']
-        qtd_fontes = dic['num_fontes']
+        subsistema = {}
+        subsistema[regex['nome']] = {}
         
-#        subsistema['nome'] = dic['nome']
-#        subsistema['energia'][fontes[0]] = 1
-#                                                          (objeto_bs, tag, left_tx, top_tx):  
-        [fontes_lista, fontes_json]  = balanco_energetico_detalhado.recupera_fontes(self.objeto_bs, tag, dic['fontes_lf'], dic['fontes_tp'] )
-#        teste = {}
-#        teste = {'teste':fontes[0]}
- 
+        qtd_fontes = regex['qtd_programada_fontes']
+#                                                                                    (objeto_bs, tag, left_tx, top_tx):  
+        [fontes_lista, fontes_json]  = balanco_energetico_detalhado.recupera_fontes(self.objeto_bs, tag, regex['fontes_lf'], regex['fontes_tp'] )
         
-## TODO mapear a energia gerada por cada fonte        
-        producao_vf = balanco_energetico_detalhado.producao(self.objeto_bs, tag, dic['prod_verif_lf'], dic['prod_verif_tp'] )
-        producao_pg = balanco_energetico_detalhado.producao(self.objeto_bs, tag, dic['prod_prog_lf'], dic['prod_prog_tp'] )
+        subsistema[regex['nome']]['qtd_fontes'] = {'programada':regex['qtd_programada_fontes'], 'verificada':len(fontes_lista)-1} # -1 -> retira Total
+
+        if subsistema[regex['nome']]['qtd_fontes']['programada'] <> subsistema[regex['nome']]['qtd_fontes']['verificada']:
+            print 'Erro: A quantidade de fontes verificadas é diferente da quantidade programada.'
+            print 'programada ->'  + str(subsistema[regex['nome']]['qtd_fontes']['programada'])
+            print 'verificada ->'  + str(subsistema[regex['nome']]['qtd_fontes']['verificada'])
+            import sys            
+            sys.exit()     
+        
+        
+        producao_vf = balanco_energetico_detalhado.producao(self.objeto_bs, tag, regex['prod_verif_lf'], regex['prod_verif_tp'] )
+        producao_pg = balanco_energetico_detalhado.producao(self.objeto_bs, tag, regex['prod_prog_lf'], regex['prod_prog_tp'] )
         
         ##  separa a caga da produção
         if ((len(producao_vf)==(qtd_fontes+2) and (len(producao_pg)==(qtd_fontes+2)))):
             carga_vf = [producao_vf.pop(qtd_fontes+1)]
             carga_pg = [producao_pg.pop(qtd_fontes+1)]
-#            print 'carga_vf -->'+ str(self.carga_vf)
-#            print 'carga_pg -->'+ str(self.carga_pg)
             
         ## lê a carga a partir de uma expressão regular
         elif ((len(producao_vf)==(qtd_fontes+1)) and (len(producao_pg)==(qtd_fontes+1))):  
-            carga_vf = balanco_energetico_detalhado.carga(self.objeto_bs, tag, dic['carga_verif_lf'], dic['carga_verif_tp'] )
-            carga_pg = balanco_energetico_detalhado.carga(self.objeto_bs, tag, dic['carga_prog_lf'], dic['carga_prog_tp'] )
-            
-#            total
-#            print 'carga_vf -->'+ str(self.carga_vf)
-#            print 'carga_pg -->'+ str(self.carga_pg)
+            carga_vf = balanco_energetico_detalhado.carga(self.objeto_bs, tag, regex['carga_verif_lf'], regex['carga_verif_tp'] )
+            carga_pg = balanco_energetico_detalhado.carga(self.objeto_bs, tag, regex['carga_prog_lf'], regex['carga_prog_tp'] )
             
         else:
-            print 'Erro ao ler a carga do subsistema ->' + nome_subistema
+            print 'Erro ao ler a carga do subsistema ->' +  regex['nome']
             print 'O arquivo deve ter mudado de estrutura.'    
+
 
         for indice, fonte in enumerate(fontes_lista):
             fontes_json[fonte] = {
                 'programada' : producao_pg[indice], 
                 'verificada' : producao_vf[indice]
                 }
-
-        print fontes_json
-        print producao_pg
-        print producao_vf
-        print carga_pg
-        print carga_vf
+                
+        subsistema[regex['nome']]['energia'] = fontes_json
         
-        energia_natural_afluente_vf = balanco_energetico_detalhado.ena(self.objeto_bs, tag, dic['ena_lf'], dic['ena_tp'] )
-        energia_armazenada_reservatorio_vf = balanco_energetico_detalhado.ear(self.objeto_bs, tag, dic['ear_lf'], dic['ear_tp'] )
-
-        return nome_subistema, qtd_fontes, fontes_json, producao_pg, producao_vf, \
-                carga_vf, carga_pg, energia_natural_afluente_vf, \
-                energia_armazenada_reservatorio_vf
+#        print subsistema
+#        print fontes_json
+#        print producao_pg
+#        print producao_vf
+#        print carga_pg
+#        print carga_vf
+        
+        energia_natural_afluente_vf = balanco_energetico_detalhado.ena(self.objeto_bs, tag, regex['ena_lf'], regex['ena_tp'] )
+        energia_armazenada_reservatorio_vf = balanco_energetico_detalhado.ear(self.objeto_bs, tag, regex['ear_lf'], regex['ear_tp'] )
+        
+        return subsistema
+#        return regex['nome'], qtd_fontes, fontes_json, producao_pg, producao_vf, \
+#                carga_vf, carga_pg, energia_natural_afluente_vf, \
+#                energia_armazenada_reservatorio_vf
           
