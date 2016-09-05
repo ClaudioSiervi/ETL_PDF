@@ -41,7 +41,6 @@ class ArquivoIPDO():
         self.balanco_energetico_detalhado = self.extrair_balanco_energetico_detalhado()#(objeto_bs)
         
         print self.balanco_energetico_detalhado
-        #self.balanco_detalhado = self.extra_balanco()
 
 
 #####-------------     
@@ -86,7 +85,7 @@ class ArquivoIPDO():
         self.sistema_interligado_nacional['subsistemas']['nordeste'] =  self.nordeste['nordeste']
         self.sistema_interligado_nacional['subsistemas']['norte'] =  self.norte['norte']
         
-        print self.sistema_interligado_nacional['subsistemas'] 
+#        print self.sistema_interligado_nacional['subsistemas'] 
 #        return self.sudeste, self.sul, self.nordeste, self.norte
         return self.sistema_interligado_nacional['subsistemas']
         
@@ -132,27 +131,19 @@ class ArquivoIPDO():
             print 'Erro ao ler a carga do subsistema ->' +  regex['nome']
             print 'O arquivo deve ter mudado de estrutura.'    
 
-
+        # produção programa e verificada por fonte
         for indice, fonte in enumerate(fontes_lista):
-            fontes_json[fonte] = {
+            fontes_json[fonte] = {  
                 'programada' : producao_pg[indice], 
                 'verificada' : producao_vf[indice]
                 }
                 
         subsistema[regex['nome']]['energia'] = fontes_json
         
-#        print subsistema
-#        print fontes_json
-#        print producao_pg
-#        print producao_vf
-#        print carga_pg
-#        print carga_vf
-        
         energia_natural_afluente_vf = balanco_energetico_detalhado.ena(self.objeto_bs, tag, regex['ena_lf'], regex['ena_tp'] )
-        energia_armazenada_reservatorio_vf = balanco_energetico_detalhado.ear(self.objeto_bs, tag, regex['ear_lf'], regex['ear_tp'] )
+        subsistema[regex['nome']]['ena'] = {'verificada' : energia_natural_afluente_vf[0]}
         
-        return subsistema
-#        return regex['nome'], qtd_fontes, fontes_json, producao_pg, producao_vf, \
-#                carga_vf, carga_pg, energia_natural_afluente_vf, \
-#                energia_armazenada_reservatorio_vf
-          
+        energia_armazenada_reservatorio_vf = balanco_energetico_detalhado.ear(self.objeto_bs, tag, regex['ear_lf'], regex['ear_tp'] )
+        subsistema[regex['nome']]['ear'] = {'verificada' : energia_armazenada_reservatorio_vf[0]}
+        
+        return subsistema          

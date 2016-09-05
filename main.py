@@ -27,7 +27,7 @@ for dia in xrange(22,23):
 #    print arquivo_ipdo.sul
 #    print arquivo_ipdo.nordeste
 #    print arquivo_ipdo.norte
-    print arquivo_ipdo.sistema_interligado_nacional['subsistemas'] 
+#    print arquivo_ipdo.sistema_interligado_nacional['subsistemas'] 
 
    
 #    
