@@ -7,7 +7,7 @@ Created on Wed Jul 27 22:15:01 2016
 
 
 from Arquivo import ArquivoIPDO
-#from ImprimeResultados import ImprimeArquivosTexto
+from ImprimeResultados import ImprimeArquivosTexto
 
 import os
 
@@ -22,26 +22,7 @@ for dia in xrange(22,23):
      
              ##TODO --> Organizar impressões sequencialmente em um arquivo único
     arquivo_ipdo = ArquivoIPDO(nome_arquivo_entrada)
-       
-#    print arquivo_ipdo.sudeste
-#    print arquivo_ipdo.sul
-#    print arquivo_ipdo.nordeste
-#    print arquivo_ipdo.norte
-#    print arquivo_ipdo.sistema_interligado_nacional['subsistemas'] 
-
-   
-#    
-#    imprime = ImprimeArquivosTexto()
-#    
-#    imprime.texto_em_html(arquivo_ipdo.html_extraido, 'texto_extraido.html')
-#        
-#    imprime.data_em_xlsx(arquivo_ipdo.data_relatorio) 
-#    imprime.resumo_balanco_em_xlsx(arquivo_ipdo.resumo_balanco_energia)
-#    
-#    se = arquivo_ipdo.balanco_por_subsistema       
-#    
-    
-
+    arquivo_ipdo.imprimir_resultados()
 
   
     

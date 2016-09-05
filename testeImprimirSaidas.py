@@ -7,7 +7,7 @@ Created on Mon Aug 29 12:20:38 2016
 
 import os
 from bs4 import BeautifulSoup
-from etl_pdf import Ferramentas
+from Utilitarios import Ferramentas
 from openpyxl import load_workbook
 from ExtracaoTexto import DadosBalancoEnergeticoDetalhado   
 from Mapeamento import DicionarioRegEx

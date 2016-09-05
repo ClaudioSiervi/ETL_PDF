@@ -237,7 +237,7 @@ import re
 import string
 from ExtracaoTexto import BalancoEnergia, Subsistemas       
 from DicionarioTexto import DicionarioRegEx
-from etl_pdf import ExtrairTransformarCarregar
+from Utilitarios import ExtrairTransformarCarregar
 from bs4 import BeautifulSoup
     
 objeto_bs = BeautifulSoup(html_extraido, 'html.parser')

@@ -6,7 +6,7 @@ Created on Tue Aug 02 19:20:17 2016
 """
 from openpyxl import load_workbook
 #from Arquivo import ArquivoIPDO
-from etl_pdf import Ferramentas
+from Utilitarios import Ferramentas
 #from openpyxl import Workbook
 import string
 
@@ -23,13 +23,13 @@ class ImprimeArquivosTexto():
         
     def texto_em_html(self, texto, nome_arquivo_saida):
     # Salva o texto extraído do pdf em um arquivo texto
-        self.arquivo_texto = open(nome_arquivo_saida, "w")
-        self.status_escrita = self.arquivo_texto.write(texto)
-        self.arquivo_texto.close()
+        arquivo_texto = open(nome_arquivo_saida, "w")
+        self.status_escrita = arquivo_texto.write(texto)
+        arquivo_texto.close()
         
         
     # Imprime a data do IPDO    
-    def data_em_xlsx(self, data):
+    def data_ipdo_em_xlsx(self, data):
         
         #        try:
         wb = load_workbook('IPDO.xlsx') 

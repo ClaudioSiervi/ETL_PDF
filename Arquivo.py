@@ -6,7 +6,7 @@ Created on Thu Jul 28 23:53:44 2016
 """
 
 
-from etl_pdf import Ferramentas
+from Utilitarios import Ferramentas
 from ImprimeResultados import ImprimeArquivosTexto
 from ExtracaoTexto import BalancoEnergeticoResumido, BalancoEnergeticoDetalhado       
 from Mapeamento import DicionarioRegEx
@@ -29,43 +29,59 @@ class ArquivoIPDO():
         converte = Ferramentas()
         converte.desbloqueia(nome_arquivo_entrada, nome_arquivo_saida)
         
-        html_extraido = converte.pdf_para_html(nome_arquivo_saida)    
+        self.html_extraido = converte.pdf_para_html(nome_arquivo_saida)    
         
-        imprime = ImprimeArquivosTexto()
-        imprime.texto_em_html(html_extraido, 'texto_extraido.html')
-        
-        self.objeto_bs = BeautifulSoup(html_extraido, 'html.parser')
+        self.objeto_bs = BeautifulSoup(self.html_extraido, 'html.parser')
 
-        self.data_relatorio = self.extrair_data_relatorio()#(objeto_bs)
+#        self.data_relatorio = self.extrair_data_relatorio()#(objeto_bs)
         self.balanco_energetico_resumido = self.extrair_balanco_energetico_resumido()#()(objeto_bs)
         self.balanco_energetico_detalhado = self.extrair_balanco_energetico_detalhado()#(objeto_bs)
         
-        print self.balanco_energetico_detalhado
+#        print self.balanco_energetico_detalhado
+        print self.balanco_energetico_resumido
 
 
 #####-------------     
 
-    def extrair_data_relatorio(self):
+    def imprimir_resultados(self):
+        
+        
+        imprimir = ImprimeArquivosTexto()
+        imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
+        
+#        imprimir.data_em_xlsx(arquivo_ipdo.data_relatorio) 
+#        imprime.resumo_balanco_em_xlsx(arquivo_ipdo.resumo_balanco_energia)
 
-        subsistema = BalancoEnergeticoResumido()    
-        dic = DicionarioRegEx()
-        
-        data_arquivo = subsistema.data_arquivo_entrada(self.objeto_bs, 'div', dic.geral['data_ipdo_tp'])
-        
-        print data_arquivo 
-        return data_arquivo    
+
+#    def extrair_data_relatorio(self):
+#
+#        subsistema = BalancoEnergeticoResumido()    
+#        dic = DicionarioRegEx()
+#        
+#        data_arquivo = subsistema.data_arquivo_entrada(self.objeto_bs, 'div', dic.geral['data_ipdo_tp'])
+#        
+#        print data_arquivo 
+#        return data_arquivo    
       
       
     # Dados da página 1 
     def extrair_balanco_energetico_resumido(self):
 
-        subsistema = BalancoEnergeticoResumido()
+        balanco_resumido = BalancoEnergeticoResumido()    
         dic = DicionarioRegEx()
         
-        programado = subsistema.resumo_sin(self.objeto_bs, 'div', dic.balanco['programado_lf'] , dic.balanco['programado_tp'])        
-        verificado = subsistema.resumo_sin(self.objeto_bs, 'div', dic.balanco['verificado_lf'], dic.balanco['verificado_tp'])      
+        data_arquivo_ipdo = balanco_resumido.extrair_data_arquivo_ipdo(self.objeto_bs, 'div', dic.geral['data_ipdo_tp'])
+        
+        programado = balanco_resumido.extrair_dados_sistema(self.objeto_bs, 'div', dic.balanco['programado_lf'] , dic.balanco['programado_tp'])        
+        verificado = balanco_resumido.extrair_dados_sistema(self.objeto_bs, 'div', dic.balanco['verificado_lf'], dic.balanco['verificado_tp'])      
+        
+        arquivo_ipdo = {}
+        arquivo_ipdo = {"geral":{"data_arquivo":data_arquivo_ipdo}}
+        arquivo_ipdo["balanco_resumido"] = {"programado":programado, "verificado": verificado}
 
-        return [programado, verificado]
+        return arquivo_ipdo   
+#        return arquivo_ipdo["balanco_resumido"]["programado"], arquivo_ipdo["balanco_resumido"]["verificado"]
+        
         
         
     # Dados da página 2    
@@ -87,7 +103,7 @@ class ArquivoIPDO():
         
 #        print self.sistema_interligado_nacional['subsistemas'] 
 #        return self.sudeste, self.sul, self.nordeste, self.norte
-        return self.sistema_interligado_nacional['subsistemas']
+        return self.sistema_interligado_nacional
         
         
         
@@ -102,7 +118,7 @@ class ArquivoIPDO():
         
         qtd_fontes = regex['qtd_programada_fontes']
 #                                                                                    (objeto_bs, tag, left_tx, top_tx):  
-        [fontes_lista, fontes_json]  = balanco_energetico_detalhado.recupera_fontes(self.objeto_bs, tag, regex['fontes_lf'], regex['fontes_tp'] )
+        [fontes_lista, fontes_json]  = balanco_energetico_detalhado.fontes_energeticas(self.objeto_bs, tag, regex['fontes_lf'], regex['fontes_tp'] )
         
         subsistema[regex['nome']]['qtd_fontes'] = {'programada':regex['qtd_programada_fontes'], 'verificada':len(fontes_lista)-1} # -1 -> retira Total
 

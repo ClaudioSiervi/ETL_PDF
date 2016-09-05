@@ -39,7 +39,7 @@ class BalancoEnergeticoResumido():
 
 
      # Extrai a data do arquivo do IPDO
-    def data_arquivo_entrada(self, objeto_bs, tag, top_tx):
+    def extrair_data_arquivo_ipdo(self, objeto_bs, tag, top_tx):
     
         tag_encontrada = objeto_bs.find('div', style=re.compile(r''+top_tx))
         conteudo_tag = tag_encontrada.contents
@@ -53,7 +53,7 @@ class BalancoEnergeticoResumido():
         
         
     # Extrai os dados do resumo do Balanço de Energia (programado e verificado)
-    def resumo_sin(self, objeto_bs, tag, left_tx, top_tx):        
+    def extrair_dados_sistema(self, objeto_bs, tag, left_tx, top_tx):        
     
         extrair = ExtrairDados()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
@@ -66,7 +66,7 @@ class BalancoEnergeticoResumido():
 class BalancoEnergeticoDetalhado():
     
     
-    def recupera_fontes(self, objeto_bs, tag, left_tx, top_tx):    
+    def fontes_energeticas(self, objeto_bs, tag, left_tx, top_tx):    
     
         extrair = ExtrairDados()
         
