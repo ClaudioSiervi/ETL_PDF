@@ -89,7 +89,7 @@ class BalancoEnergeticoDetalhado():
 #            elif (item == 'Termo (**)'):
 #                fontes_lista[item] = 'Termo'
 #                item = 'Termo'
-            print item
+#            print item
 
             fontes_json[item] = ""
             

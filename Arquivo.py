@@ -6,12 +6,13 @@ Created on Thu Jul 28 23:53:44 2016
 """
 
 
-from Utilitarios import Ferramentas
-from ImprimeResultados import ImprimeArquivosTexto
-from ExtracaoTexto import BalancoEnergeticoResumido, BalancoEnergeticoDetalhado       
-from Mapeamento import DicionarioRegEx
 
+from ExtracaoTexto import BalancoEnergeticoResumido, BalancoEnergeticoDetalhado       
+from ImprimeResultados import ImprimeArquivosTexto
+from Mapeamento import DicionarioRegEx
+from Utilitarios import Ferramentas
 from bs4 import BeautifulSoup
+
 
 
 class ArquivoIPDO():
@@ -26,42 +27,35 @@ class ArquivoIPDO():
         # exemplo:  nome_arquivo_entrada = 'IPDO-22-06-2016.pdf'
         nome_arquivo_entrada = nome_arquivo_entrada + '.pdf'
     
-        converte = Ferramentas()
-        converte.desbloqueia(nome_arquivo_entrada, nome_arquivo_saida)
+        ferramenta = Ferramentas()
         
-        self.html_extraido = converte.pdf_para_html(nome_arquivo_saida)    
+        ferramenta.desbloqueia(nome_arquivo_entrada, nome_arquivo_saida)
+        
+        self.html_extraido = ferramenta.pdf_para_html(nome_arquivo_saida)    
         
         self.objeto_bs = BeautifulSoup(self.html_extraido, 'html.parser')
 
-#        self.data_relatorio = self.extrair_data_relatorio()#(objeto_bs)
-        self.balanco_energetico_resumido = self.extrair_balanco_energetico_resumido()#()(objeto_bs)
-        self.balanco_energetico_detalhado = self.extrair_balanco_energetico_detalhado()#(objeto_bs)
+        self.balanco_energetico_resumido = self.extrair_balanco_energetico_resumido()
+        self.balanco_energetico_detalhado = self.extrair_balanco_energetico_detalhado()
         
-#        print self.balanco_energetico_detalhado
-        print self.balanco_energetico_resumido
+        self.arquivo_ipdo = {}
+        self.arquivo_ipdo["geral"] = self.balanco_energetico_resumido["geral"] 
+        self.arquivo_ipdo["balanco_resumido"] = self.balanco_energetico_resumido["balanco_resumido"] 
+        self.arquivo_ipdo["balanco_detalhado"] = self.balanco_energetico_detalhado["balanco_detalhado"]
+
+        print self.arquivo_ipdo
 
 
 #####-------------     
 
     def imprimir_resultados(self):
-        
-        
+
         imprimir = ImprimeArquivosTexto()
+        
         imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
         
-#        imprimir.data_em_xlsx(arquivo_ipdo.data_relatorio) 
-#        imprime.resumo_balanco_em_xlsx(arquivo_ipdo.resumo_balanco_energia)
+        imprimir.balanco_energia_resumido_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_resumido"])
 
-
-#    def extrair_data_relatorio(self):
-#
-#        subsistema = BalancoEnergeticoResumido()    
-#        dic = DicionarioRegEx()
-#        
-#        data_arquivo = subsistema.data_arquivo_entrada(self.objeto_bs, 'div', dic.geral['data_ipdo_tp'])
-#        
-#        print data_arquivo 
-#        return data_arquivo    
       
       
     # Dados da página 1 
@@ -72,12 +66,12 @@ class ArquivoIPDO():
         
         data_arquivo_ipdo = balanco_resumido.extrair_data_arquivo_ipdo(self.objeto_bs, 'div', dic.geral['data_ipdo_tp'])
         
-        programado = balanco_resumido.extrair_dados_sistema(self.objeto_bs, 'div', dic.balanco['programado_lf'] , dic.balanco['programado_tp'])        
-        verificado = balanco_resumido.extrair_dados_sistema(self.objeto_bs, 'div', dic.balanco['verificado_lf'], dic.balanco['verificado_tp'])      
+        programada = balanco_resumido.extrair_dados_sistema(self.objeto_bs, 'div', dic.balanco['programado_lf'] , dic.balanco['programado_tp'])        
+        verificada = balanco_resumido.extrair_dados_sistema(self.objeto_bs, 'div', dic.balanco['verificado_lf'], dic.balanco['verificado_tp'])      
         
         arquivo_ipdo = {}
         arquivo_ipdo = {"geral":{"data_arquivo":data_arquivo_ipdo}}
-        arquivo_ipdo["balanco_resumido"] = {"programado":programado, "verificado": verificado}
+        arquivo_ipdo["balanco_resumido"] = {"programada":programada, "verificada": verificada}
 
         return arquivo_ipdo   
 #        return arquivo_ipdo["balanco_resumido"]["programado"], arquivo_ipdo["balanco_resumido"]["verificado"]
@@ -95,11 +89,11 @@ class ArquivoIPDO():
         self.norte = self.balanco_energetico_detalhado_por_subsistema(dicionario.norte)                
         
         self.sistema_interligado_nacional = {}
-        self.sistema_interligado_nacional['subsistemas'] = {'sudeste' :'', 'sul':'', 'nordeste':'', 'norte':''}
-        self.sistema_interligado_nacional['subsistemas']['sudeste'] = self.sudeste['sudeste']
-        self.sistema_interligado_nacional['subsistemas']['sul'] =  self.sul['sul']  
-        self.sistema_interligado_nacional['subsistemas']['nordeste'] =  self.nordeste['nordeste']
-        self.sistema_interligado_nacional['subsistemas']['norte'] =  self.norte['norte']
+        self.sistema_interligado_nacional['balanco_detalhado'] = {'sudeste' :'', 'sul':'', 'nordeste':'', 'norte':''}
+        self.sistema_interligado_nacional['balanco_detalhado']['sudeste'] = self.sudeste['sudeste']
+        self.sistema_interligado_nacional['balanco_detalhado']['sul'] =  self.sul['sul']  
+        self.sistema_interligado_nacional['balanco_detalhado']['nordeste'] =  self.nordeste['nordeste']
+        self.sistema_interligado_nacional['balanco_detalhado']['norte'] =  self.norte['norte']
         
 #        print self.sistema_interligado_nacional['subsistemas'] 
 #        return self.sudeste, self.sul, self.nordeste, self.norte
