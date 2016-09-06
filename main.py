@@ -36,7 +36,9 @@ for dia in xrange(22,23):
 #                for valores each balanco_detalhado[subsistema]["energia"][fonte][tipo]:
 #                    print "           -- " + valores
     
-
+    
+import json# prettify json
+print(json.dumps(balanco_detalhado, indent = 5))
 
 
 #manipula_pdf.salva_texto_em_txt(texto_extraido, 'texto_extraido.txt')

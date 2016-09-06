@@ -77,6 +77,7 @@ class BalancoEnergeticoDetalhado():
         subsistemas = ['Sudeste', 'Sul', 'Nordeste', 'Norte']        
         #   tratamento de strings    
         for item in list(fontes_lista):
+            
             if item in subsistemas:      
                 fontes_lista.remove(item)
                 continue
@@ -85,10 +86,11 @@ class BalancoEnergeticoDetalhado():
                 fontes_lista.remove(item)
                 continue
             
-#            elif (item == 'Termo (**)'):
-#                fontes_lista[item] = 'Termo'
-#                item = 'Termo'
-#            print item
+            elif (item == 'Termo (**)'):
+                fontes_lista.remove(item)
+                item = 'Termo'
+                fontes_lista.append(item)
+                continue
 
             fontes_json[item] = ""
             

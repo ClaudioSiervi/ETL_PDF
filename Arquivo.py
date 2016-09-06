@@ -132,9 +132,9 @@ class ArquivoIPDO():
             
             ## Log -> modificação na estrutura do arquivo
             self.log_arquivo_ipdo["fontes"] = "Erro: A quantidade de fontes verificadas é diferente da quantidade programada."            
-            self.log_arquivo_ipdo["fontes"]["verificada"] = subsistema[regex["nome"]]["qtd_fontes"]["verificada"]
-            self.log_arquivo_ipdo["fontes"]["programada"] = subsistema[regex["nome"]]["qtd_fontes"]["programada"]            
-            
+#            self.log_arquivo_ipdo["fontes"]["verificada"] = subsistema[regex["nome"]]["qtd_fontes"]["verificada"]
+#            self.log_arquivo_ipdo["fontes"]["programada"] = subsistema[regex["nome"]]["qtd_fontes"]["programada"]            
+#            
             print 'Erro: A quantidade de fontes verificadas é diferente da quantidade programada.'
             print 'programada ->'  + str(subsistema[regex['nome']]['qtd_fontes']['programada'])
             print 'verificada ->'  + str(subsistema[regex['nome']]['qtd_fontes']['verificada'])
