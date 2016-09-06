@@ -27,14 +27,16 @@ class ArquivoIPDO():
 
 
     def mapeia_texto(self, nome_arquivo_entrada):
+       
         # exemplo:  nome_arquivo_entrada = 'IPDO-22-06-2016 - unlocked.pdf'
         nome_arquivo_saida = nome_arquivo_entrada + '-unlocked.pdf'
+        
         # exemplo:  nome_arquivo_entrada = 'IPDO-22-06-2016.pdf'
         nome_arquivo_entrada = nome_arquivo_entrada + '.pdf'
     
         ferramenta = Ferramentas()
-        
-        self.log_arquivo_ipdo = {}        
+         
+        self.log_arquivo_ipdo = {}          # log de ocorrências
         
         ferramenta.desbloqueia(nome_arquivo_entrada, nome_arquivo_saida)
         
@@ -56,12 +58,16 @@ class ArquivoIPDO():
 #####-------------     
 
     def imprimir_resultados(self):
-
-        imprimir = ImprimeArquivosTexto()
         
-        imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
-        imprimir.balanco_energia_resumido_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_resumido"])
+        try:
+            imprimir = ImprimeArquivosTexto()
+            
+            imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
+            imprimir.balanco_energia_resumido_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_resumido"])
 
+        except IOError as e:
+            self.log_arquivo_ipdo["imprimir_resultados"] = "I/O error({0}): {1}".format(e.errno, e.strerror)                        
+            print self.log_arquivo_ipdo["imprimir_resultados"]
       
       
     # Dados da página 1 
