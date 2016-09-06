@@ -21,6 +21,7 @@ class ArquivoIPDO():
     
     # construtor
     def __init__(self, nome_arquivo_entrada):
+        
         self.__init__ = self.mapeia_texto(nome_arquivo_entrada)
         self.dados_extraidos = self.arquivo_ipdo
         self.log_dados_extraidos = self.log_arquivo_ipdo
@@ -52,7 +53,7 @@ class ArquivoIPDO():
         self.arquivo_ipdo["balanco_resumido"] = self.balanco_energetico_resumido["balanco_resumido"] 
         self.arquivo_ipdo["balanco_detalhado"] = self.balanco_energetico_detalhado["balanco_detalhado"]
 
-        print self.arquivo_ipdo
+#        print self.arquivo_ipdo
 
 
 #####-------------     
@@ -87,7 +88,6 @@ class ArquivoIPDO():
 
         return arquivo_ipdo   
 #        return arquivo_ipdo["balanco_resumido"]["programado"], arquivo_ipdo["balanco_resumido"]["verificado"]
-        
         
         
     # Dados da página 2    
@@ -130,6 +130,7 @@ class ArquivoIPDO():
 
         if subsistema[regex['nome']]['qtd_fontes']['programada'] <> subsistema[regex['nome']]['qtd_fontes']['verificada']:
             
+            ## Log -> modificação na estrutura do arquivo
             self.log_arquivo_ipdo["fontes"] = "Erro: A quantidade de fontes verificadas é diferente da quantidade programada."            
             self.log_arquivo_ipdo["fontes"]["verificada"] = subsistema[regex["nome"]]["qtd_fontes"]["verificada"]
             self.log_arquivo_ipdo["fontes"]["programada"] = subsistema[regex["nome"]]["qtd_fontes"]["programada"]            
@@ -158,7 +159,9 @@ class ArquivoIPDO():
         else:
             print 'Erro ao ler a carga do subsistema ->' +  regex['nome']
             print 'O arquivo deve ter mudado de estrutura.'    
-
+            
+            
+            
         # produção programa e verificada por fonte
         for indice, fonte in enumerate(fontes_lista):
             fontes_json[fonte] = {  

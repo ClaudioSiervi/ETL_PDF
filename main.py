@@ -24,8 +24,17 @@ for dia in xrange(22,23):
     arquivo_ipdo = ArquivoIPDO(nome_arquivo_entrada)
     arquivo_ipdo.imprimir_resultados()
 
-  
-    
+
+#    print arquivo_ipdo.dados_extraidos
+    balanco_detalhado = arquivo_ipdo.dados_extraidos['balanco_detalhado']  
+    for subsistema in balanco_detalhado:
+        print subsistema        
+        for fonte in balanco_detalhado[subsistema]["energia"]:
+            print "   energia " + fonte
+            for tipo in balanco_detalhado[subsistema]["energia"][fonte]:
+                print "        " + tipo + " " + str(balanco_detalhado[subsistema]["energia"][fonte][tipo]) 
+#                for valores each balanco_detalhado[subsistema]["energia"][fonte][tipo]:
+#                    print "           -- " + valores
     
 
 
