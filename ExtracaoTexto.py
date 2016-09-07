@@ -142,6 +142,7 @@ class BalancoEnergeticoDetalhado():
         extrair = ExtrairDados()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
+#        print texto_extraido_str
         ear_extraida = texto_extraido_str[0:1]
         
         return ear_extraida

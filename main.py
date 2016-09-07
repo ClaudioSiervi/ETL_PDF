@@ -12,12 +12,12 @@ from Arquivo import ArquivoIPDO
 import os
 
 caminho = os.getcwd()
-mes = "05"
+mes = "06"
 ano = "2016"
 caminho = str(caminho) + "\Scripts-py\\" + mes +"-" + ano
 #caminho += mes  
 
-for dia in xrange(1,32):
+for dia in xrange(1,2):
     if (dia <10):
         nome_arquivo_entrada = caminho + '\IPDO-0'+str(dia)+ "-" + mes +"-" + ano
     else:

@@ -65,7 +65,7 @@ class ArquivoIPDO():
             
             imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
             imprimir.balanco_energia_resumido_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_resumido"])
-#            imprimir.            
+            imprimir.balanco_energia_detalhado_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])            
             
         except IOError as e:
             self.log_arquivo_ipdo["imprimir_resultados"] = "I/O error({0}): {1}".format(e.errno, e.strerror)                        
@@ -181,6 +181,8 @@ class ArquivoIPDO():
         
         return balanco_detalhado  
 
+    ## TODO criar uma classe de validação
+    ## TODO escrever resultados das validações no arquivo de log
     # valida campos numericos
     def valida_conteudo_numerico(self, balanco_detalhado):
         
@@ -196,7 +198,9 @@ class ArquivoIPDO():
                     ferramenta.eh_numerico(fonte, balanco_detalhado[subsistema]["energia"][fonte]["programada"])
         
         ferramenta.eh_numerico("ena", balanco_detalhado[subsistema]["ena"]["verificada"])
-        ferramenta.eh_numerico("ear", balanco_detalhado[subsistema]["ear"]["verificada"])            
+#        ferramenta.eh_numerico("ear", balanco_detalhado[subsistema]["ear"]["verificada"])            
+        
+        
         
 #    def eh_numerico(self,s):
 #
