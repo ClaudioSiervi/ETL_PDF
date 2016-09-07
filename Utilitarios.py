@@ -55,6 +55,27 @@ class Ferramentas:
         retstr.close()
         return text
     
+    
+    
+    
+    def eh_numerico(self, nome_campo, valor):
+
+        try:
+            float(valor) # int, long and float
+
+        except ValueError:
+            try:
+                complex(valor) 
+            except ValueError:
+                print nome_campo + ", não tem conteúdo numérico!:"
+                print valor
+                
+                import sys
+                sys.exit()
+                return False
+    
+        return True
+        
 
 
     def pdf_para_html(self, path):

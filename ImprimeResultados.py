@@ -29,7 +29,7 @@ class ImprimeArquivosTexto():
         
 
     # Imprime o resumo do balanço energético    
-    def balanco_energia_resumido_em_xlsx(self, geral, balanco_detalhado):
+    def balanco_energia_resumido_em_xlsx(self, geral, balanco_resumido):
         
 #        try:
         wb_ipdo = load_workbook('IPDO.xlsx') 
@@ -45,22 +45,22 @@ class ImprimeArquivosTexto():
            
         ws_balanco_resumido[indice] = geral["data_arquivo"]
         
-        num_elementos_pg = len(balanco_detalhado["programada"]) # Número de elementos do resumo
+        num_elementos_pg = len(balanco_resumido["programada"]) # Número de elementos do resumo
         conta_valores = 0
         
         for conta_coluna_pg in xrange(1, num_elementos_pg):
             letra = ferramenta.retorna_letra_da_coluna(conta_coluna_pg + 1)
             indice = letra + str(ultima_linha)            
-            ws_balanco_resumido[indice] = balanco_detalhado["programada"][conta_valores]       
+            ws_balanco_resumido[indice] = balanco_resumido["programada"][conta_valores]       
             conta_valores = conta_valores + 1
         
-        num_elementos_vf = len(balanco_detalhado["verificada"]) + conta_coluna_pg
+        num_elementos_vf = len(balanco_resumido["verificada"]) + conta_coluna_pg
         conta_valores = 0       
         
         for conta_coluna_vf in xrange(conta_coluna_pg, num_elementos_vf):
             letra = ferramenta.retorna_letra_da_coluna(conta_coluna_vf + 2)
             indice = letra + str(ultima_linha)            
-            ws_balanco_resumido[indice] = balanco_detalhado["verificada"][conta_valores]
+            ws_balanco_resumido[indice] = balanco_resumido["verificada"][conta_valores]
             conta_valores = conta_valores + 1                
         
         wb_ipdo.save('IPDO.xlsx')   # sobrescreve resultados
@@ -71,9 +71,25 @@ class ImprimeArquivosTexto():
         
         
         
-    @classmethod
-    def balanco_energia_detalhado_em_xlsx(self):
+    def balanco_energia_detalhado_em_xlsx(self, geral, balanco_detalhado):
         
-        from Arquivo import Arquivo_IPDO        
-        arquivo_ipdo = Arquivo_IPDO()
-            
+        wb_ipdo = load_workbook('IPDO.xlsx') 
+        ws_balanco_resumido = wb_ipdo['BalancoDetalhado']
+        
+        ferramenta = Ferramentas()
+        
+        [primeira_linha, ultima_linha] = ferramenta.linha_nao_vazia(ws_balanco_resumido)
+        
+        ultima_linha = ultima_linha + 1        
+        
+        indice = 'A'+str(ultima_linha)
+        
+        ws_balanco_resumido[indice] = geral["data_arquivo"]
+        
+        for subsistema in balanco_detalhado:
+            print subsistema        
+            for fonte in balanco_detalhado[subsistema]["energia"]:
+                print "   energia " + fonte
+                for tipo in balanco_detalhado[subsistema]["energia"][fonte]:
+                    print "        " + tipo + " " + str(balanco_detalhado[subsistema]["energia"][fonte][tipo]) 
+   

@@ -65,7 +65,8 @@ class ArquivoIPDO():
             
             imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
             imprimir.balanco_energia_resumido_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_resumido"])
-
+#            imprimir.            
+            
         except IOError as e:
             self.log_arquivo_ipdo["imprimir_resultados"] = "I/O error({0}): {1}".format(e.errno, e.strerror)                        
             print self.log_arquivo_ipdo["imprimir_resultados"]
@@ -117,24 +118,25 @@ class ArquivoIPDO():
     def balanco_energetico_detalhado_por_subsistema(self, regex):
         
         tag = 'div'        
-        balanco_energetico_detalhado = BalancoEnergeticoDetalhado()    
+        balanco_detalhado_extrair = BalancoEnergeticoDetalhado()    
         
-        subsistema = {}
-        subsistema[regex['nome']] = {}
+        balanco_detalhado = {}
+        balanco_detalhado[regex['nome']] = {}
         
         qtd_fontes = regex['qtd_programada_fontes']
 #                                                                                    (objeto_bs, tag, left_tx, top_tx):  
-        [fontes_lista, fontes_json]  = balanco_energetico_detalhado.fontes_energeticas(self.objeto_bs, tag, regex['fontes_lf'], regex['fontes_tp'] )
+        [fontes_lista, fontes_json]  = balanco_detalhado_extrair.fontes_energeticas(self.objeto_bs, tag, regex['fontes_lf'], regex['fontes_tp'] )
         
-        subsistema[regex['nome']]['qtd_fontes'] = {'programada':regex['qtd_programada_fontes'], 'verificada':len(fontes_lista)-1} # -1 -> retira Total
+        balanco_detalhado[regex['nome']]['qtd_fontes'] = {'programada':regex['qtd_programada_fontes'], 'verificada':len(fontes_lista)-1} # -1 -> retira Total
 
-        if subsistema[regex['nome']]['qtd_fontes']['programada'] <> subsistema[regex['nome']]['qtd_fontes']['verificada']:
+        if balanco_detalhado[regex['nome']]['qtd_fontes']['programada'] <> balanco_detalhado[regex['nome']]['qtd_fontes']['verificada']:
             
             ## Log -> modificação na estrutura do arquivo
             self.log_arquivo_ipdo["fontes"] = "Erro: A quantidade de fontes verificadas é diferente da quantidade programada."            
 #            self.log_arquivo_ipdo["fontes"]["verificada"] = subsistema[regex["nome"]]["qtd_fontes"]["verificada"]
 #            self.log_arquivo_ipdo["fontes"]["programada"] = subsistema[regex["nome"]]["qtd_fontes"]["programada"]            
 #            
+            print regex['nome']          
             print 'Erro: A quantidade de fontes verificadas é diferente da quantidade programada.'
             print 'programada ->'  + str(subsistema[regex['nome']]['qtd_fontes']['programada'])
             print 'verificada ->'  + str(subsistema[regex['nome']]['qtd_fontes']['verificada'])
@@ -143,8 +145,8 @@ class ArquivoIPDO():
             sys.exit()     
         
         
-        producao_vf = balanco_energetico_detalhado.producao(self.objeto_bs, tag, regex['prod_verif_lf'], regex['prod_verif_tp'] )
-        producao_pg = balanco_energetico_detalhado.producao(self.objeto_bs, tag, regex['prod_prog_lf'], regex['prod_prog_tp'] )
+        producao_vf = balanco_detalhado_extrair.producao(self.objeto_bs, tag, regex['prod_verif_lf'], regex['prod_verif_tp'] )
+        producao_pg = balanco_detalhado_extrair.producao(self.objeto_bs, tag, regex['prod_prog_lf'], regex['prod_prog_tp'] )
         
         ##  separa a caga da produção
         if ((len(producao_vf)==(qtd_fontes+2) and (len(producao_pg)==(qtd_fontes+2)))):
@@ -153,14 +155,12 @@ class ArquivoIPDO():
             
         ## lê a carga a partir de uma expressão regular
         elif ((len(producao_vf)==(qtd_fontes+1)) and (len(producao_pg)==(qtd_fontes+1))):  
-            carga_vf = balanco_energetico_detalhado.carga(self.objeto_bs, tag, regex['carga_verif_lf'], regex['carga_verif_tp'] )
-            carga_pg = balanco_energetico_detalhado.carga(self.objeto_bs, tag, regex['carga_prog_lf'], regex['carga_prog_tp'] )
+            carga_vf = balanco_detalhado_extrair.carga(self.objeto_bs, tag, regex['carga_verif_lf'], regex['carga_verif_tp'] )
+            carga_pg = balanco_detalhado_extrair.carga(self.objeto_bs, tag, regex['carga_prog_lf'], regex['carga_prog_tp'] )
             
         else:
             print 'Erro ao ler a carga do subsistema ->' +  regex['nome']
             print 'O arquivo deve ter mudado de estrutura.'    
-            
-            
             
         # produção programa e verificada por fonte
         for indice, fonte in enumerate(fontes_lista):
@@ -169,12 +169,49 @@ class ArquivoIPDO():
                 'verificada' : producao_vf[indice]
                 }
                 
-        subsistema[regex['nome']]['energia'] = fontes_json
+        balanco_detalhado[regex['nome']]['energia'] = fontes_json
         
-        energia_natural_afluente_vf = balanco_energetico_detalhado.ena(self.objeto_bs, tag, regex['ena_lf'], regex['ena_tp'] )
-        subsistema[regex['nome']]['ena'] = {'verificada' : energia_natural_afluente_vf[0]}
+        energia_natural_afluente_vf = balanco_detalhado_extrair.ena(self.objeto_bs, tag, regex['ena_lf'], regex['ena_tp'] )
+        balanco_detalhado[regex['nome']]['ena'] = {'verificada' : energia_natural_afluente_vf[0]}
         
-        energia_armazenada_reservatorio_vf = balanco_energetico_detalhado.ear(self.objeto_bs, tag, regex['ear_lf'], regex['ear_tp'] )
-        subsistema[regex['nome']]['ear'] = {'verificada' : energia_armazenada_reservatorio_vf[0]}
+        energia_armazenada_reservatorio_vf = balanco_detalhado_extrair.ear(self.objeto_bs, tag, regex['ear_lf'], regex['ear_tp'] )
+        balanco_detalhado[regex['nome']]['ear'] = {'verificada' : energia_armazenada_reservatorio_vf[0]}
+  
+        self.valida_conteudo_numerico(balanco_detalhado)
         
-        return subsistema          
+        return balanco_detalhado  
+
+    # valida campos numericos
+    def valida_conteudo_numerico(self, balanco_detalhado):
+        
+        ferramenta = Ferramentas()
+        for subsistema in balanco_detalhado:
+            print subsistema        
+            for fonte in balanco_detalhado[subsistema]["energia"]:
+                print "   energia " + fonte
+                for tipo in balanco_detalhado[subsistema]["energia"][fonte]:
+                    print "        " + tipo + " " + str(balanco_detalhado[subsistema]["energia"][fonte]["verificada"])
+                                        
+                    ferramenta.eh_numerico(fonte, balanco_detalhado[subsistema]["energia"][fonte]["verificada"])
+                    ferramenta.eh_numerico(fonte, balanco_detalhado[subsistema]["energia"][fonte]["programada"])
+        
+        ferramenta.eh_numerico("ena", balanco_detalhado[subsistema]["ena"]["verificada"])
+        ferramenta.eh_numerico("ear", balanco_detalhado[subsistema]["ear"]["verificada"])            
+        
+#    def eh_numerico(self,s):
+#
+#        try:
+#            float(s) # int, long and float
+#
+#        except ValueError:
+#            try:
+#                complex(s) 
+#            except ValueError:
+#                print "Este valor não é numérico:"
+#                print s
+#                
+#                import sys
+#                sys.exit()
+#                return False
+#    
+#        return True

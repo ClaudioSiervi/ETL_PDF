@@ -12,31 +12,31 @@ from Arquivo import ArquivoIPDO
 import os
 
 caminho = os.getcwd()
-caminho = str(caminho) + '\Scripts-py'
+mes = "05"
+ano = "2016"
+caminho = str(caminho) + "\Scripts-py\\" + mes +"-" + ano
+#caminho += mes  
 
-for dia in xrange(22,23):
+for dia in xrange(1,32):
     if (dia <10):
-        nome_arquivo_entrada = caminho + '\IPDO-0'+str(dia)+'-05-2016'
+        nome_arquivo_entrada = caminho + '\IPDO-0'+str(dia)+ "-" + mes +"-" + ano
     else:
-        nome_arquivo_entrada = caminho + '\IPDO-'+str(dia)+'-05-2016'
+        nome_arquivo_entrada = caminho + '\IPDO-'+str(dia)+ "-" + mes +"-" + ano
      
              ##TODO --> Organizar impressões sequencialmente em um arquivo único
     arquivo_ipdo = ArquivoIPDO(nome_arquivo_entrada)
-    arquivo_ipdo.imprimir_resultados()
+    arquivo_ipdo.imprimir_resultados()   
+    
+        
+    #    print arquivo_ipdo.dados_extraidos
+    balanco_detalhado = arquivo_ipdo.dados_extraidos['balanco_detalhado']
+      
+      
+    from firebase import Firebase
+    f = Firebase("https://wesee-dw.firebaseio.com/balanco_detalhado/"+ mes +"-" + ano)
+    f.post(balanco_detalhado)
 
 
-#    print arquivo_ipdo.dados_extraidos
-    balanco_detalhado = arquivo_ipdo.dados_extraidos['balanco_detalhado']  
-    for subsistema in balanco_detalhado:
-        print subsistema        
-        for fonte in balanco_detalhado[subsistema]["energia"]:
-            print "   energia " + fonte
-            for tipo in balanco_detalhado[subsistema]["energia"][fonte]:
-                print "        " + tipo + " " + str(balanco_detalhado[subsistema]["energia"][fonte][tipo]) 
-#                for valores each balanco_detalhado[subsistema]["energia"][fonte][tipo]:
-#                    print "           -- " + valores
-    
-    
 import json# prettify json
 print(json.dumps(balanco_detalhado, indent = 5))
 

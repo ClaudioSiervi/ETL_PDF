@@ -29,6 +29,8 @@ class ExtrairDados():
             texto_extraido_unicode = texto_extraido_unicode + ';'
         
         texto_extraido_str = string.split(texto_extraido_unicode.encode('utf-8'), ';')
+        
+#        print texto_extraido_str
               
         return texto_extraido_str
 
@@ -65,13 +67,12 @@ class BalancoEnergeticoResumido():
     # Página 2
 class BalancoEnergeticoDetalhado():
     
-    
     def fontes_energeticas(self, objeto_bs, tag, left_tx, top_tx):    
     
         extrair = ExtrairDados()
         
         fontes_lista = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
-
+        
         fontes_json ={}
 
         subsistemas = ['Sudeste', 'Sul', 'Nordeste', 'Norte']        
@@ -93,7 +94,9 @@ class BalancoEnergeticoDetalhado():
                 continue
 
             fontes_json[item] = ""
-            
+
+#        print fontes_lista
+#        print fontes_json        
         return fontes_lista, fontes_json   
     
     
