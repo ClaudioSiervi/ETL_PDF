@@ -128,12 +128,6 @@ class ArquivoIPDO():
 #                                                                                    (objeto_bs, tag, left_tx, top_tx):  
         [fontes_lista, fontes_json]  = balanco_detalhado_extrair.fontes_energeticas(self.objeto_bs, tag, regex['fontes_lf'], regex['fontes_tp'] )
         
-        print "fontes_lista_ordenada"        
-        print fontes_lista
-        print fontes_json 
-
-
-        
         
         balanco_detalhado[regex['nome']]['qtd_fontes'] = {'programada':regex['qtd_programada_fontes'], 'verificada':len(fontes_lista)-1} # -1 -> retira Total
 
@@ -170,17 +164,20 @@ class ArquivoIPDO():
             print 'Erro ao ler a carga do subsistema ->' +  regex['nome']
             print 'O arquivo deve ter mudado de estrutura.'    
         
-        
-        # produção programa e verificada por fonte
-        print fontes_lista
-        print producao_pg
+
         for indice, fonte in enumerate(fontes_lista):
             fontes_json[fonte] = {  
                 'programada' : producao_pg[indice], 
                 'verificada' : producao_vf[indice]
                 }
-                
         balanco_detalhado[regex['nome']]['energia'] = fontes_json
+        
+        balanco_detalhado[regex['nome']]["carga"] = {
+            "programada" : carga_pg[0],
+            "verificada" : carga_vf[0]
+            }
+        print "carga"        
+        print   balanco_detalhado[regex['nome']]["carga"]
         
         energia_natural_afluente_vf = balanco_detalhado_extrair.ena(self.objeto_bs, tag, regex['ena_lf'], regex['ena_tp'] )
         balanco_detalhado[regex['nome']]['ena'] = {'verificada' : energia_natural_afluente_vf[0]}
@@ -208,6 +205,8 @@ class ArquivoIPDO():
                     ferramenta.eh_numerico(fonte, balanco_detalhado[subsistema]["energia"][fonte]["verificada"])
                     ferramenta.eh_numerico(fonte, balanco_detalhado[subsistema]["energia"][fonte]["programada"])
         
+#        ferramenta.eh_numerico("carga", balanco_detalhado[subsistema]["carga"]["verificada"])
+#        ferramenta.eh_numerico("carga", balanco_detalhado[subsistema]["carga"]["programada"])
         ferramenta.eh_numerico("ena", balanco_detalhado[subsistema]["ena"]["verificada"])
 #        ferramenta.eh_numerico("ear", balanco_detalhado[subsistema]["ear"]["verificada"])            
         
