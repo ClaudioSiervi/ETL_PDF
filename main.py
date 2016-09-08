@@ -36,7 +36,7 @@ for dia in xrange(1,2):
     f = Firebase("https://wesee-dw.firebaseio.com/balanco_detalhado/"+ mes +"-" + ano)
     f.post(balanco_detalhado)
 
-
+#
 import json# prettify json
 print(json.dumps(balanco_detalhado, indent = 5))
 

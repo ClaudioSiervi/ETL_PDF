@@ -65,7 +65,8 @@ class ArquivoIPDO():
             
             imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
             imprimir.balanco_energia_resumido_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_resumido"])
-            imprimir.balanco_energia_detalhado_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])            
+            imprimir.balanco_energia_detalhado_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
+                        
             
         except IOError as e:
             self.log_arquivo_ipdo["imprimir_resultados"] = "I/O error({0}): {1}".format(e.errno, e.strerror)                        
@@ -127,6 +128,13 @@ class ArquivoIPDO():
 #                                                                                    (objeto_bs, tag, left_tx, top_tx):  
         [fontes_lista, fontes_json]  = balanco_detalhado_extrair.fontes_energeticas(self.objeto_bs, tag, regex['fontes_lf'], regex['fontes_tp'] )
         
+        print "fontes_lista_ordenada"        
+        print fontes_lista
+        print fontes_json 
+
+
+        
+        
         balanco_detalhado[regex['nome']]['qtd_fontes'] = {'programada':regex['qtd_programada_fontes'], 'verificada':len(fontes_lista)-1} # -1 -> retira Total
 
         if balanco_detalhado[regex['nome']]['qtd_fontes']['programada'] <> balanco_detalhado[regex['nome']]['qtd_fontes']['verificada']:
@@ -138,8 +146,8 @@ class ArquivoIPDO():
 #            
             print regex['nome']          
             print 'Erro: A quantidade de fontes verificadas é diferente da quantidade programada.'
-            print 'programada ->'  + str(subsistema[regex['nome']]['qtd_fontes']['programada'])
-            print 'verificada ->'  + str(subsistema[regex['nome']]['qtd_fontes']['verificada'])
+            print 'programada ->'  + str(balanco_detalhado[regex['nome']]['qtd_fontes']['programada'])
+            print 'verificada ->'  + str(balanco_detalhado[regex['nome']]['qtd_fontes']['verificada'])
             
             import sys            
             sys.exit()     
@@ -161,8 +169,11 @@ class ArquivoIPDO():
         else:
             print 'Erro ao ler a carga do subsistema ->' +  regex['nome']
             print 'O arquivo deve ter mudado de estrutura.'    
-            
+        
+        
         # produção programa e verificada por fonte
+        print fontes_lista
+        print producao_pg
         for indice, fonte in enumerate(fontes_lista):
             fontes_json[fonte] = {  
                 'programada' : producao_pg[indice], 

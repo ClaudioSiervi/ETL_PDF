@@ -74,22 +74,61 @@ class ImprimeArquivosTexto():
     def balanco_energia_detalhado_em_xlsx(self, geral, balanco_detalhado):
         
         wb_ipdo = load_workbook('IPDO.xlsx') 
-        ws_balanco_resumido = wb_ipdo['BalancoDetalhado']
-        
+        ws_balanco_detalhado = wb_ipdo['BalancoDetalhado']
+
         ferramenta = Ferramentas()
         
-        [primeira_linha, ultima_linha] = ferramenta.linha_nao_vazia(ws_balanco_resumido)
+        [primeira_linha, ultima_linha] = ferramenta.linha_nao_vazia(ws_balanco_detalhado)
         
         ultima_linha = ultima_linha + 1        
+            
         
         indice = 'A'+str(ultima_linha)
         
-        ws_balanco_resumido[indice] = geral["data_arquivo"]
+        ws_balanco_detalhado[indice] = geral["data_arquivo"]
         
-        for subsistema in balanco_detalhado:
-            print subsistema        
-            for fonte in balanco_detalhado[subsistema]["energia"]:
-                print "   energia " + fonte
-                for tipo in balanco_detalhado[subsistema]["energia"][fonte]:
-                    print "        " + tipo + " " + str(balanco_detalhado[subsistema]["energia"][fonte][tipo]) 
-   
+        fontes_relatorio = ["Hidro","Termo","Nuclear","Eólica","Solar","Total","Carga"]
+        subsistemas_relatorio = ["sudeste","sul","nordeste","norte"]
+        
+        coluna_pg = 1 # primeira fonte programada
+        coluna_vf = 8 # primeira fonte verificada
+        
+        for subsistema in subsistemas_relatorio:    
+            print subsistema
+
+            for fonte in fontes_relatorio:
+                coluna_pg += 1
+                coluna_vf += 1
+                print coluna_pg
+                print coluna_vf
+                indice_pg = ferramenta.retorna_letra_da_coluna(coluna_pg) + str(ultima_linha)
+                indice_vf = ferramenta.retorna_letra_da_coluna(coluna_vf) + str(ultima_linha)
+                print indice_pg
+                print indice_vf
+                
+                for fonte_extraida in balanco_detalhado[subsistema]["energia"]:
+                    print fonte_extraida
+                    if (fonte == fonte_extraida):
+                        print fonte
+                        
+                    
+                        ws_balanco_detalhado[indice_pg] = balanco_detalhado[subsistema]["energia"][fonte]["programada"]
+                        print balanco_detalhado[subsistema]["energia"][fonte]["programada"]                        
+                        print ws_balanco_detalhado[indice_pg]                        
+                        
+                        ws_balanco_detalhado[indice_vf] = balanco_detalhado[subsistema]["energia"][fonte]["verificada"]
+                        print balanco_detalhado[subsistema]["energia"][fonte]["verificada"]                        
+                        print ws_balanco_detalhado[indice_vf]  
+                        continue
+            coluna_pg += 7  # pula  fonte verificada
+            coluna_vf += 7  # pula fonte programada
+#                elif (fonte == "Carga"):
+#                    balanco_detalhado[subsistema]["carga"]["prevista"]
+#                    ws_balanco_detalhado[indice_vf]
+#                    else:
+#                        ws_balanco_detalhado[indice_pg] = 0
+#                        ws_balanco_detalhado[indice_vf] = 0
+                    
+#            ws_balanco_detalhado[indice_vf] = 
+        
+        wb_ipdo.save('IPDO.xlsx')   # sobrescreve resultados

@@ -71,12 +71,13 @@ class BalancoEnergeticoDetalhado():
     
         extrair = ExtrairDados()
         
-        fontes_lista = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+        fontes_lista = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)      
         
         fontes_json ={}
 
         subsistemas = ['Sudeste', 'Sul', 'Nordeste', 'Norte']        
         #   tratamento de strings    
+        posicao = 1
         for item in list(fontes_lista):
             
             if item in subsistemas:      
@@ -90,14 +91,23 @@ class BalancoEnergeticoDetalhado():
             elif (item == 'Termo (**)'):
                 fontes_lista.remove(item)
                 item = 'Termo'
-                fontes_lista.append(item)
+                fontes_lista.insert(posicao, item)
+                fontes_json[item] = ""
                 continue
-
+            
+            posicao += 1
             fontes_json[item] = ""
 
-#        print fontes_lista
-#        print fontes_json        
-        return fontes_lista, fontes_json   
+        fontes_lista_ordenada =[]
+        fontes_relatorio = ["Hidro","Termo","Nuclear","Eólica","Solar","Total"]
+        
+        for fonte_in in fontes_relatorio:
+            for fonte in fontes_json:
+                if (fonte == fonte_in):
+                    fontes_lista_ordenada.append(fonte_in)
+            
+
+        return fontes_lista_ordenada, fontes_json   
     
     
     # Produção de energia programada e verificada por subsistema
