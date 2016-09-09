@@ -68,6 +68,7 @@ class BalancoEnergeticoResumido():
 class BalancoEnergeticoDetalhado():
     
     def fontes_energeticas(self, objeto_bs, tag, left_tx, top_tx):    
+    # objeto_bs-> objeto beautifulSoup, tag='div', tag_positions -> (top_tx,left_tx)
     
         extrair = ExtrairDados()
         
@@ -145,14 +146,14 @@ class BalancoEnergeticoDetalhado():
         
         return ena_extraida
         
-    
+    ## varrer a lista de dados para encontrar o valor ear
     # Energia Armazenada nos Reservatórios
-    def ear(self, objeto_bs, tag, left_tx, top_tx):
+    def energia_armazenada_reservatorio(self, objeto_bs, tag, left_tx, top_tx):
         
         extrair = ExtrairDados()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
-#        print texto_extraido_str
-        ear_extraida = texto_extraido_str[0:1]
+        print texto_extraido_str
+        ear_extraida = texto_extraido_str[0]
         
         return ear_extraida

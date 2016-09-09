@@ -147,8 +147,11 @@ class ArquivoIPDO():
             sys.exit()     
         
         
-        producao_vf = balanco_detalhado_extrair.producao(self.objeto_bs, tag, regex['prod_verif_lf'], regex['prod_verif_tp'] )
-        producao_pg = balanco_detalhado_extrair.producao(self.objeto_bs, tag, regex['prod_prog_lf'], regex['prod_prog_tp'] )
+        producao_vf = balanco_detalhado_extrair.producao(
+                self.objeto_bs, tag, regex['prod_verif_lf'], regex['prod_verif_tp'] )
+        
+        producao_pg = balanco_detalhado_extrair.producao(
+                self.objeto_bs, tag, regex['prod_prog_lf'], regex['prod_prog_tp'] )
         
         ##  separa a caga da produção
         if ((len(producao_vf)==(qtd_fontes+2) and (len(producao_pg)==(qtd_fontes+2)))):
@@ -157,8 +160,12 @@ class ArquivoIPDO():
             
         ## lê a carga a partir de uma expressão regular
         elif ((len(producao_vf)==(qtd_fontes+1)) and (len(producao_pg)==(qtd_fontes+1))):  
-            carga_vf = balanco_detalhado_extrair.carga(self.objeto_bs, tag, regex['carga_verif_lf'], regex['carga_verif_tp'] )
-            carga_pg = balanco_detalhado_extrair.carga(self.objeto_bs, tag, regex['carga_prog_lf'], regex['carga_prog_tp'] )
+            
+            carga_vf = balanco_detalhado_extrair.carga(
+                    self.objeto_bs, tag, regex['carga_verif_lf'], regex['carga_verif_tp'] )
+
+            carga_pg = balanco_detalhado_extrair.carga(
+                self.objeto_bs, tag, regex['carga_prog_lf'], regex['carga_prog_tp'] )
             
         else:
             print 'Erro ao ler a carga do subsistema ->' +  regex['nome']
@@ -170,6 +177,7 @@ class ArquivoIPDO():
                 'programada' : producao_pg[indice], 
                 'verificada' : producao_vf[indice]
                 }
+                
         balanco_detalhado[regex['nome']]['energia'] = fontes_json
         
         balanco_detalhado[regex['nome']]["carga"] = {
@@ -177,11 +185,23 @@ class ArquivoIPDO():
             "verificada" : carga_vf[0]
             }
         
-        energia_natural_afluente_vf = balanco_detalhado_extrair.ena(self.objeto_bs, tag, regex['ena_lf'], regex['ena_tp'] )
-        balanco_detalhado[regex['nome']]['ena'] = {'verificada' : energia_natural_afluente_vf[0]}
+        energia_natural_afluente_vf = \
+                    balanco_detalhado_extrair.energia_armazenada_reservatorio(
+                            self.objeto_bs, tag, regex['ena_lf'], regex['ena_tp'] 
+                    )
+                    
+        balanco_detalhado[regex['nome']]['ena'] = {
+                    'verificada' : energia_natural_afluente_vf[0]
+                    }
         
-        energia_armazenada_reservatorio_vf = balanco_detalhado_extrair.ear(self.objeto_bs, tag, regex['ear_lf'], regex['ear_tp'] )
-        balanco_detalhado[regex['nome']]['ear'] = {'verificada' : energia_armazenada_reservatorio_vf[0]}
+        energia_armazenada_reservatorio_vf = \
+                    balanco_detalhado_extrair.energia_armazenada_reservatorio(
+                            self.objeto_bs, tag, regex['ear_lf'], regex['ear_tp']
+                        )
+                        
+        balanco_detalhado[regex['nome']]['ear'] = {
+                            'verificada' : energia_armazenada_reservatorio_vf[0]
+                            }
   
         self.valida_conteudo_numerico(balanco_detalhado)
         
