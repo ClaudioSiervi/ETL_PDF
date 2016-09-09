@@ -12,7 +12,7 @@ from Arquivo import ArquivoIPDO
 import os
 
 caminho = os.getcwd()
-mes = "06"
+mes = "05"
 ano = "2016"
 caminho = str(caminho) + "\Scripts-py\\" + mes +"-" + ano
 #caminho += mes  
@@ -34,7 +34,8 @@ for dia in xrange(1,2):
       
     from firebase import Firebase
     f = Firebase("https://wesee-dw.firebaseio.com/balanco_detalhado/"+ mes +"-" + ano)
-    f.post(balanco_detalhado)
+    r = f.post(balanco_detalhado)
+    print r
 
 #
 import json# prettify json

@@ -176,8 +176,6 @@ class ArquivoIPDO():
             "programada" : carga_pg[0],
             "verificada" : carga_vf[0]
             }
-        print "carga"        
-        print   balanco_detalhado[regex['nome']]["carga"]
         
         energia_natural_afluente_vf = balanco_detalhado_extrair.ena(self.objeto_bs, tag, regex['ena_lf'], regex['ena_tp'] )
         balanco_detalhado[regex['nome']]['ena'] = {'verificada' : energia_natural_afluente_vf[0]}
@@ -191,41 +189,22 @@ class ArquivoIPDO():
 
     ## TODO criar uma classe de validação
     ## TODO escrever resultados das validações no arquivo de log
-    # valida campos numericos
+    
+    # valida se o conteúdo dos campos é numerico
     def valida_conteudo_numerico(self, balanco_detalhado):
         
         ferramenta = Ferramentas()
         for subsistema in balanco_detalhado:
-            print subsistema        
+            
             for fonte in balanco_detalhado[subsistema]["energia"]:
-                print "   energia " + fonte
+#                print "   energia " + fonte
                 for tipo in balanco_detalhado[subsistema]["energia"][fonte]:
-                    print "        " + tipo + " " + str(balanco_detalhado[subsistema]["energia"][fonte]["verificada"])
-                                        
+#                    print "        " + tipo + " " + str(balanco_detalhado[subsistema]["energia"][fonte]["verificada"])
                     ferramenta.eh_numerico(fonte, balanco_detalhado[subsistema]["energia"][fonte]["verificada"])
                     ferramenta.eh_numerico(fonte, balanco_detalhado[subsistema]["energia"][fonte]["programada"])
         
-#        ferramenta.eh_numerico("carga", balanco_detalhado[subsistema]["carga"]["verificada"])
-#        ferramenta.eh_numerico("carga", balanco_detalhado[subsistema]["carga"]["programada"])
+        ferramenta.eh_numerico("carga", balanco_detalhado[subsistema]["carga"]["verificada"])
+        ferramenta.eh_numerico("carga", balanco_detalhado[subsistema]["carga"]["programada"])
         ferramenta.eh_numerico("ena", balanco_detalhado[subsistema]["ena"]["verificada"])
 #        ferramenta.eh_numerico("ear", balanco_detalhado[subsistema]["ear"]["verificada"])            
         
-        
-        
-#    def eh_numerico(self,s):
-#
-#        try:
-#            float(s) # int, long and float
-#
-#        except ValueError:
-#            try:
-#                complex(s) 
-#            except ValueError:
-#                print "Este valor não é numérico:"
-#                print s
-#                
-#                import sys
-#                sys.exit()
-#                return False
-#    
-#        return True
