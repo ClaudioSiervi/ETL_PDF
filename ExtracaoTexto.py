@@ -136,7 +136,7 @@ class BalancoEnergeticoDetalhado():
 
     
     # Energia Natural Afluente
-    def ena(self, objeto_bs, tag, left_tx, top_tx):
+    def energia_narutal_afluente(self, objeto_bs, tag, left_tx, top_tx):
         
         extrair = ExtrairDados()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
@@ -153,7 +153,6 @@ class BalancoEnergeticoDetalhado():
         extrair = ExtrairDados()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
-        print texto_extraido_str
         ear_extraida = texto_extraido_str[0]
-        
+        print ear_extraida
         return ear_extraida

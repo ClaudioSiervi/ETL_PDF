@@ -17,8 +17,6 @@ from bs4 import BeautifulSoup
 
 class ArquivoIPDO():
     
-    
-    
     # construtor
     def __init__(self, nome_arquivo_entrada):
         
@@ -53,9 +51,6 @@ class ArquivoIPDO():
         self.arquivo_ipdo["balanco_resumido"] = self.balanco_energetico_resumido["balanco_resumido"] 
         self.arquivo_ipdo["balanco_detalhado"] = self.balanco_energetico_detalhado["balanco_detalhado"]
 
-#        print self.arquivo_ipdo
-
-
 #####-------------     
 
     def imprimir_resultados(self):
@@ -89,9 +84,8 @@ class ArquivoIPDO():
         arquivo_ipdo["balanco_resumido"] = {"programada":programada, "verificada": verificada}
 
         return arquivo_ipdo   
-#        return arquivo_ipdo["balanco_resumido"]["programado"], arquivo_ipdo["balanco_resumido"]["verificado"]
-        
-        
+
+
     # Dados da página 2    
     def extrair_balanco_energetico_detalhado(self):
 
@@ -112,8 +106,6 @@ class ArquivoIPDO():
 #        print self.sistema_interligado_nacional['subsistemas'] 
 #        return self.sudeste, self.sul, self.nordeste, self.norte
         return self.sistema_interligado_nacional
-        
-        
         
         
     def balanco_energetico_detalhado_por_subsistema(self, regex):
@@ -186,7 +178,7 @@ class ArquivoIPDO():
             }
         
         energia_natural_afluente_vf = \
-                    balanco_detalhado_extrair.energia_armazenada_reservatorio(
+                    balanco_detalhado_extrair.energia_narutal_afluente(
                             self.objeto_bs, tag, regex['ena_lf'], regex['ena_tp'] 
                     )
                     
@@ -199,8 +191,9 @@ class ArquivoIPDO():
                             self.objeto_bs, tag, regex['ear_lf'], regex['ear_tp']
                         )
                         
+        print energia_armazenada_reservatorio_vf
         balanco_detalhado[regex['nome']]['ear'] = {
-                            'verificada' : energia_armazenada_reservatorio_vf[0]
+                            'verificada' : energia_armazenada_reservatorio_vf
                             }
   
         self.valida_conteudo_numerico(balanco_detalhado)

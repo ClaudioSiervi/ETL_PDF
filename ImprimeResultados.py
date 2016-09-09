@@ -96,10 +96,12 @@ class ImprimeArquivosTexto():
         
         situacao = 2 # programada e verificada
         colunas_relatorio = situacao * len(subsistemas_relatorio)*len(fontes_relatorio)
-        # zera todas as células da ultima linha
+       
+       # zera todas as células da ultima linha
         for coluna in xrange(2, (colunas_relatorio+2)):
             indice = ferramenta.retorna_letra_da_coluna(coluna) + str(ultima_linha)
             ws_balanco_detalhado[indice] = 0 
+            
             
         for subsistema in subsistemas_relatorio:    
 
@@ -116,20 +118,18 @@ class ImprimeArquivosTexto():
                 for fonte_extraida in balanco_detalhado[subsistema]["energia"]:
 
                     if (fonte_extraida == fonte):
-                        ws_balanco_detalhado[indice_pg] = balanco_detalhado[subsistema]["energia"][fonte]["programada"]
-                        ws_balanco_detalhado[indice_vf] = balanco_detalhado[subsistema]["energia"][fonte]["verificada"]
+                        ws_balanco_detalhado[indice_pg] = float(balanco_detalhado[subsistema]["energia"][fonte]["programada"])
+                        ws_balanco_detalhado[indice_vf] = float(balanco_detalhado[subsistema]["energia"][fonte]["verificada"])
                     
                     elif (fonte == "Carga"):                       
-                        ws_balanco_detalhado[indice_carga_pg] = balanco_detalhado[subsistema]["carga"]["programada"]                        
-                        ws_balanco_detalhado[indice_carga_vf] = balanco_detalhado[subsistema]["carga"]["verificada"]
+                        ws_balanco_detalhado[indice_carga_pg] = float(balanco_detalhado[subsistema]["carga"]["programada"])                        
+                        ws_balanco_detalhado[indice_carga_vf] = float(balanco_detalhado[subsistema]["carga"]["verificada"])
                                                 
                         continue
-
                         
             coluna_energia_pg += 7  # pula  fontes verificadas
             coluna_energia_vf += 7  # pula fontes programadas
             coluna_carga_pg += 14             
             coluna_carga_vf += 14 
 
-   
         wb_ipdo.save('IPDO.xlsx')   # sobrescreve resultados

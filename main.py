@@ -29,15 +29,15 @@ for dia in xrange(1,2):
     
         
 #    #    print arquivo_ipdo.dados_extraidos
-#    balanco_detalhado = arquivo_ipdo.dados_extraidos['balanco_detalhado']
-#    from firebase import Firebase
-#    f = Firebase("https://wesee-dw.firebaseio.com/balanco_detalhado/"+ mes +"-" + ano)
-#    r = f.post(balanco_detalhado)
+    balanco_detalhado = arquivo_ipdo.dados_extraidos['balanco_detalhado']
+    from firebase import Firebase
+    f = Firebase("https://wesee-dw.firebaseio.com/balanco_detalhado/"+ mes +"-" + ano)
+    r = f.post(balanco_detalhado)
 #    print r
 
 #
-#import json# prettify json
-#print(json.dumps(balanco_detalhado, indent = 5))
+import json# prettify json
+print(json.dumps(balanco_detalhado, indent = 5))
 
 
 #manipula_pdf.salva_texto_em_txt(texto_extraido, 'texto_extraido.txt')
