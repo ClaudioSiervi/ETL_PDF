@@ -11,8 +11,6 @@ from ExtracaoTexto import BalancoEnergeticoDetalhado
 class MapeamentoBalancoDetalhado():
     
         
-    
-    
     def intercambio_sistema_interligado_nacional(self, objeto_bs, regex):
         # regex -> REGular EXpression
     
@@ -35,7 +33,7 @@ class MapeamentoBalancoDetalhado():
                                                                          )
 
             intercambio[intercambio_energia] = {
-                                "verificada" : float(intercambio_extraido[0]),
-                                "programada" : float(intercambio_extraido[1])
+                                "programada" : float(intercambio_extraido[0].replace('.','')),
+                                "verificada" : float(intercambio_extraido[1].replace('.',''))
                                             }            
         return intercambio

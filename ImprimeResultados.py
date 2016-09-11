@@ -71,6 +71,7 @@ class ImprimeArquivosTexto():
         
         wb_ipdo = load_workbook('IPDO.xlsx') 
         ws_balanco_detalhado = wb_ipdo['BalancoDetalhado']
+       
         ferramenta = Ferramentas()
         
         [primeira_linha, ultima_linha] = ferramenta.linha_nao_vazia(ws_balanco_detalhado)
@@ -90,8 +91,8 @@ class ImprimeArquivosTexto():
         coluna_energia_vf = 8 # primeira fonte verificada
         coluna_carga_vf = 15
         
-        situacao = 2 # programada e verificada
-        colunas_relatorio = situacao * len(subsistemas_relatorio)*len(fontes_relatorio)
+        estados = 2 # programada e verificada
+        colunas_relatorio = estados * len(subsistemas_relatorio)*len(fontes_relatorio)
        
        # zera todas as células da ultima linha
         for coluna in xrange(2, (colunas_relatorio+2)):
@@ -129,6 +130,59 @@ class ImprimeArquivosTexto():
 
         wb_ipdo.save('IPDO.xlsx')   # sobrescreve resultados
         
+        
+        
+    def intercambio_em_xlsx(self, geral, balanco_detalhado):
+        
+        wb_ipdo = load_workbook('IPDO.xlsx') 
+        ws_balanco_detalhado = wb_ipdo['Intercambios']
+        
+        ferramenta = Ferramentas()
+        
+        [primeira_linha, ultima_linha] = ferramenta.linha_nao_vazia(ws_balanco_detalhado)
+        
+        ultima_linha = ultima_linha + 1        
+            
+        indice = 'A'+str(ultima_linha)
+        
+        ws_balanco_detalhado[indice] = geral["data_arquivo"]
+        
+                                        # saida-chegada
+        sentido_transferencia_energia = ['norte-imperatriz', 'imperatriz-nordeste', \
+                                        'itaipu-sudeste','sudeste-imperatriz', 'sul-sudeste', \
+                                        'internacional-sul']
+        # referência excel
+        coluna_energia_pg = 1 # primeira intercambio programada
+        coluna_energia_vf = 7 # primeira intercambio verificada
+        
+        estados = 2 # programada e verificada
+        colunas_relatorio = estados * len(sentido_transferencia_energia)
+       
+       # zera todas as células da ultima linha
+        for coluna in xrange(2, (colunas_relatorio+2)):
+            indice = ferramenta.retorna_letra_da_coluna(coluna) + str(ultima_linha)
+            ws_balanco_detalhado[indice] = 0 
+    
+        for intercambio_energia in sentido_transferencia_energia:    
+            coluna_energia_pg += 1
+            coluna_energia_vf += 1
+            
+            indice_pg = ferramenta.retorna_letra_da_coluna(coluna_energia_pg) + str(ultima_linha)
+            indice_vf = ferramenta.retorna_letra_da_coluna(coluna_energia_vf) + str(ultima_linha)
+            
+            print intercambio_energia
+            
+            for intercambio_extraido in balanco_detalhado['intercambio']:
+                
+                if (intercambio_extraido == intercambio_energia):
+                    print balanco_detalhado['intercambio'][intercambio_extraido]
+                    ws_balanco_detalhado[indice_pg] = balanco_detalhado['intercambio'][intercambio_extraido]['programada']
+                    ws_balanco_detalhado[indice_vf] = balanco_detalhado['intercambio'][intercambio_extraido]['verificada']                   
+                    continue
+
+        wb_ipdo.save('IPDO.xlsx')   # sobrescreve resultados
+    
+    
     # ENA, EAR e EAM   
     def energias_em_xlsx(self):
         aaa =99

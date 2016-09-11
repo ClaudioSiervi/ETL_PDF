@@ -62,7 +62,7 @@ class ArquivoIPDO():
             imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
             imprimir.balanco_energia_resumido_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_resumido"])
             imprimir.balanco_energia_detalhado_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
-                        
+            imprimir.intercambio_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
             
         except IOError as e:
             self.log_arquivo_ipdo["imprimir_resultados"] = "I/O error({0}): {1}".format(e.errno, e.strerror)                        
@@ -98,6 +98,8 @@ class ArquivoIPDO():
         sul = self.balanco_energetico_detalhado_por_subsistema(dicionario.sul)
         nordeste = self.balanco_energetico_detalhado_por_subsistema( dicionario.nordeste)                      
         norte = self.balanco_energetico_detalhado_por_subsistema(dicionario.norte)                
+        intercambio = mapeamento.intercambio_sistema_interligado_nacional(self.objeto_bs, dicionario.intercambio)   
+        
         
         sistema_interligado_nacional = {}
         sistema_interligado_nacional['balanco_detalhado'] = {'sudeste' :'', 'sul':'', 'nordeste':'', 'norte':''}
@@ -105,15 +107,13 @@ class ArquivoIPDO():
         sistema_interligado_nacional['balanco_detalhado']['sul'] =  sul['sul']  
         sistema_interligado_nacional['balanco_detalhado']['nordeste'] =  nordeste['nordeste']
         sistema_interligado_nacional['balanco_detalhado']['norte'] =  norte['norte']
+        sistema_interligado_nacional['balanco_detalhado']['intercambio'] = intercambio
+#        print sistema_interligado_nacional
         
-#        print dicionario.intercambio
-        self.intercambio = mapeamento.intercambio_sistema_interligado_nacional(self.objeto_bs, dicionario.intercambio)   
-        print "intercâmbio"        
-        import json# prettify json
-        print(json.dumps(self.intercambio, indent = 3))
         
-#        print self.sistema_interligado_nacional['subsistemas'] 
-#        return self.sudeste, self.sul, self.nordeste, self.norte
+#        import json# prettify json
+#        print "intercâmbio"                
+#        print(json.dumps(self.intercambio, indent = 3))
         return sistema_interligado_nacional
         
 #    # Dados da página 3    
@@ -187,15 +187,15 @@ class ArquivoIPDO():
 
         for indice, fonte in enumerate(fontes_lista):
             fontes_json[fonte] = {  
-                'programada' : producao_pg[indice], 
-                'verificada' : producao_vf[indice]
+                'programada' : producao_pg[indice].replace('.',''), 
+                'verificada' : producao_vf[indice].replace('.','')
                 }
                 
         balanco_detalhado[regex['nome']]['energia'] = fontes_json
         
         balanco_detalhado[regex['nome']]["carga"] = {
-            "programada" : carga_pg[0],
-            "verificada" : carga_vf[0]
+            "programada" : carga_pg[0].replace('.',''),
+            "verificada" : carga_vf[0].replace('.','')
             }
         
         energia_natural_afluente_vf = \
@@ -204,7 +204,7 @@ class ArquivoIPDO():
                     )
                     
         balanco_detalhado[regex['nome']]['ena'] = {
-                    'verificada' : energia_natural_afluente_vf[0]
+                    'verificada' : energia_natural_afluente_vf[0].replace('.','')
                     }
         
         energia_armazenada_reservatorio_vf = \
@@ -214,7 +214,7 @@ class ArquivoIPDO():
                         
 #        print energia_armazenada_reservatorio_vf
         balanco_detalhado[regex['nome']]['ear'] = {
-                            'verificada' : energia_armazenada_reservatorio_vf
+                            'verificada' : energia_armazenada_reservatorio_vf.replace('.','')
                             }  
   
         self.valida_conteudo_numerico(balanco_detalhado)
