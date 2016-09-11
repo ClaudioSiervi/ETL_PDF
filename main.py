@@ -36,8 +36,8 @@ for dia in xrange(1,2):
 #    print r
 
 #
-import json# prettify json
-print(json.dumps(balanco_detalhado, indent = 5))
+#import json# prettify json
+#print(json.dumps(balanco_detalhado, indent = 5))
 
 
 #manipula_pdf.salva_texto_em_txt(texto_extraido, 'texto_extraido.txt')

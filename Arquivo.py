@@ -7,9 +7,10 @@ Created on Thu Jul 28 23:53:44 2016
 
 
 
-from ExtracaoTexto import BalancoEnergeticoResumido, BalancoEnergeticoDetalhado       
+from ExtracaoTexto import BalancoEnergeticoResumido, BalancoEnergeticoDetalhado, VariacaoEnergiaArmazenada       
 from ImprimeResultados import ImprimeArquivosTexto
-from Mapeamento import DicionarioRegEx
+from ExpressoesRegulares import DicionarioRegEx
+from Mapeamento import MapeamentoBalancoDetalhado
 from Utilitarios import Ferramentas
 from bs4 import BeautifulSoup
 
@@ -89,25 +90,46 @@ class ArquivoIPDO():
     # Dados da página 2    
     def extrair_balanco_energetico_detalhado(self):
 
-        dicionario = DicionarioRegEx()
+#        balanco_energetico_detalhado_por_subsistema = BalancoEnergeticoDetalhado
+        dicionario = DicionarioRegEx()         
+        mapeamento = MapeamentoBalancoDetalhado()
         
-        self.sudeste = self.balanco_energetico_detalhado_por_subsistema(dicionario.sudeste)
-        self.sul = self.balanco_energetico_detalhado_por_subsistema(dicionario.sul)
-        self.nordeste = self.balanco_energetico_detalhado_por_subsistema( dicionario.nordeste)                      
-        self.norte = self.balanco_energetico_detalhado_por_subsistema(dicionario.norte)                
+        sudeste = self.balanco_energetico_detalhado_por_subsistema(dicionario.sudeste)
+        sul = self.balanco_energetico_detalhado_por_subsistema(dicionario.sul)
+        nordeste = self.balanco_energetico_detalhado_por_subsistema( dicionario.nordeste)                      
+        norte = self.balanco_energetico_detalhado_por_subsistema(dicionario.norte)                
         
-        self.sistema_interligado_nacional = {}
-        self.sistema_interligado_nacional['balanco_detalhado'] = {'sudeste' :'', 'sul':'', 'nordeste':'', 'norte':''}
-        self.sistema_interligado_nacional['balanco_detalhado']['sudeste'] = self.sudeste['sudeste']
-        self.sistema_interligado_nacional['balanco_detalhado']['sul'] =  self.sul['sul']  
-        self.sistema_interligado_nacional['balanco_detalhado']['nordeste'] =  self.nordeste['nordeste']
-        self.sistema_interligado_nacional['balanco_detalhado']['norte'] =  self.norte['norte']
+        sistema_interligado_nacional = {}
+        sistema_interligado_nacional['balanco_detalhado'] = {'sudeste' :'', 'sul':'', 'nordeste':'', 'norte':''}
+        sistema_interligado_nacional['balanco_detalhado']['sudeste'] = sudeste['sudeste']
+        sistema_interligado_nacional['balanco_detalhado']['sul'] =  sul['sul']  
+        sistema_interligado_nacional['balanco_detalhado']['nordeste'] =  nordeste['nordeste']
+        sistema_interligado_nacional['balanco_detalhado']['norte'] =  norte['norte']
+        
+#        print dicionario.intercambio
+        self.intercambio = mapeamento.intercambio_sistema_interligado_nacional(self.objeto_bs, dicionario.intercambio)   
+        print "intercâmbio"        
+        import json# prettify json
+        print(json.dumps(self.intercambio, indent = 3))
         
 #        print self.sistema_interligado_nacional['subsistemas'] 
 #        return self.sudeste, self.sul, self.nordeste, self.norte
-        return self.sistema_interligado_nacional
+        return sistema_interligado_nacional
         
+#    # Dados da página 3    
+#    def extrair_energia_armazenada_maxima(self):
+#
+##        balanco_energetico_detalhado_por_subsistema = BalancoEnergeticoDetalhado
+#        dicionario = DicionarioRegEx()
+#        
+#        self.sudeste = self.balanco_energetico_detalhado_por_subsistema(dicionario.sudeste)
+#        self.sul = self.balanco_energetico_detalhado_por_subsistema(dicionario.sul)
+#        self.nordeste = self.balanco_energetico_detalhado_por_subsistema( dicionario.nordeste)                      
+#        self.norte = self.balanco_energetico_detalhado_por_subsistema(dicionario.norte)   
+#        
+
         
+    ## TODO trnasferir balanco_energetico_detalhado_por_subsistema para a classe de ExtraçãoTexto
     def balanco_energetico_detalhado_por_subsistema(self, regex):
         
         tag = 'div'        
@@ -137,8 +159,7 @@ class ArquivoIPDO():
             
             import sys            
             sys.exit()     
-        
-        
+     
         producao_vf = balanco_detalhado_extrair.producao(
                 self.objeto_bs, tag, regex['prod_verif_lf'], regex['prod_verif_tp'] )
         
@@ -191,14 +212,17 @@ class ArquivoIPDO():
                             self.objeto_bs, tag, regex['ear_lf'], regex['ear_tp']
                         )
                         
-        print energia_armazenada_reservatorio_vf
+#        print energia_armazenada_reservatorio_vf
         balanco_detalhado[regex['nome']]['ear'] = {
                             'verificada' : energia_armazenada_reservatorio_vf
-                            }
+                            }  
   
         self.valida_conteudo_numerico(balanco_detalhado)
         
         return balanco_detalhado  
+        
+    
+                      
 
     ## TODO criar uma classe de validação
     ## TODO escrever resultados das validações no arquivo de log
@@ -219,5 +243,22 @@ class ArquivoIPDO():
         ferramenta.eh_numerico("carga", balanco_detalhado[subsistema]["carga"]["verificada"])
         ferramenta.eh_numerico("carga", balanco_detalhado[subsistema]["carga"]["programada"])
         ferramenta.eh_numerico("ena", balanco_detalhado[subsistema]["ena"]["verificada"])
-#        ferramenta.eh_numerico("ear", balanco_detalhado[subsistema]["ear"]["verificada"])            
+        ferramenta.eh_numerico("ear", balanco_detalhado[subsistema]["ear"]["verificada"])            
+        
+        
+    def energia_armazenada_maxima(self, regex):
+        
+        tag = 'div'        
+        energia_armazenada_extrair = VariacaoEnergiaArmazenada()    
+        
+        energia_armazenada = {}
+        energia_armazenada[regex['nome']] = {}
+##                                                                                    (objeto_bs, tag, left_tx, top_tx):  
+        energia_armazenada_maxima  = energia_armazenada_extrair.capacidade_maxima(
+                                        self.objeto_bs, tag, regex['eam_lf'], regex['eam_tp'] )
+
+        print energia_armazenada_maxima
+#        
+#        
+#        balanco_detalhado[regex['nome']]['qtd_fontes'] = {'programada':regex['qtd_programada_fontes'], 'verificada':len(fontes_lista)-1} # -1 -> retira Total
         

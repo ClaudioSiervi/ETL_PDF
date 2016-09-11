@@ -8,21 +8,21 @@ from openpyxl import load_workbook
 #from Arquivo import ArquivoIPDO
 from Utilitarios import Ferramentas
 #from openpyxl import Workbook
-import string
+#import string
 
 class ImprimeArquivosTexto():
     
     
-    
-    def texto_em_txt(self, texto, nome_arquivo_saida):
     # Salva o texto extraído do pdf em um arquivo texto
+    def texto_em_txt(self, texto, nome_arquivo_saida):
+    
         arquivo_texto = open(nome_arquivo_saida, "w")
         self.status_escrita = arquivo_texto.write(texto)
         arquivo_texto.close()
         
-        
+     # Salva o texto extraído do pdf em um arquivo texto
     def texto_em_html(self, texto, nome_arquivo_saida):
-    # Salva o texto extraído do pdf em um arquivo texto
+   
         arquivo_texto = open(nome_arquivo_saida, "w")
         self.status_escrita = arquivo_texto.write(texto)
         arquivo_texto.close()
@@ -31,7 +31,6 @@ class ImprimeArquivosTexto():
     # Imprime o resumo do balanço energético    
     def balanco_energia_resumido_em_xlsx(self, geral, balanco_resumido):
         
-#        try:
         wb_ipdo = load_workbook('IPDO.xlsx') 
         ws_balanco_resumido = wb_ipdo['BalancoResumido']
         
@@ -51,7 +50,7 @@ class ImprimeArquivosTexto():
         for conta_coluna_pg in xrange(1, num_elementos_pg):
             letra = ferramenta.retorna_letra_da_coluna(conta_coluna_pg + 1)
             indice = letra + str(ultima_linha)            
-            ws_balanco_resumido[indice] = balanco_resumido["programada"][conta_valores]       
+            ws_balanco_resumido[indice] = float(balanco_resumido["programada"][conta_valores])       
             conta_valores = conta_valores + 1
         
         num_elementos_vf = len(balanco_resumido["verificada"]) + conta_coluna_pg
@@ -60,17 +59,14 @@ class ImprimeArquivosTexto():
         for conta_coluna_vf in xrange(conta_coluna_pg, num_elementos_vf):
             letra = ferramenta.retorna_letra_da_coluna(conta_coluna_vf + 2)
             indice = letra + str(ultima_linha)            
+#            print balanco_resumido["verificada"][conta_valores]
             ws_balanco_resumido[indice] = balanco_resumido["verificada"][conta_valores]
             conta_valores = conta_valores + 1                
         
         wb_ipdo.save('IPDO.xlsx')   # sobrescreve resultados
- 
-#        except:
-#            print '------------------------------------------------------------'
-#            print 'ERRO: Não foi possível salvar os resultados na planilha.xlsx'               
+
         
-        
-        
+    # Imprime resultados na aba 'BalancoDetalhado' da planilha 'IPDO.xlsx'
     def balanco_energia_detalhado_em_xlsx(self, geral, balanco_detalhado):
         
         wb_ipdo = load_workbook('IPDO.xlsx') 
@@ -102,7 +98,6 @@ class ImprimeArquivosTexto():
             indice = ferramenta.retorna_letra_da_coluna(coluna) + str(ultima_linha)
             ws_balanco_detalhado[indice] = 0 
             
-            
         for subsistema in subsistemas_relatorio:    
 
             for fonte in fontes_relatorio:
@@ -133,3 +128,11 @@ class ImprimeArquivosTexto():
             coluna_carga_vf += 14 
 
         wb_ipdo.save('IPDO.xlsx')   # sobrescreve resultados
+        
+    # ENA, EAR e EAM   
+    def energias_em_xlsx(self):
+        aaa =99
+        
+    
+        
+        

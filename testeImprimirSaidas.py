@@ -37,8 +37,9 @@ html_extraido = converte.pdf_para_html(nome_arquivo_saida)
 objeto_bs = BeautifulSoup(html_extraido, 'html.parser')
 
 dic = DicionarioRegEx()
-dic = dic.norte
-fontes = subsistema.fontes(objeto_bs, tag, dic['fontes_lf'], dic['fontes_tp'] )
+dic = dic.intercambio
+
+inter = subsistema.intercambio_entre_subsistemas(objeto_bs, tag, dic['fontes_lf'], dic['fontes_tp'] )
 
 #print fontes
 

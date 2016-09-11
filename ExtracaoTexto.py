@@ -39,7 +39,6 @@ class ExtrairDados():
      # Página 1
 class BalancoEnergeticoResumido():
 
-
      # Extrai a data do arquivo do IPDO
     def extrair_data_arquivo_ipdo(self, objeto_bs, tag, top_tx):
     
@@ -154,5 +153,40 @@ class BalancoEnergeticoDetalhado():
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
         ear_extraida = texto_extraido_str[0]
-        print ear_extraida
+#        print ear_extraida
         return ear_extraida
+        
+        
+    # Intercambio de Energia entre subsistemas   
+    def intercambio_entre_subsistemas(self, objeto_bs, tag, left_tx, top_tx):
+        
+        extrair = ExtrairDados()
+        
+        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+        
+        intercambio_extraido = texto_extraido_str[0:2]
+
+        return intercambio_extraido
+
+############################################################################
+    # Página 3
+class VariacaoEnergiaArmazenada():
+    
+    # Energia Armazenada Máxima
+    def capacidade_maxima(self, objeto_bs, tag, left_tx, top_tx):
+        
+        extrair = ExtrairDados()
+        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+        
+
+        dim = len(texto_extraido_str)
+        capacidade_maxima_extraida = texto_extraido_str[0:(dim-1)]  # retira [dim]=''
+        
+        return capacidade_maxima_extraida
+
+    
+## TODO implementar extração
+############################################################################
+    # Página 14
+class DemandasMaximas():
+    demandas = 99
