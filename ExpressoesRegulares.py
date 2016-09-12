@@ -24,7 +24,6 @@ class DicionarioRegEx():
     'verificado_tp' : 'top:(30[0-9]|31[0-9])px'
     }
     
-    
     sudeste = {
     'nome' : 'sudeste',
     'qtd_programada_fontes' : 3,
@@ -47,7 +46,10 @@ class DicionarioRegEx():
 
     'ear_tp' : 'top:(143[0-9]|144[0-9])px', 
     'ear_lf' : 'left:(38[0-9]|39[0-9])px',
-    'ear_wd' : 'width:(8[0-9])px'
+    'ear_wd' : 'width:(8[0-9])px',
+
+    'eam_tp' : 'top:(194[0-9]|195[0-9]|196[0-9])px', 
+    'eam_lf' : 'left:(32[0-9]|33[0-9]|34[0-9]|35[0-9])px',
     }
 
 
@@ -72,7 +74,10 @@ class DicionarioRegEx():
     'ena_lf' : 'left:(26[0-9]|27[0-9]|28[0-9]|29[0-9]|30[0-9]|31[0-9])px',
 
     'ear_tp' : 'top:(|152[0-9]|153[0-9]|154[0-9]|155[0-9])px', 
-    'ear_lf' : 'left:(22[0-9]|23[0-9]|24[0-9]|25[0-9]|26[0-9])px'
+    'ear_lf' : 'left:(22[0-9]|23[0-9]|24[0-9]|25[0-9]|26[0-9])px',
+
+    'eam_tp' : 'top:(194[0-9]|195[0-9]|196[0-9])px', 
+    'eam_lf' : 'left:(37[0-9]|38[0-9]|39[0-9]|40[0-9])px',
     }
     
     
@@ -99,7 +104,10 @@ class DicionarioRegEx():
     'ena_lf' : 'left:(44[0-9]|45[0-9]|46[0-9]|47[0-9]|48[0-9])px',
 
     'ear_tp' : 'top:(121[0-9]|122[0-9]|123[0-9])px', 
-    'ear_lf' : 'left:(41[0-9]|42[0-9]|43[0-9])px'
+    'ear_lf' : 'left:(41[0-9]|42[0-9]|43[0-9])px',
+
+    'eam_tp' : 'top:(194[0-9]|195[0-9]|196[0-9])px', 
+    'eam_lf' : 'left:(53[0-9]|52[0-9]|53[0-9]|54[0-9])px'
     }
     
     
@@ -125,7 +133,18 @@ class DicionarioRegEx():
 
     'ear_tp' : 'top:(120[0-9]|121[0-9]|122[0-9]|123[0-9])px', 
     'ear_lf' : 'left:(11[0-9]|12[0-9])px',
+
+    'eam_tp' : 'top:(194[0-9]|195[0-9]|196[0-9])px', 
+    'eam_lf' : 'left:(45[0-9]|46[0-9]|47[0-9]|48[0-9])px'
     }
+    
+    
+    sistema_interligado = {
+                            'sudeste' : sudeste,
+                            'sul' : sul, 
+                            'nordeste' : nordeste,
+                            'norte' : norte}    
+    
     
     
 # Intercambio de Energia entre subsistemas      

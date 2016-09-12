@@ -8,22 +8,22 @@ Created on Sun Sep 11 16:13:12 2016
 
 from ExtracaoTexto import BalancoEnergeticoDetalhado
 
+
 class MapeamentoBalancoDetalhado():
     
-        
     def intercambio_sistema_interligado_nacional(self, objeto_bs, regex):
         # regex -> REGular EXpression
     
         tag = 'div'        
         
-        balanco_detalhado_extrair = BalancoEnergeticoDetalhado() 
-    
-        intercambio = {}        
+        balanco_detalhado_extrair = BalancoEnergeticoDetalhado()  
+        
                                         # saida-chegada
         sentido_transferencia_energia = ['norte-imperatriz', 'imperatriz-nordeste', \
                                         'itaipu-sudeste','sudeste-imperatriz', 'sul-sudeste', \
                                         'internacional-sul']
-
+        intercambio = {}   
+        
         for intercambio_energia in sentido_transferencia_energia:            
             
             intercambio_extraido = \
@@ -37,3 +37,47 @@ class MapeamentoBalancoDetalhado():
                                 "verificada" : float(intercambio_extraido[1].replace('.',''))
                                             }            
         return intercambio
+        
+        
+###########################################    
+        
+from ExtracaoTexto import VariacaoEnergiaArmazenada
+#from ExpressoesRegulares import DicionarioRegEx
+
+class MapeamentoVariacaoEnergiaArmazenada():
+    
+#    def __init__(self):
+#
+#        dicionario = DicionarioRegEx()
+#    
+#        energia_armazenada_maxima = \   
+#                    self.energia_armazenada_maxima(objeto_bs, dicionario)   
+#        
+#        
+##        return energia_armazenada_maxima
+#    
+    
+    def energia_armazenada_maxima(self, objeto_bs, regex):
+        
+        tag = 'div'
+        
+        energia_armazenada_extrair = VariacaoEnergiaArmazenada()    
+        
+        energia_armazenada = {}
+        
+#        for subsistema in sistema_interligado:
+            
+        energia_armazenada_maxima  = \
+                    energia_armazenada_extrair.capacidade_maxima(
+                            self.objeto_bs, tag, regex['eam_lf'], \
+                                                 regex['eam_tp'] 
+                                                                 )
+
+        energia_armazenada["energia_armazenada_maxima"] = {
+                            "programada" : float(energia_armazenada_maxima[0].replace('.','')),
+                            "verificada" : float(energia_armazenada_maxima[1].replace('.',''))
+                                                        } 
+                                        
+        print energia_armazenada
+        return energia_armazenada
+        

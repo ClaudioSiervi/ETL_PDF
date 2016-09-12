@@ -30,6 +30,8 @@ for dia in xrange(1,2):
         
 #    #    print arquivo_ipdo.dados_extraidos
     balanco_detalhado = arquivo_ipdo.dados_extraidos['balanco_detalhado']
+#    balanco_detalhado = arquivo_ipdo.balanco_detalhado.imprimir() classe balanco_detalhado
+    
     from firebase import Firebase
     f = Firebase("https://wesee-dw.firebaseio.com/balanco_detalhado/"+ mes +"-" + ano)
     r = f.post(balanco_detalhado)

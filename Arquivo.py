@@ -7,10 +7,10 @@ Created on Thu Jul 28 23:53:44 2016
 
 
 
-from ExtracaoTexto import BalancoEnergeticoResumido, BalancoEnergeticoDetalhado, VariacaoEnergiaArmazenada       
+from ExtracaoTexto import BalancoEnergeticoResumido, BalancoEnergeticoDetalhado
 from ImprimeResultados import ImprimeArquivosTexto
 from ExpressoesRegulares import DicionarioRegEx
-from Mapeamento import MapeamentoBalancoDetalhado
+from Mapeamento import MapeamentoBalancoDetalhado, MapeamentoVariacaoEnergiaArmazenada
 from Utilitarios import Ferramentas
 from bs4 import BeautifulSoup
 
@@ -47,10 +47,16 @@ class ArquivoIPDO():
         self.balanco_energetico_resumido = self.extrair_balanco_energetico_resumido()
         self.balanco_energetico_detalhado = self.extrair_balanco_energetico_detalhado()
         
+        print "balanco"
+        print self.balanco_energetico_detalhado
         self.arquivo_ipdo = {}
         self.arquivo_ipdo["geral"] = self.balanco_energetico_resumido["geral"] 
+        
         self.arquivo_ipdo["balanco_resumido"] = self.balanco_energetico_resumido["balanco_resumido"] 
-        self.arquivo_ipdo["balanco_detalhado"] = self.balanco_energetico_detalhado["balanco_detalhado"]
+        
+        self.arquivo_ipdo["balanco_detalhado"] = self.balanco_energetico_detalhado
+
+#        self.arquivo_ipdo["balanco_detalhado"] = self.balanco_energetico_detalhado
 
 #####-------------     
 
@@ -61,7 +67,10 @@ class ArquivoIPDO():
             
             imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
             imprimir.balanco_energia_resumido_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_resumido"])
+            
+            print self.arquivo_ipdo["balanco_detalhado"]
             imprimir.balanco_energia_detalhado_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
+
             imprimir.intercambio_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
             
         except IOError as e:
@@ -90,81 +99,88 @@ class ArquivoIPDO():
     # Dados da página 2    
     def extrair_balanco_energetico_detalhado(self):
 
-#        balanco_energetico_detalhado_por_subsistema = BalancoEnergeticoDetalhado
-        dicionario = DicionarioRegEx()         
-        mapeamento = MapeamentoBalancoDetalhado()
+        dicionario = DicionarioRegEx()  
         
-        sudeste = self.balanco_energetico_detalhado_por_subsistema(dicionario.sudeste)
-        sul = self.balanco_energetico_detalhado_por_subsistema(dicionario.sul)
-        nordeste = self.balanco_energetico_detalhado_por_subsistema( dicionario.nordeste)                      
-        norte = self.balanco_energetico_detalhado_por_subsistema(dicionario.norte)                
-        intercambio = mapeamento.intercambio_sistema_interligado_nacional(self.objeto_bs, dicionario.intercambio)   
+        mapeamento_balanco_detalhado = MapeamentoBalancoDetalhado()
         
+        mapeamento_energia_armazenada = MapeamentoVariacaoEnergiaArmazenada()
         
         sistema_interligado_nacional = {}
-        sistema_interligado_nacional['balanco_detalhado'] = {'sudeste' :'', 'sul':'', 'nordeste':'', 'norte':''}
-        sistema_interligado_nacional['balanco_detalhado']['sudeste'] = sudeste['sudeste']
-        sistema_interligado_nacional['balanco_detalhado']['sul'] =  sul['sul']  
-        sistema_interligado_nacional['balanco_detalhado']['nordeste'] =  nordeste['nordeste']
-        sistema_interligado_nacional['balanco_detalhado']['norte'] =  norte['norte']
-        sistema_interligado_nacional['balanco_detalhado']['intercambio'] = intercambio
-#        print sistema_interligado_nacional
+
+        for subsistema in dicionario.sistema_interligado:
+
+            sistema_interligado_nacional[subsistema] = \
+                                self.balanco_energetico_detalhado_por_subsistema(
+                                                            dicionario.sistema_interligado[subsistema]['nome']
+                                                                                )                                                                                
         
-        
-#        import json# prettify json
-#        print "intercâmbio"                
-#        print(json.dumps(self.intercambio, indent = 3))
+        sistema_interligado_nacional['intercambio']  = \
+                mapeamento_balanco_detalhado.intercambio_sistema_interligado_nacional(
+                                                        self.objeto_bs, dicionario.intercambio
+                                                                                           )   
         return sistema_interligado_nacional
         
-#    # Dados da página 3    
-#    def extrair_energia_armazenada_maxima(self):
-#
-##        balanco_energetico_detalhado_por_subsistema = BalancoEnergeticoDetalhado
-#        dicionario = DicionarioRegEx()
-#        
-#        self.sudeste = self.balanco_energetico_detalhado_por_subsistema(dicionario.sudeste)
-#        self.sul = self.balanco_energetico_detalhado_por_subsistema(dicionario.sul)
-#        self.nordeste = self.balanco_energetico_detalhado_por_subsistema( dicionario.nordeste)                      
-#        self.norte = self.balanco_energetico_detalhado_por_subsistema(dicionario.norte)   
-#        
-
+        
+        def variacao_energia_armazenada(self):
+            
+            mapeamento = MapeamentoVariacaoEnergiaArmazenada()
+            
+            dicionario = DicionarioRegEx()
+            
+            sistema_interligado = ['Sudeste', 'Sul', 'Nordeste', 'Norte'] 
+            
+            energia_armazenada_maxima = {}
+            
+            for subsistema in sistema_interligado:
+                
+                energia_armazenada_maxima[subsistema] = \
+                        mapeamento.energia_armazenada_maxima(
+                                            self.objeto_bs, dicionario[subsistema]
+                                                            )                
+            print energia_armazenada_maxima        
+        
+        
         
     ## TODO trnasferir balanco_energetico_detalhado_por_subsistema para a classe de ExtraçãoTexto
-    def balanco_energetico_detalhado_por_subsistema(self, regex):
+    def balanco_energetico_detalhado_por_subsistema(self, nome_subsistema):
         
         tag = 'div'        
-        balanco_detalhado_extrair = BalancoEnergeticoDetalhado()    
+        balanco_detalhado_extrair = BalancoEnergeticoDetalhado()  
+        
+        dicionario = DicionarioRegEx()
+        sistema_interligado = dicionario.sistema_interligado
+        subsistema = sistema_interligado[nome_subsistema]
         
         balanco_detalhado = {}
-        balanco_detalhado[regex['nome']] = {}
         
-        qtd_fontes = regex['qtd_programada_fontes']
+        balanco_detalhado[subsistema['nome']] = {}
+        
+        qtd_fontes = subsistema['qtd_programada_fontes']
 #                                                                                    (objeto_bs, tag, left_tx, top_tx):  
-        [fontes_lista, fontes_json]  = balanco_detalhado_extrair.fontes_energeticas(self.objeto_bs, tag, regex['fontes_lf'], regex['fontes_tp'] )
+        [fontes_lista, fontes_json]  = balanco_detalhado_extrair.fontes_energeticas(self.objeto_bs, tag, subsistema['fontes_lf'], subsistema['fontes_tp'] )
         
-        
-        balanco_detalhado[regex['nome']]['qtd_fontes'] = {'programada':regex['qtd_programada_fontes'], 'verificada':len(fontes_lista)-1} # -1 -> retira Total
+        balanco_detalhado[subsistema['nome']]['qtd_fontes'] = {'programada':subsistema['qtd_programada_fontes'], 'verificada':len(fontes_lista)-1} # -1 -> retira Total
 
-        if balanco_detalhado[regex['nome']]['qtd_fontes']['programada'] <> balanco_detalhado[regex['nome']]['qtd_fontes']['verificada']:
+        if balanco_detalhado[subsistema['nome']]['qtd_fontes']['programada'] <> balanco_detalhado[subsistema['nome']]['qtd_fontes']['verificada']:
             
             ## Log -> modificação na estrutura do arquivo
             self.log_arquivo_ipdo["fontes"] = "Erro: A quantidade de fontes verificadas é diferente da quantidade programada."            
 #            self.log_arquivo_ipdo["fontes"]["verificada"] = subsistema[regex["nome"]]["qtd_fontes"]["verificada"]
 #            self.log_arquivo_ipdo["fontes"]["programada"] = subsistema[regex["nome"]]["qtd_fontes"]["programada"]            
 #            
-            print regex['nome']          
+            print subsistema['nome']          
             print 'Erro: A quantidade de fontes verificadas é diferente da quantidade programada.'
-            print 'programada ->'  + str(balanco_detalhado[regex['nome']]['qtd_fontes']['programada'])
-            print 'verificada ->'  + str(balanco_detalhado[regex['nome']]['qtd_fontes']['verificada'])
+            print 'programada ->'  + str(balanco_detalhado[subsistema['nome']]['qtd_fontes']['programada'])
+            print 'verificada ->'  + str(balanco_detalhado[subsistema['nome']]['qtd_fontes']['verificada'])
             
             import sys            
             sys.exit()     
      
         producao_vf = balanco_detalhado_extrair.producao(
-                self.objeto_bs, tag, regex['prod_verif_lf'], regex['prod_verif_tp'] )
+                self.objeto_bs, tag, subsistema['prod_verif_lf'], subsistema['prod_verif_tp'] )
         
         producao_pg = balanco_detalhado_extrair.producao(
-                self.objeto_bs, tag, regex['prod_prog_lf'], regex['prod_prog_tp'] )
+                self.objeto_bs, tag, subsistema['prod_prog_lf'], subsistema['prod_prog_tp'] )
         
         ##  separa a caga da produção
         if ((len(producao_vf)==(qtd_fontes+2) and (len(producao_pg)==(qtd_fontes+2)))):
@@ -175,13 +191,13 @@ class ArquivoIPDO():
         elif ((len(producao_vf)==(qtd_fontes+1)) and (len(producao_pg)==(qtd_fontes+1))):  
             
             carga_vf = balanco_detalhado_extrair.carga(
-                    self.objeto_bs, tag, regex['carga_verif_lf'], regex['carga_verif_tp'] )
+                    self.objeto_bs, tag, subsistema['carga_verif_lf'], subsistema['carga_verif_tp'] )
 
             carga_pg = balanco_detalhado_extrair.carga(
-                self.objeto_bs, tag, regex['carga_prog_lf'], regex['carga_prog_tp'] )
+                self.objeto_bs, tag, subsistema['carga_prog_lf'], subsistema['carga_prog_tp'] )
             
         else:
-            print 'Erro ao ler a carga do subsistema ->' +  regex['nome']
+            print 'Erro ao ler a carga do subsistema ->' +  subsistema['nome']
             print 'O arquivo deve ter mudado de estrutura.'    
         
 
@@ -191,37 +207,36 @@ class ArquivoIPDO():
                 'verificada' : producao_vf[indice].replace('.','')
                 }
                 
-        balanco_detalhado[regex['nome']]['energia'] = fontes_json
+        balanco_detalhado[subsistema['nome']]['energia'] = fontes_json
         
-        balanco_detalhado[regex['nome']]["carga"] = {
+        balanco_detalhado[subsistema['nome']]["carga"] = {
             "programada" : carga_pg[0].replace('.',''),
             "verificada" : carga_vf[0].replace('.','')
             }
         
         energia_natural_afluente_vf = \
                     balanco_detalhado_extrair.energia_narutal_afluente(
-                            self.objeto_bs, tag, regex['ena_lf'], regex['ena_tp'] 
+                            self.objeto_bs, tag, subsistema['ena_lf'], subsistema['ena_tp'] 
                     )
                     
-        balanco_detalhado[regex['nome']]['ena'] = {
+        balanco_detalhado[subsistema['nome']]['ena'] = {
                     'verificada' : energia_natural_afluente_vf[0].replace('.','')
                     }
         
         energia_armazenada_reservatorio_vf = \
                     balanco_detalhado_extrair.energia_armazenada_reservatorio(
-                            self.objeto_bs, tag, regex['ear_lf'], regex['ear_tp']
+                            self.objeto_bs, tag, subsistema['ear_lf'], subsistema['ear_tp']
                         )
                         
 #        print energia_armazenada_reservatorio_vf
-        balanco_detalhado[regex['nome']]['ear'] = {
+        balanco_detalhado[subsistema['nome']]['ear'] = {
                             'verificada' : energia_armazenada_reservatorio_vf.replace('.','')
                             }  
-  
+        
         self.valida_conteudo_numerico(balanco_detalhado)
         
-        return balanco_detalhado  
+        return balanco_detalhado[subsistema['nome']] 
         
-    
                       
 
     ## TODO criar uma classe de validação
@@ -244,21 +259,3 @@ class ArquivoIPDO():
         ferramenta.eh_numerico("carga", balanco_detalhado[subsistema]["carga"]["programada"])
         ferramenta.eh_numerico("ena", balanco_detalhado[subsistema]["ena"]["verificada"])
         ferramenta.eh_numerico("ear", balanco_detalhado[subsistema]["ear"]["verificada"])            
-        
-        
-    def energia_armazenada_maxima(self, regex):
-        
-        tag = 'div'        
-        energia_armazenada_extrair = VariacaoEnergiaArmazenada()    
-        
-        energia_armazenada = {}
-        energia_armazenada[regex['nome']] = {}
-##                                                                                    (objeto_bs, tag, left_tx, top_tx):  
-        energia_armazenada_maxima  = energia_armazenada_extrair.capacidade_maxima(
-                                        self.objeto_bs, tag, regex['eam_lf'], regex['eam_tp'] )
-
-        print energia_armazenada_maxima
-#        
-#        
-#        balanco_detalhado[regex['nome']]['qtd_fontes'] = {'programada':regex['qtd_programada_fontes'], 'verificada':len(fontes_lista)-1} # -1 -> retira Total
-        
