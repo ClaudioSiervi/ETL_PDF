@@ -186,8 +186,9 @@ class ImprimeArquivosTexto():
     # ENA, EAR e EAM   
     def energial_potencial_armazenada_em_xlsx(self, geral, balanco_detalhado):
         
-        print "balanco_detalhado"
-        print balanco_detalhado
+#        print "balanco_detalhado"
+#        print balanco_detalhado
+        
         wb_ipdo = load_workbook('IPDO.xlsx') 
         ws_balanco_detalhado = wb_ipdo['EnergiaPotencialArmazenada']
         
@@ -204,28 +205,31 @@ class ImprimeArquivosTexto():
 #        energias_relatorio = ['ENA', 'EAR', 'EAM']
         subsistemas_relatorio = ["sudeste","sul","nordeste","norte"]
         
-        
         # referência excel
-        coluna_energia_vf = 1 # primeira intercambio verificada
-                    
+        coluna_ena_vf = 1 # primeira ena verificada
+        coluna_ear_vf = 2
+        coluna_eam_vf = 3
+        
         for subsistema in subsistemas_relatorio:    
-            coluna_energia_vf += 1
-            coluna_energia_vf
+            coluna_ena_vf += 1
+            coluna_ear_vf += 1
+            coluna_eam_vf += 1
             
-            indice_vf = ferramenta.retorna_letra_da_coluna(coluna_energia_vf) + str(ultima_linha)
-            print subsistema
-            print subsistema
+            indice_ena_vf = ferramenta.retorna_letra_da_coluna(coluna_ena_vf) + str(ultima_linha)
+            indice_ear_vf = ferramenta.retorna_letra_da_coluna(coluna_ear_vf) + str(ultima_linha)
+            indice_eam_vf = ferramenta.retorna_letra_da_coluna(coluna_eam_vf) + str(ultima_linha)
             
-            for subsistema_extraido in balanco_detalhado[subsistema]:
-                
+            for subsistema_extraido in balanco_detalhado:
+
                 if (subsistema_extraido == subsistema):
-                    print 'balanco_detalhado'
-                    print balanco_detalhado[subsistema_extraido]["eam"]['verificada']
-                    ws_balanco_detalhado[indice_vf] = balanco_detalhado[subsistema_extraido]["ena"]['verificada']   
-                    ws_balanco_detalhado[indice_vf] = balanco_detalhado[subsistema_extraido]["ear"]['verificada']   
-                    ws_balanco_detalhado[indice_vf] = balanco_detalhado[subsistema_extraido]["eam"]['verificada']   
+                    ws_balanco_detalhado[indice_ena_vf] = float(balanco_detalhado[subsistema_extraido]["ena"]['verificada'])   
+                    ws_balanco_detalhado[indice_ear_vf] = float(balanco_detalhado[subsistema_extraido]["ear"]['verificada'])   
+                    ws_balanco_detalhado[indice_eam_vf] = float(balanco_detalhado[subsistema_extraido]["eam"]['verificada'])   
                     continue
-                        
+                
+            coluna_ena_vf += 2
+            coluna_ear_vf += 2
+            coluna_eam_vf += 2
 
 #            coluna_energia_vf += 7  # pula fontes programadas
   

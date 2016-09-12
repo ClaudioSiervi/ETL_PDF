@@ -75,6 +75,7 @@ class ArquivoIPDO():
             
             imprimir.energial_potencial_armazenada_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
         
+        
         except IOError as e:
             self.log_arquivo_ipdo["imprimir_resultados"] = "I/O error({0}): {1}".format(e.errno, e.strerror)                        
             print self.log_arquivo_ipdo["imprimir_resultados"]
