@@ -184,8 +184,52 @@ class ImprimeArquivosTexto():
     
     
     # ENA, EAR e EAM   
-    def energias_em_xlsx(self):
-        aaa =99
+    def energial_potencial_armazenada_em_xlsx(self, geral, balanco_detalhado):
+        
+        print "balanco_detalhado"
+        print balanco_detalhado
+        wb_ipdo = load_workbook('IPDO.xlsx') 
+        ws_balanco_detalhado = wb_ipdo['EnergiaPotencialArmazenada']
+        
+        ferramenta = Ferramentas()
+        
+        [primeira_linha, ultima_linha] = ferramenta.linha_nao_vazia(ws_balanco_detalhado)
+        
+        ultima_linha = ultima_linha + 1        
+            
+        indice = 'A'+str(ultima_linha)
+        
+        ws_balanco_detalhado[indice] = geral["data_arquivo"]
+    
+#        energias_relatorio = ['ENA', 'EAR', 'EAM']
+        subsistemas_relatorio = ["sudeste","sul","nordeste","norte"]
+        
+        
+        # referência excel
+        coluna_energia_vf = 1 # primeira intercambio verificada
+                    
+        for subsistema in subsistemas_relatorio:    
+            coluna_energia_vf += 1
+            coluna_energia_vf
+            
+            indice_vf = ferramenta.retorna_letra_da_coluna(coluna_energia_vf) + str(ultima_linha)
+            print subsistema
+            print subsistema
+            
+            for subsistema_extraido in balanco_detalhado[subsistema]:
+                
+                if (subsistema_extraido == subsistema):
+                    print 'balanco_detalhado'
+                    print balanco_detalhado[subsistema_extraido]["eam"]['verificada']
+                    ws_balanco_detalhado[indice_vf] = balanco_detalhado[subsistema_extraido]["ena"]['verificada']   
+                    ws_balanco_detalhado[indice_vf] = balanco_detalhado[subsistema_extraido]["ear"]['verificada']   
+                    ws_balanco_detalhado[indice_vf] = balanco_detalhado[subsistema_extraido]["eam"]['verificada']   
+                    continue
+                        
+
+#            coluna_energia_vf += 7  # pula fontes programadas
+  
+        wb_ipdo.save('IPDO.xlsx')   # sobrescreve resultados
         
     
         

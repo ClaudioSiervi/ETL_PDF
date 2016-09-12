@@ -40,22 +40,12 @@ class MapeamentoBalancoDetalhado():
         
         
 ###########################################    
-        
+    
+    
 from ExtracaoTexto import VariacaoEnergiaArmazenada
-#from ExpressoesRegulares import DicionarioRegEx
 
 class MapeamentoVariacaoEnergiaArmazenada():
     
-#    def __init__(self):
-#
-#        dicionario = DicionarioRegEx()
-#    
-#        energia_armazenada_maxima = \   
-#                    self.energia_armazenada_maxima(objeto_bs, dicionario)   
-#        
-#        
-##        return energia_armazenada_maxima
-#    
     
     def energia_armazenada_maxima(self, objeto_bs, regex):
         
@@ -69,13 +59,12 @@ class MapeamentoVariacaoEnergiaArmazenada():
             
         energia_armazenada_maxima  = \
                     energia_armazenada_extrair.capacidade_maxima(
-                            self.objeto_bs, tag, regex['eam_lf'], \
-                                                 regex['eam_tp'] 
+                                    objeto_bs, tag, regex['eam_lf'], \
+                                                    regex['eam_tp'] 
                                                                  )
 
-        energia_armazenada["energia_armazenada_maxima"] = {
-                            "programada" : float(energia_armazenada_maxima[0].replace('.','')),
-                            "verificada" : float(energia_armazenada_maxima[1].replace('.',''))
+        energia_armazenada = { 
+                            "verificada" : float(energia_armazenada_maxima[0].replace('.',''))
                                                         } 
                                         
         print energia_armazenada

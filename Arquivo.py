@@ -45,10 +45,10 @@ class ArquivoIPDO():
         self.objeto_bs = BeautifulSoup(self.html_extraido, 'html.parser')
 
         self.balanco_energetico_resumido = self.extrair_balanco_energetico_resumido()
+
         self.balanco_energetico_detalhado = self.extrair_balanco_energetico_detalhado()
         
-        print "balanco"
-        print self.balanco_energetico_detalhado
+        
         self.arquivo_ipdo = {}
         self.arquivo_ipdo["geral"] = self.balanco_energetico_resumido["geral"] 
         
@@ -73,6 +73,8 @@ class ArquivoIPDO():
 
             imprimir.intercambio_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
             
+            imprimir.energial_potencial_armazenada_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
+        
         except IOError as e:
             self.log_arquivo_ipdo["imprimir_resultados"] = "I/O error({0}): {1}".format(e.errno, e.strerror)                        
             print self.log_arquivo_ipdo["imprimir_resultados"]
@@ -103,7 +105,7 @@ class ArquivoIPDO():
         
         mapeamento_balanco_detalhado = MapeamentoBalancoDetalhado()
         
-        mapeamento_energia_armazenada = MapeamentoVariacaoEnergiaArmazenada()
+        variacao_energia_armazenada = MapeamentoVariacaoEnergiaArmazenada()
         
         sistema_interligado_nacional = {}
 
@@ -112,33 +114,19 @@ class ArquivoIPDO():
             sistema_interligado_nacional[subsistema] = \
                                 self.balanco_energetico_detalhado_por_subsistema(
                                                             dicionario.sistema_interligado[subsistema]['nome']
-                                                                                )                                                                                
-        
+                                                            )
+
+            sistema_interligado_nacional[subsistema]["eam"] = \
+                               variacao_energia_armazenada.energia_armazenada_maxima(
+                                        self.objeto_bs, dicionario.sistema_interligado[subsistema]
+                                        ) 
+                    
+                                                            
         sistema_interligado_nacional['intercambio']  = \
                 mapeamento_balanco_detalhado.intercambio_sistema_interligado_nacional(
                                                         self.objeto_bs, dicionario.intercambio
-                                                                                           )   
+                                                        )   
         return sistema_interligado_nacional
-        
-        
-        def variacao_energia_armazenada(self):
-            
-            mapeamento = MapeamentoVariacaoEnergiaArmazenada()
-            
-            dicionario = DicionarioRegEx()
-            
-            sistema_interligado = ['Sudeste', 'Sul', 'Nordeste', 'Norte'] 
-            
-            energia_armazenada_maxima = {}
-            
-            for subsistema in sistema_interligado:
-                
-                energia_armazenada_maxima[subsistema] = \
-                        mapeamento.energia_armazenada_maxima(
-                                            self.objeto_bs, dicionario[subsistema]
-                                                            )                
-            print energia_armazenada_maxima        
-        
         
         
     ## TODO trnasferir balanco_energetico_detalhado_por_subsistema para a classe de ExtraçãoTexto
