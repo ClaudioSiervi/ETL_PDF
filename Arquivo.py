@@ -125,7 +125,8 @@ class ArquivoIPDO():
                                 extrair.energia_armazenada_reservatorio(
                                         self.objeto_bs, dicionario.sistema_interligado[subsistema]['nome']
                                         )   
-                                        
+            
+            print dicionario.sistema_interligado[subsistema]
             sistema_interligado_nacional[subsistema]["eam"] = \
                                variacao_energia_armazenada.energia_armazenada_maxima(
                                         self.objeto_bs, dicionario.sistema_interligado[subsistema]

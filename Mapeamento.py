@@ -56,8 +56,8 @@ class MapeamentoBalancoDetalhado():
                                                                          )
 
             intercambio[intercambio_energia] = {
-                                "programada" : float(intercambio_extraido[0].replace('.','')),
-                                "verificada" : float(intercambio_extraido[1].replace('.',''))
+                                "verificada" : float(intercambio_extraido[0].replace('.','')),
+                                "programada" : float(intercambio_extraido[1].replace('.',''))
                                            }              
         return intercambio
         
