@@ -7,6 +7,8 @@ Created on Tue Aug 02 17:37:43 2016
 
 import re
 import string
+from Utilitarios import Ferramentas
+from ExpressoesRegulares import DicionarioRegEx, DicionarioStrings
 #from etl_pdf import Ferramentas
 #from Mapeamento import DicionarioStrings
 
@@ -19,6 +21,9 @@ class ExtrairDados():
 #        import re
 
         tag_encontrada = objeto_bs.find(tag, style=re.compile(r''+ left_tx+'.*?'+top_tx))             
+#        print "tag"
+#        print tag_encontrada
+        
         conteudo_tag = tag_encontrada.contents          
         
         texto_extraido_unicode =''
@@ -145,16 +150,59 @@ class BalancoEnergeticoDetalhado():
         
         return ena_extraida
         
+        
+        
     ## varrer a lista de dados para encontrar o valor ear
     # Energia Armazenada nos Reservatórios
-    def energia_armazenada_reservatorio(self, objeto_bs, tag, left_tx, top_tx):
+    def energia_armazenada_reservatorio(self, objeto_bs, sub):
+#    def energia_armazenada_reservatorio(self, objeto_bs, tag, left_tx, top_tx):    
+        
+        tag = 'div'        
+        dicionario_expressoes = DicionarioRegEx()  
+#        dicionario_strings = DicionarioStrings()
+        
+#        subsistemas = dicionario_strings.subsistemas
+        
+        sistema_interligado = dicionario_expressoes.sistema_interligado
         
         extrair = ExtrairDados()
-        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
-        ear_extraida = texto_extraido_str[0]
+        ferramenta = Ferramentas()
+        
+        ear_extraida = {}
+        
+#        for sub in subsistemas:
+        texto_extraido_str = \
+                    extrair.dados_objeto_bs(objeto_bs, tag, 
+                                sistema_interligado[sub]['ear_lf'], 
+                                sistema_interligado[sub]['ear_tp']
+                        )
+                        
+        ear_extraida = {'verificada' : texto_extraido_str[0].replace('.','')}
+        print "ear_extraida 1"
+        print ear_extraida
+        
+        eh_numerico = ferramenta.eh_numerico("subsistema", "ear", ear_extraida['verificada'])
+        
+        if not eh_numerico:
+#                print sub
+            texto_extraido_str = \
+                    extrair.dados_objeto_bs(objeto_bs, tag, 
+                                sistema_interligado[sub]['ear1_lf'], 
+                                sistema_interligado[sub]['ear1_tp']
+                        )
+            
+            ear_extraida = {'verificada' : texto_extraido_str[0].replace('.','')}
+            
+            print "ear_extraida 2"
+            print ear_extraida
+            eh_numerico = ferramenta.eh_numerico("subsistema", "ear", ear_extraida['verificada'])
+        
 #        print ear_extraida
         return ear_extraida
+        
+        
+        
         
         
     # Intercambio de Energia entre subsistemas   
@@ -164,6 +212,8 @@ class BalancoEnergeticoDetalhado():
         
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
+        print "intercambio_extraido"                                       
+        print texto_extraido_str 
         intercambio_extraido = texto_extraido_str[0:2]
 
         return intercambio_extraido

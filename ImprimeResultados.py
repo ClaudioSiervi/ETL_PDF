@@ -170,12 +170,12 @@ class ImprimeArquivosTexto():
             indice_pg = ferramenta.retorna_letra_da_coluna(coluna_energia_pg) + str(ultima_linha)
             indice_vf = ferramenta.retorna_letra_da_coluna(coluna_energia_vf) + str(ultima_linha)
             
-            print intercambio_energia
+#            print intercambio_energia
             
             for intercambio_extraido in balanco_detalhado['intercambio']:
                 
                 if (intercambio_extraido == intercambio_energia):
-                    print balanco_detalhado['intercambio'][intercambio_extraido]
+#                    print balanco_detalhado['intercambio'][intercambio_extraido]
                     ws_balanco_detalhado[indice_pg] = balanco_detalhado['intercambio'][intercambio_extraido]['programada']
                     ws_balanco_detalhado[indice_vf] = balanco_detalhado['intercambio'][intercambio_extraido]['verificada']                   
                     continue
@@ -202,10 +202,11 @@ class ImprimeArquivosTexto():
         
         ws_balanco_detalhado[indice] = geral["data_arquivo"]
     
-#        energias_relatorio = ['ENA', 'EAR', 'EAM']
+
         subsistemas_relatorio = ["sudeste","sul","nordeste","norte"]
         
         # referência excel
+#        energias_relatorio = ['ENA', 'EAR', 'EAM']
         coluna_ena_vf = 1 # primeira ena verificada
         coluna_ear_vf = 2
         coluna_eam_vf = 3
@@ -222,8 +223,10 @@ class ImprimeArquivosTexto():
             for subsistema_extraido in balanco_detalhado:
 
                 if (subsistema_extraido == subsistema):
+#                    print "balanco   "  + indice_ear_vf                  
+#                    print balanco_detalhado[subsistema_extraido]["ear"]
                     ws_balanco_detalhado[indice_ena_vf] = float(balanco_detalhado[subsistema_extraido]["ena"]['verificada'])   
-                    ws_balanco_detalhado[indice_ear_vf] = float(balanco_detalhado[subsistema_extraido]["ear"]['verificada'])   
+                    ws_balanco_detalhado[indice_ear_vf] = float(balanco_detalhado[subsistema_extraido]["ear"]['verificada'])
                     ws_balanco_detalhado[indice_eam_vf] = float(balanco_detalhado[subsistema_extraido]["eam"]['verificada'])   
                     continue
                 

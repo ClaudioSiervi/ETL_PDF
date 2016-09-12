@@ -12,17 +12,18 @@ from Arquivo import ArquivoIPDO
 import os
 
 caminho = os.getcwd()
-mes = "05"
+mes = "08"
 ano = "2016"
 caminho = str(caminho) + "\Scripts-py\\" + mes +"-" + ano
 #caminho += mes  
 
-for dia in xrange(1,2):
+for dia in xrange(1,32):
     if (dia <10):
         nome_arquivo_entrada = caminho + '\IPDO-0'+str(dia)+ "-" + mes +"-" + ano
     else:
         nome_arquivo_entrada = caminho + '\IPDO-'+str(dia)+ "-" + mes +"-" + ano
-     
+    print "dia" + str(dia)
+    
              ##TODO --> Organizar impressões sequencialmente em um arquivo único
     arquivo_ipdo = ArquivoIPDO(nome_arquivo_entrada)
     arquivo_ipdo.imprimir_resultados()   
@@ -38,8 +39,8 @@ for dia in xrange(1,2):
 #    print r
 
 #
-#import json# prettify json
-#print(json.dumps(balanco_detalhado, indent = 5))
+import json# prettify json
+print(json.dumps(balanco_detalhado, indent = 5))
 
 
 #manipula_pdf.salva_texto_em_txt(texto_extraido, 'texto_extraido.txt')

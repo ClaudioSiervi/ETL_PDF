@@ -58,7 +58,7 @@ class Ferramentas:
     
     
     
-    def eh_numerico(self, nome_campo, valor):
+    def eh_numerico(self, subsistema, nome_campo, valor):
 
         try:
             float(valor) # int, long and float
@@ -67,11 +67,13 @@ class Ferramentas:
             try:
                 complex(valor) 
             except ValueError:
+                print "subsistema   ->" + subsistema
                 print nome_campo + ", não tem conteúdo numérico!:"
                 print valor
                 
-                import sys
-                sys.exit()
+                
+#                import sys
+#                sys.exit()
                 return False
     
         return True

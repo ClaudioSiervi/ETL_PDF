@@ -45,8 +45,11 @@ class DicionarioRegEx():
     'ena_lf' : 'left:(44[0-9]|45[0-9]|46[0-9]|47[0-9]|48[0-9]|49[0-9])px',
 
     'ear_tp' : 'top:(143[0-9]|144[0-9])px', 
-    'ear_lf' : 'left:(38[0-9]|39[0-9])px',
-    'ear_wd' : 'width:(8[0-9])px',
+    'ear_lf' : 'left:(38[0-9]|39[0-9]|40[0-9]|41[0-9]|42[0-9]|43[0-9])px',
+
+    'ear1_tp' : 'top:(143[0-9]|144[0-9])px', 
+    'ear1_lf' : 'left:(39[0-9]|40[0-9]|41[0-9]|42[0-9]|43[0-9])px',
+#    'ear_wd' : 'width:(8[0-9])px',
 
     'eam_tp' : 'top:(194[0-9]|195[0-9]|196[0-9])px', 
     'eam_lf' : 'left:(32[0-9]|33[0-9]|34[0-9]|35[0-9])px',
@@ -73,8 +76,11 @@ class DicionarioRegEx():
     'ena_tp' : 'top:(145[0-9]|146[0-9]|147[0-9]|148[0-9]|149[0-9]|150[0-9])px', 
     'ena_lf' : 'left:(26[0-9]|27[0-9]|28[0-9]|29[0-9]|30[0-9]|31[0-9])px',
 
-    'ear_tp' : 'top:(|152[0-9]|153[0-9]|154[0-9]|155[0-9])px', 
+    'ear_tp' : 'top:(152[0-9]|153[0-9]|154[0-9]|155[0-9])px', 
     'ear_lf' : 'left:(22[0-9]|23[0-9]|24[0-9]|25[0-9]|26[0-9])px',
+
+    'ear1_tp' : 'top:(152[0-9]|153[0-9]|154[0-9]|155[0-9])px', 
+    'ear1_lf' : 'left:(23[0-9]|24[0-9]|25[0-9]|26[0-9])px',
 
     'eam_tp' : 'top:(194[0-9]|195[0-9]|196[0-9])px', 
     'eam_lf' : 'left:(37[0-9]|38[0-9]|39[0-9]|40[0-9])px',
@@ -103,8 +109,8 @@ class DicionarioRegEx():
     'ena_tp' : 'top:(116[0-9]|117[0-9]|118[0-5])px', 
     'ena_lf' : 'left:(44[0-9]|45[0-9]|46[0-9]|47[0-9]|48[0-9])px',
 
-    'ear_tp' : 'top:(121[0-9]|122[0-9]|123[0-9])px', 
-    'ear_lf' : 'left:(41[0-9]|42[0-9]|43[0-9])px',
+    'ear_tp' : 'top:(121[0-9]|122[0-9]|123[0-9]|124[0-9])px', 
+    'ear_lf' : 'left:(41[0-9]|42[0-9]|43[0-9]|44[0-9])px',
 
     'eam_tp' : 'top:(194[0-9]|195[0-9]|196[0-9])px', 
     'eam_lf' : 'left:(53[0-9]|52[0-9]|53[0-9]|54[0-9])px'
@@ -134,8 +140,11 @@ class DicionarioRegEx():
     'ear_tp' : 'top:(120[0-9]|121[0-9]|122[0-9]|123[0-9])px', 
     'ear_lf' : 'left:(11[0-9]|12[0-9])px',
 
-    'eam_tp' : 'top:(194[0-9]|195[0-9]|196[0-9])px', 
-    'eam_lf' : 'left:(45[0-9]|46[0-9]|47[0-9]|48[0-9])px'
+    'ear1_tp' : 'top:(120[0-9]|121[0-9]|122[0-9]|123[0-9])px', 
+    'ear1_lf' : 'left:(45[0-9]|46[0-9]|47[0-9])px',
+
+    'eam_tp' : 'top:(197[0-9]|198[0-9])px', 
+    'eam_lf' : 'left:(46[0-9]|47[0-9]|48[0-9])px'
     }
     
     
@@ -150,13 +159,13 @@ class DicionarioRegEx():
 # Intercambio de Energia entre subsistemas      
     intercambio = {
         'norte-imperatriz_tp' : 'top:(114[0-9]|115[0-9])px', 
-        'norte-imperatriz_lf' : 'left:(25[0-9]|26[0-9])px', 
+        'norte-imperatriz_lf' : 'left:(22[0-9]|23[0-9]|24[0-9]|25[0-9]|26[0-9])px', 
         'imperatriz-nordeste_tp' : 'top:(114[0-9]|115[0-9])px',
-        'imperatriz-nordeste_lf' : 'left:(32[0-9]|33[0-9])px',
+        'imperatriz-nordeste_lf' : 'left:(29[0-9]|30[0-9]|31[0-9]|32[0-9]|33[0-9])px',
         'itaipu-sudeste_tp' : 'top:(130[0-9]|131[0-9])px', 
-        'itaipu-sudeste_lf' : 'left:(23[0-9]|24[0-9])px', 
+        'itaipu-sudeste_lf' : 'left:(20[0-9]|21[0-9]|22[0-9]|23[0-9]|24[0-9])px', 
         'sudeste-imperatriz_tp' : 'top:(125[0-9]|126[0-9])px',
-        'sudeste-imperatriz_lf' : 'left:(27[0-9]|28[0-9])px',
+        'sudeste-imperatriz_lf' : 'left:(24[0-9]|25[0-9]|26[0-9]|27[0-9]|28[0-9])px',
         'sul-sudeste_tp' : 'top:(148[0-9]|149[0-9]|150[0-9])px', 
         'sul-sudeste_lf' : 'left:(35[0-9]|36[0-9]|37[0-9]|38[0-9]|39[0-9]|40[0-9]|41[0-9]|42[0-9]|43[0-9]|44[0-9]|45[0-9]|46[0-9]|47[0-9]|48[0-9]|49[0-9]|50[0-9])px', 
         'internacional-sul_tp' : 'top:(147[0-9]|147[0-9]|148[0-9]|149[0-9]|150[0-9]|151[0-9]|152[0-9]|153[0-9])px',
@@ -167,12 +176,15 @@ class DicionarioRegEx():
 
 class DicionarioStrings():
     
-    subsistesmas ={
+    
+    subsistemas = ['sudeste', 'sul', 'nordeste', 'norte']
+    sub ={
         'SE' : 'sudeste',
         'S'  : 'sul',        
         'NE' : 'nordeste',
         'N'  : 'norte',
-        
+        }
+    subsistemas_acronimos = {
         'sudeste' : 'SE',
         'sul' : 'S',
         'nordeste' : ' NE',

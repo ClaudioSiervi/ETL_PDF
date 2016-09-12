@@ -41,6 +41,8 @@ class ArquivoIPDO():
         ferramenta.desbloqueia(nome_arquivo_entrada, nome_arquivo_saida)
         
         self.html_extraido = ferramenta.pdf_para_html(nome_arquivo_saida)    
+        imprimir = ImprimeArquivosTexto()
+        imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
         
         self.objeto_bs = BeautifulSoup(self.html_extraido, 'html.parser')
 
@@ -65,16 +67,15 @@ class ArquivoIPDO():
         try:
             imprimir = ImprimeArquivosTexto()
             
-            imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
+#            imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
+            
             imprimir.balanco_energia_resumido_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_resumido"])
             
-            print self.arquivo_ipdo["balanco_detalhado"]
             imprimir.balanco_energia_detalhado_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
 
             imprimir.intercambio_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
             
             imprimir.energial_potencial_armazenada_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
-        
         
         except IOError as e:
             self.log_arquivo_ipdo["imprimir_resultados"] = "I/O error({0}): {1}".format(e.errno, e.strerror)                        
@@ -108,6 +109,9 @@ class ArquivoIPDO():
         
         variacao_energia_armazenada = MapeamentoVariacaoEnergiaArmazenada()
         
+        extrair = BalancoEnergeticoDetalhado()
+        
+        
         sistema_interligado_nacional = {}
 
         for subsistema in dicionario.sistema_interligado:
@@ -116,17 +120,25 @@ class ArquivoIPDO():
                                 self.balanco_energetico_detalhado_por_subsistema(
                                                             dicionario.sistema_interligado[subsistema]['nome']
                                                             )
-
+           
+            sistema_interligado_nacional[subsistema]["ear"] = \
+                                extrair.energia_armazenada_reservatorio(
+                                        self.objeto_bs, dicionario.sistema_interligado[subsistema]['nome']
+                                        )   
+                                        
             sistema_interligado_nacional[subsistema]["eam"] = \
                                variacao_energia_armazenada.energia_armazenada_maxima(
                                         self.objeto_bs, dicionario.sistema_interligado[subsistema]
                                         ) 
-                    
-                                                            
+                                        
+                                             
         sistema_interligado_nacional['intercambio']  = \
                 mapeamento_balanco_detalhado.intercambio_sistema_interligado_nacional(
                                                         self.objeto_bs, dicionario.intercambio
                                                         )   
+        
+
+        
         return sistema_interligado_nacional
         
         
@@ -143,6 +155,7 @@ class ArquivoIPDO():
         balanco_detalhado = {}
         
         balanco_detalhado[subsistema['nome']] = {}
+#        print subsistema['nome']
         
         qtd_fontes = subsistema['qtd_programada_fontes']
 #                                                                                    (objeto_bs, tag, left_tx, top_tx):  
@@ -212,15 +225,33 @@ class ArquivoIPDO():
                     'verificada' : energia_natural_afluente_vf[0].replace('.','')
                     }
         
-        energia_armazenada_reservatorio_vf = \
-                    balanco_detalhado_extrair.energia_armazenada_reservatorio(
-                            self.objeto_bs, tag, subsistema['ear_lf'], subsistema['ear_tp']
-                        )
-                        
-#        print energia_armazenada_reservatorio_vf
-        balanco_detalhado[subsistema['nome']]['ear'] = {
-                            'verificada' : energia_armazenada_reservatorio_vf.replace('.','')
-                            }  
+#        print "subsistema"                                
+#        print subsistema['nome']
+        
+        
+        
+#        energia_armazenada_reservatorio_vf = \
+#                    balanco_detalhado_extrair.energia_armazenada_reservatorio(self.objeto_bs)
+#                        
+##        print energia_armazenada_reservatorio_vf
+#        balanco_detalhado[subsistema['nome']]['ear'] = {
+#                            'verificada' : energia_armazenada_reservatorio_vf.replace('.','')
+#                            }  
+                            
+                            
+                            
+                            
+#        print "subsistema"                                
+#        print subsistema['nome']
+#        energia_armazenada_reservatorio_vf = \
+#                    balanco_detalhado_extrair.energia_armazenada_reservatorio(
+#                            self.objeto_bs, tag, subsistema['ear_lf'], subsistema['ear_tp']
+#                        )
+#                        
+##        print energia_armazenada_reservatorio_vf
+#        balanco_detalhado[subsistema['nome']]['ear'] = {
+#                            'verificada' : energia_armazenada_reservatorio_vf.replace('.','')
+#                            }  
         
         self.valida_conteudo_numerico(balanco_detalhado)
         
@@ -233,6 +264,8 @@ class ArquivoIPDO():
     
     # valida se o conteúdo dos campos é numerico
     def valida_conteudo_numerico(self, balanco_detalhado):
+        import sys
+        
         
         ferramenta = Ferramentas()
         for subsistema in balanco_detalhado:
@@ -241,10 +274,16 @@ class ArquivoIPDO():
 #                print "   energia " + fonte
                 for tipo in balanco_detalhado[subsistema]["energia"][fonte]:
 #                    print "        " + tipo + " " + str(balanco_detalhado[subsistema]["energia"][fonte]["verificada"])
-                    ferramenta.eh_numerico(fonte, balanco_detalhado[subsistema]["energia"][fonte]["verificada"])
-                    ferramenta.eh_numerico(fonte, balanco_detalhado[subsistema]["energia"][fonte]["programada"])
-        
-        ferramenta.eh_numerico("carga", balanco_detalhado[subsistema]["carga"]["verificada"])
-        ferramenta.eh_numerico("carga", balanco_detalhado[subsistema]["carga"]["programada"])
-        ferramenta.eh_numerico("ena", balanco_detalhado[subsistema]["ena"]["verificada"])
-        ferramenta.eh_numerico("ear", balanco_detalhado[subsistema]["ear"]["verificada"])            
+                    eh_numerico = ferramenta.eh_numerico(subsistema, fonte, balanco_detalhado[subsistema]["energia"][fonte]["verificada"])
+                    if not eh_numerico :sys.exit()                   
+                    eh_numerico = ferramenta.eh_numerico(subsistema, fonte, balanco_detalhado[subsistema]["energia"][fonte]["programada"])
+                    if not eh_numerico :sys.exit()
+            
+            eh_numerico = ferramenta.eh_numerico(subsistema, "carga", balanco_detalhado[subsistema]["carga"]["verificada"])
+            if not eh_numerico :sys.exit()            
+            eh_numerico = ferramenta.eh_numerico(subsistema, "carga", balanco_detalhado[subsistema]["carga"]["programada"])
+            if not eh_numerico :sys.exit()
+            eh_numerico = ferramenta.eh_numerico(subsistema, "ena", balanco_detalhado[subsistema]["ena"]["verificada"])
+            if not eh_numerico :sys.exit()            
+#            eh_numerico = ferramenta.eh_numerico(subsistema, "ear", balanco_detalhado[subsistema]["ear"]["verificada"])            
+#            if not eh_numerico :sys.exit()
