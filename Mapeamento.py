@@ -124,4 +124,38 @@ class MapeamentoVariacaoEnergiaArmazenada():
         print "energia armazenada"                                
         print energia_armazenada
         return energia_armazenada
+    
+    
+    
+###########################################  
+    
+from ExtracaoTexto import DemandasMaximas
+
+class MapeamentoDemandaInstantaneaMaxima():
+    
+    
+    def demanda_maxima_instantanea(self, objeto_bs, regex):
         
+        tag = 'div'
+        
+        demanda_maxima_extrair = DemandasMaximas()    
+        
+        demanda_instantanea = {}
+
+        energia_armazenada_maxima  = \
+                    demanda_maxima_extrair.demanda_instantanea_por_subsistema(
+                                    objeto_bs, tag, regex['carga_hora_verif_lf'], \
+                                                    regex['carga_hora_verif_tp'] 
+                                                                 )
+        print "energia_armazenada_maxima"                                                          
+        print energia_armazenada_maxima
+        
+        demanda_instantanea = {}
+        
+        demanda_instantanea = { 
+                            "verificada" : float(energia_armazenada_maxima[0].replace('.',''))
+                                                        } 
+#        print "demanda_instantanea"                                
+#        print demanda_instantanea
+        
+        return demanda_instantanea

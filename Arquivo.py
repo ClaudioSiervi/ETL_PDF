@@ -7,10 +7,13 @@ Created on Thu Jul 28 23:53:44 2016
 
 
 
-from ExtracaoTexto import BalancoEnergeticoResumido, BalancoEnergeticoDetalhado
+from ExtracaoTexto import BalancoEnergeticoResumido, \
+                          BalancoEnergeticoDetalhado
 from ImprimeResultados import ImprimeArquivosTexto
 from ExpressoesRegulares import DicionarioRegEx
-from Mapeamento import MapeamentoBalancoDetalhado, MapeamentoVariacaoEnergiaArmazenada
+from Mapeamento import MapeamentoBalancoDetalhado, \
+                       MapeamentoVariacaoEnergiaArmazenada, \
+                       MapeamentoDemandaInstantaneaMaxima
 from Utilitarios import Ferramentas
 from bs4 import BeautifulSoup
 
@@ -69,13 +72,21 @@ class ArquivoIPDO():
             
 #            imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
             
-            imprimir.balanco_energia_resumido_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_resumido"])
+            imprimir.balanco_energia_resumido_em_xlsx(self.arquivo_ipdo["geral"], \
+                                                      self.arquivo_ipdo["balanco_resumido"]
+                                                      )
             
-            imprimir.balanco_energia_detalhado_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
+            imprimir.balanco_energia_detalhado_em_xlsx(self.arquivo_ipdo["geral"], \
+                                                       self.arquivo_ipdo["balanco_detalhado"]
+                                                       )
 
-            imprimir.intercambio_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
+            imprimir.intercambio_em_xlsx(self.arquivo_ipdo["geral"], \
+                                         self.arquivo_ipdo["balanco_detalhado"]
+                                         )
             
-            imprimir.energial_potencial_armazenada_em_xlsx(self.arquivo_ipdo["geral"], self.arquivo_ipdo["balanco_detalhado"])
+            imprimir.energial_potencial_armazenada_em_xlsx(self.arquivo_ipdo["geral"], \
+                                                           self.arquivo_ipdo["balanco_detalhado"]
+                                                           )
         
         except IOError as e:
             self.log_arquivo_ipdo["imprimir_resultados"] = "I/O error({0}): {1}".format(e.errno, e.strerror)                        
@@ -95,8 +106,11 @@ class ArquivoIPDO():
         
         arquivo_ipdo = {}
         arquivo_ipdo = {"geral":{"data_arquivo":data_arquivo_ipdo}}
-        arquivo_ipdo["balanco_resumido"] = {"programada":programada, "verificada": verificada}
-
+        arquivo_ipdo["balanco_resumido"] = {
+                                        "programada":programada, 
+                                        "verificada": verificada
+                                        }
+                                        
         return arquivo_ipdo   
 
 
@@ -109,8 +123,9 @@ class ArquivoIPDO():
         
         variacao_energia_armazenada = MapeamentoVariacaoEnergiaArmazenada()
         
-        extrair = BalancoEnergeticoDetalhado()
+        demanda_maxima_mapear = MapeamentoDemandaInstantaneaMaxima()
         
+        extrair = BalancoEnergeticoDetalhado()
         
         sistema_interligado_nacional = {}
 
@@ -130,7 +145,15 @@ class ArquivoIPDO():
                                variacao_energia_armazenada.energia_armazenada_maxima(
                                         self.objeto_bs, dicionario.sistema_interligado[subsistema]
                                         ) 
+            
+            print dicionario.sistema_interligado[subsistema]['nome']
+            
+            sistema_interligado_nacional[subsistema]["demanda"] = \
+                               demanda_maxima_mapear.demanda_maxima_instantanea(
+                                        self.objeto_bs, dicionario.sistema_interligado[subsistema]
+                                        ) 
                                         
+        
         sistema_interligado_nacional['itaipu'] = {'unidade': 'MWm'}
         sistema_interligado_nacional['itaipu']['energia']  = \
                 mapeamento_balanco_detalhado.energia_itaipu(
@@ -153,7 +176,9 @@ class ArquivoIPDO():
         balanco_detalhado_extrair = BalancoEnergeticoDetalhado()  
         
         dicionario = DicionarioRegEx()
+        
         sistema_interligado = dicionario.sistema_interligado
+        
         subsistema = sistema_interligado[nome_subsistema]
         
         balanco_detalhado = {}

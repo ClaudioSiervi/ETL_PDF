@@ -254,4 +254,31 @@ class VariacaoEnergiaArmazenada():
 ############################################################################
     # Página 14
 class DemandasMaximas():
-    demandas = 99
+    
+    # Demanda Máxima instantânea 
+    def demanda_instantanea_por_subsistema(self, objeto_bs, tag, left_tx, top_tx):
+        
+        extrair = ExtrairDados()
+        
+        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+        
+        print texto_extraido_str
+    
+        if len(texto_extraido_str) == 2:
+            texto_extraido_lista = string.split(texto_extraido_str[0], ' ')
+                
+        elif len(texto_extraido_str) == 3:
+            texto_extraido_lista = string.split(texto_extraido_str[1], ' ')
+        
+        print texto_extraido_lista
+        
+        if len(texto_extraido_lista) == 4:
+            demanda, data = [texto_extraido_lista[0], texto_extraido_lista[3]]
+        
+        elif len(texto_extraido_lista) == 5:
+            demanda, data = [texto_extraido_lista[0], texto_extraido_lista[4]]
+            
+#        demanda, data = [texto_extraido_lista[0], texto_extraido_lista[3]]
+        
+        print demanda + '    ' + data
+        return demanda, data

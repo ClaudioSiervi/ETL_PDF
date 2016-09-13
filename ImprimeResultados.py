@@ -27,7 +27,7 @@ class ImprimeArquivosTexto():
         self.status_escrita = arquivo_texto.write(texto)
         arquivo_texto.close()
         
-
+## TODO fazer refactory
     # Imprime o resumo do balanço energético    
     def balanco_energia_resumido_em_xlsx(self, geral, balanco_resumido):
         
@@ -50,7 +50,7 @@ class ImprimeArquivosTexto():
         for conta_coluna_pg in xrange(1, num_elementos_pg):
             letra = ferramenta.retorna_letra_da_coluna(conta_coluna_pg + 1)
             indice = letra + str(ultima_linha)            
-            ws_balanco_resumido[indice] = float(balanco_resumido["programada"][conta_valores])       
+            ws_balanco_resumido[indice] = float(balanco_resumido["programada"][conta_valores].replace('.',''))       
             conta_valores = conta_valores + 1
         
         num_elementos_vf = len(balanco_resumido["verificada"]) + conta_coluna_pg
@@ -58,15 +58,19 @@ class ImprimeArquivosTexto():
         
         for conta_coluna_vf in xrange(conta_coluna_pg, num_elementos_vf):
             letra = ferramenta.retorna_letra_da_coluna(conta_coluna_vf + 2)
+            
             indice = letra + str(ultima_linha)            
-#            print balanco_resumido["verificada"][conta_valores]
-            ws_balanco_resumido[indice] = balanco_resumido["verificada"][conta_valores]
+            
+            ws_balanco_resumido[indice] = balanco_resumido["verificada"][conta_valores].replace('.','')
+            
             conta_valores = conta_valores + 1                
         
         wb_ipdo.save('IPDO.xlsx')   # sobrescreve resultados
 
         
-    # Imprime resultados na aba 'BalancoDetalhado' da planilha 'IPDO.xlsx'
+        
+#### Imprime a energia gerada e a carga de cada subsistema e a geração de Itaipu
+  # no arquivo de saída --> planilha 'IPDO.xlsx', aba 'BalancoDetalhado'
     def balanco_energia_detalhado_em_xlsx(self, geral, balanco_detalhado):
         
         wb_ipdo = load_workbook('IPDO.xlsx') 
@@ -98,7 +102,7 @@ class ImprimeArquivosTexto():
         for coluna in xrange(2, (colunas_relatorio+2)):
             indice = ferramenta.retorna_letra_da_coluna(coluna) + str(ultima_linha)
             ws_balanco_detalhado[indice] = 0 
-            
+        
         for subsistema in subsistemas_relatorio:    
 
             for fonte in fontes_relatorio:
@@ -125,12 +129,14 @@ class ImprimeArquivosTexto():
                         
             coluna_energia_pg += 7  # pula  fontes verificadas
             coluna_energia_vf += 7  # pula fontes programadas
-            coluna_carga_pg += 14             
+            coluna_carga_pg += 14   # pula  fontes verificadas e programadas          
             coluna_carga_vf += 14 
-            
+        
+        
         # Imprime geração de Itaipu    
         coluna_energia_pg = 57 # primeira 50hz programada
         coluna_energia_vf = 60        
+        
         for frequencia in balanco_detalhado['itaipu']['energia']:
             coluna_energia_pg += 1
             coluna_energia_vf += 1
@@ -186,12 +192,9 @@ class ImprimeArquivosTexto():
             indice_pg = ferramenta.retorna_letra_da_coluna(coluna_energia_pg) + str(ultima_linha)
             indice_vf = ferramenta.retorna_letra_da_coluna(coluna_energia_vf) + str(ultima_linha)
             
-#            print intercambio_energia
-            
             for intercambio_extraido in balanco_detalhado['intercambio']:
                 
                 if (intercambio_extraido == intercambio_energia):
-#                    print balanco_detalhado['intercambio'][intercambio_extraido]
                     ws_balanco_detalhado[indice_pg] = balanco_detalhado['intercambio'][intercambio_extraido]['programada']
                     ws_balanco_detalhado[indice_vf] = balanco_detalhado['intercambio'][intercambio_extraido]['verificada']                   
                     continue
@@ -202,10 +205,8 @@ class ImprimeArquivosTexto():
     # ENA, EAR e EAM   
     def energial_potencial_armazenada_em_xlsx(self, geral, balanco_detalhado):
         
-#        print "balanco_detalhado"
-#        print balanco_detalhado
-        
         wb_ipdo = load_workbook('IPDO.xlsx') 
+        
         ws_balanco_detalhado = wb_ipdo['EnergiaPotencialArmazenada']
         
         ferramenta = Ferramentas()
@@ -222,7 +223,7 @@ class ImprimeArquivosTexto():
         subsistemas_relatorio = ["sudeste","sul","nordeste","norte"]
         
         # referência excel
-#        energias_relatorio = ['ENA', 'EAR', 'EAM']
+        # energias_relatorio = ['ENA', 'EAR', 'EAM']
         coluna_ena_vf = 1 # primeira ena verificada
         coluna_ear_vf = 2
         coluna_eam_vf = 3
@@ -239,8 +240,6 @@ class ImprimeArquivosTexto():
             for subsistema_extraido in balanco_detalhado:
 
                 if (subsistema_extraido == subsistema):
-#                    print "balanco   "  + indice_ear_vf                  
-#                    print balanco_detalhado[subsistema_extraido]["ear"]
                     ws_balanco_detalhado[indice_ena_vf] = float(balanco_detalhado[subsistema_extraido]["ena"]['verificada'])   
                     ws_balanco_detalhado[indice_ear_vf] = float(balanco_detalhado[subsistema_extraido]["ear"]['verificada'])
                     ws_balanco_detalhado[indice_eam_vf] = float(balanco_detalhado[subsistema_extraido]["eam"]['verificada'])   
@@ -249,8 +248,6 @@ class ImprimeArquivosTexto():
             coluna_ena_vf += 2
             coluna_ear_vf += 2
             coluna_eam_vf += 2
-
-#            coluna_energia_vf += 7  # pula fontes programadas
   
         wb_ipdo.save('IPDO.xlsx')   # sobrescreve resultados
         

@@ -37,7 +37,7 @@ ano = "2016"
 caminho = str(caminho) + "\Scripts-py\\" + mes +"-" + ano
 #caminho += mes  
 
-for dia in xrange(1,32):
+for dia in xrange(3,4):
     if (dia <10):
         nome_arquivo_entrada = caminho + '\IPDO-0'+str(dia)+ "-" + mes +"-" + ano
     else:
