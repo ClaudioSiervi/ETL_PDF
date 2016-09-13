@@ -126,20 +126,23 @@ class ArquivoIPDO():
                                         self.objeto_bs, dicionario.sistema_interligado[subsistema]['nome']
                                         )   
             
-            print dicionario.sistema_interligado[subsistema]
             sistema_interligado_nacional[subsistema]["eam"] = \
                                variacao_energia_armazenada.energia_armazenada_maxima(
                                         self.objeto_bs, dicionario.sistema_interligado[subsistema]
                                         ) 
                                         
-                                             
+        sistema_interligado_nacional['itaipu'] = {'unidade': 'MWm'}
+        sistema_interligado_nacional['itaipu']['energia']  = \
+                mapeamento_balanco_detalhado.energia_itaipu(
+                                                        self.objeto_bs, dicionario.itaipu
+                                                        )   
+                                                        
+                                                        
         sistema_interligado_nacional['intercambio']  = \
                 mapeamento_balanco_detalhado.intercambio_sistema_interligado_nacional(
                                                         self.objeto_bs, dicionario.intercambio
                                                         )   
-        
 
-        
         return sistema_interligado_nacional
         
         
@@ -225,7 +228,8 @@ class ArquivoIPDO():
         balanco_detalhado[subsistema['nome']]['ena'] = {
                     'verificada' : energia_natural_afluente_vf[0].replace('.','')
                     }
-        
+        balanco_detalhado[subsistema['nome']]['ena']['verificada'] = \
+                        balanco_detalhado[subsistema['nome']]['ena']['verificada'].replace(',','.')
 #        print "subsistema"                                
 #        print subsistema['nome']
         

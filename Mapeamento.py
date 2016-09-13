@@ -30,8 +30,40 @@ class MapeamentoBalancoDetalhado():
 #        print energia_armazenada
 #        return energia_armazenada
 #        
+    
+    def energia_itaipu(self, objeto_bs, regex):
+        # regex -> REGular EXpression
+    
+        tag = 'div'        
         
+        balanco_detalhado_extrair = BalancoEnergeticoDetalhado()  
         
+        itaipu = ['50Hz', '60Hz', 'Total']
+ 
+        energia_extraida_vf = \
+                balanco_detalhado_extrair.energia_itaipu(
+                        objeto_bs, tag, regex['prod_verif_lf'],
+                                        regex['prod_verif_tp']
+                                                )                                                
+        print energia_extraida_vf                
+        
+        energia_extraida_pg = \
+                balanco_detalhado_extrair.energia_itaipu(
+                        objeto_bs, tag, regex['prod_prog_lf'],
+                                        regex['prod_prog_tp']
+                                                          )
+        print energia_extraida_pg  
+        
+        energia_itaipu = {}
+        for indice, item in enumerate(itaipu):                                                  
+            energia_itaipu[item] = {
+                            "verificada" : float(energia_extraida_vf[indice].replace('.','')),
+                            "programada" : float(energia_extraida_pg[indice].replace('.',''))
+                                       }              
+        print energia_itaipu
+        return energia_itaipu     
+        
+    
     
     def intercambio_sistema_interligado_nacional(self, objeto_bs, regex):
         # regex -> REGular EXpression

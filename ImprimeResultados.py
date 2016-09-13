@@ -127,6 +127,22 @@ class ImprimeArquivosTexto():
             coluna_energia_vf += 7  # pula fontes programadas
             coluna_carga_pg += 14             
             coluna_carga_vf += 14 
+            
+        # Imprime geração de Itaipu    
+        coluna_energia_pg = 57 # primeira 50hz programada
+        coluna_energia_vf = 60        
+        for frequencia in balanco_detalhado['itaipu']['energia']:
+            coluna_energia_pg += 1
+            coluna_energia_vf += 1
+            
+            indice_pg = ferramenta.retorna_letra_da_coluna(coluna_energia_pg) + str(ultima_linha)
+            indice_vf = ferramenta.retorna_letra_da_coluna(coluna_energia_vf) + str(ultima_linha)
+            print indice_pg
+            print balanco_detalhado['itaipu']['energia'][frequencia]["programada"]
+            
+            ws_balanco_detalhado[indice_pg] = (balanco_detalhado['itaipu']['energia'][frequencia]["programada"])
+            ws_balanco_detalhado[indice_vf] = (balanco_detalhado['itaipu']['energia'][frequencia]["verificada"])
+
 
         wb_ipdo.save('IPDO.xlsx')   # sobrescreve resultados
         

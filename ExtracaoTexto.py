@@ -137,7 +137,22 @@ class BalancoEnergeticoDetalhado():
         carga_extraida = texto_extraido_str[0:(dim-1)]  # retira [dim]=''
         
         return carga_extraida
-
+    
+    
+    # Energia Itaipu    
+    def energia_itaipu(self, objeto_bs, tag, left_tx, top_tx):
+        
+        extrair = ExtrairDados()
+        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+        
+        print texto_extraido_str
+        
+        dim = len(texto_extraido_str)
+        energia_extraida = texto_extraido_str[0:(dim-1)]  # retira [dim]=''
+        
+        print energia_extraida
+        return energia_extraida
+        
     
     # Energia Natural Afluente
     def energia_narutal_afluente(self, objeto_bs, tag, left_tx, top_tx):
