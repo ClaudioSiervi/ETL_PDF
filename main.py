@@ -37,7 +37,7 @@ ano = "2016"
 caminho = str(caminho) + "\Scripts-py\\" + mes +"-" + ano
 #caminho += mes  
 
-for dia in xrange(3,4):
+for dia in xrange(1,32):
     if (dia <10):
         nome_arquivo_entrada = caminho + '\IPDO-0'+str(dia)+ "-" + mes +"-" + ano
     else:
@@ -46,7 +46,7 @@ for dia in xrange(3,4):
     
              ##TODO --> Organizar impressões sequencialmente em um arquivo único
     arquivo_ipdo = ArquivoIPDO(nome_arquivo_entrada)
-    arquivo_ipdo.imprimir_resultados()   
+#    arquivo_ipdo.imprimir_resultados()   
     
         
 #    #    print arquivo_ipdo.dados_extraidos

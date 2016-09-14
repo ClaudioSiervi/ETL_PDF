@@ -42,7 +42,8 @@ class ArquivoIPDO():
         self.log_arquivo_ipdo = {}          # log de ocorrências
         
         ferramenta.desbloqueia(nome_arquivo_entrada, nome_arquivo_saida)
-        
+
+# Imprime no começo da execução, antes de dar qlqr erro
         self.html_extraido = ferramenta.pdf_para_html(nome_arquivo_saida)    
         imprimir = ImprimeArquivosTexto()
         imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
@@ -152,7 +153,7 @@ class ArquivoIPDO():
                                demanda_maxima_mapear.demanda_maxima_instantanea(
                                         self.objeto_bs, dicionario.sistema_interligado[subsistema]
                                         ) 
-                                        
+#                                        
         
         sistema_interligado_nacional['itaipu'] = {'unidade': 'MWm'}
         sistema_interligado_nacional['itaipu']['energia']  = \
