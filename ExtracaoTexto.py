@@ -144,13 +144,10 @@ class BalancoEnergeticoDetalhado():
         
         extrair = ExtrairDados()
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
-        
-        print texto_extraido_str
-        
+
         dim = len(texto_extraido_str)
         energia_extraida = texto_extraido_str[0:(dim-1)]  # retira [dim]=''
         
-        print energia_extraida
         return energia_extraida
         
     
@@ -169,7 +166,7 @@ class BalancoEnergeticoDetalhado():
         
     ## varrer a lista de dados para encontrar o valor ear
     # Energia Armazenada nos Reservatórios
-    def energia_armazenada_reservatorio(self, objeto_bs, sub):
+    def energia_armazenada_reservatorio(self, objeto_bs, subsistema):
 #    def energia_armazenada_reservatorio(self, objeto_bs, tag, left_tx, top_tx):    
         
         tag = 'div'        
@@ -189,35 +186,33 @@ class BalancoEnergeticoDetalhado():
 #        for sub in subsistemas:
         texto_extraido_str = \
                     extrair.dados_objeto_bs(objeto_bs, tag, 
-                                sistema_interligado[sub]['ear_lf'], 
-                                sistema_interligado[sub]['ear_tp']
+                                sistema_interligado[subsistema]['ear_lf'], 
+                                sistema_interligado[subsistema]['ear_tp']
                         )
                         
         ear_extraida = {'verificada' : texto_extraido_str[0].replace('.','')}
         print "ear_extraida 1"
         print ear_extraida
         
-        eh_numerico = ferramenta.eh_numerico("subsistema", "ear", ear_extraida['verificada'])
+        eh_numerico = ferramenta.eh_numerico(sistema_interligado[subsistema]['nome'], "ear", ear_extraida['verificada'])
         
         if not eh_numerico:
 #                print sub
             texto_extraido_str = \
                     extrair.dados_objeto_bs(objeto_bs, tag, 
-                                sistema_interligado[sub]['ear1_lf'], 
-                                sistema_interligado[sub]['ear1_tp']
+                                sistema_interligado[subsistema]['ear1_lf'], 
+                                sistema_interligado[subsistema]['ear1_tp']
                         )
             
             ear_extraida = {'verificada' : texto_extraido_str[0].replace('.','')}
             
             print "ear_extraida 2"
             print ear_extraida
-            eh_numerico = ferramenta.eh_numerico("subsistema", "ear", ear_extraida['verificada'])
+            eh_numerico = ferramenta.eh_numerico(sistema_interligado[subsistema]['nome'], "ear", ear_extraida['verificada'])
         
 #        print ear_extraida
         return ear_extraida
-        
-        
-        
+              
         
         
     # Intercambio de Energia entre subsistemas   
@@ -227,11 +222,12 @@ class BalancoEnergeticoDetalhado():
         
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
-        print "intercambio_extraido"                                       
-        print texto_extraido_str 
+#        print "intercambio_extraido"                                       
+#        print texto_extraido_str 
         intercambio_extraido = texto_extraido_str[0:2]
 
         return intercambio_extraido
+
 
 ############################################################################
     # Página 3
@@ -256,13 +252,14 @@ class VariacaoEnergiaArmazenada():
 class DemandasMaximas():
     
     # Demanda Máxima instantânea 
-    def demanda_instantanea_por_subsistema(self, objeto_bs, tag, left_tx, top_tx):
+    def demanda_instantanea_verificada(self, objeto_bs, tag, left_tx, top_tx):
         
         extrair = ExtrairDados()
         
         texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
         
-        print texto_extraido_str
+#        print 'demanda_instantanea_verificada'
+#        print texto_extraido_str
     
         if len(texto_extraido_str) == 2:
             texto_extraido_lista = string.split(texto_extraido_str[0], ' ')
@@ -270,15 +267,40 @@ class DemandasMaximas():
         elif len(texto_extraido_str) == 3:
             texto_extraido_lista = string.split(texto_extraido_str[1], ' ')
         
-        print texto_extraido_lista
+#        print texto_extraido_lista
         
         if len(texto_extraido_lista) == 4:
             demanda, data = [texto_extraido_lista[0], texto_extraido_lista[3]]
         
         elif len(texto_extraido_lista) == 5:
             demanda, data = [texto_extraido_lista[0], texto_extraido_lista[4]]
-            
-#        demanda, data = [texto_extraido_lista[0], texto_extraido_lista[3]]
-        
-        print demanda + '    ' + data
+       
+#        print demanda + '    ' + data
         return demanda, data
+        
+        
+        
+    def carga_historica_recorde(self, objeto_bs, tag, left_tx, top_tx):
+        
+        extrair = ExtrairDados()
+        
+        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+        
+#        print "carga histórica"
+#        print texto_extraido_str
+        
+        texto_extraido_lista = string.split(texto_extraido_str[0], ' ')
+        
+        return texto_extraido_lista[0]
+        
+        
+    def data_carga_recorde(self, objeto_bs, tag, left_tx, top_tx):
+        
+        extrair = ExtrairDados()
+        
+        texto_extraido_str = extrair.dados_objeto_bs(objeto_bs, tag, left_tx, top_tx)
+        
+#        print "data_carga_recorde"
+#        print texto_extraido_str
+        
+        return texto_extraido_str[0]

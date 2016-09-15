@@ -70,7 +70,7 @@ class DicionarioRegEx():
         'eam_lf' : 'left:(36[0-9]|37[0-9]|38[0-9]|39[0-9]|40[0-9])px',
         
         # Demanda Máxima Instantânea (Página 14)
-        'carga_hora_verif_tp' : 'top:(1229[0-9]|1230[0-9])px',
+        'carga_hora_verif_tp' : 'top:(1229[0-9]|1230[0-9]|1315[0-9]|1316[0-9]|1317[0-9])px',
         'carga_hora_verif_lf' : 'left:(22[0-9]|23[0-9]|24[0-9])px',
 
         'carga_hist_tp' : 'top:(1229[0-9]|1230[0-9])px',
@@ -113,15 +113,15 @@ class DicionarioRegEx():
         'eam_lf' : 'left:(31[0-9]|32[0-9]|33[0-9]|34[0-9]|35[0-9])px',
 
         # Demanda Máxima Instantânea (Página 14)
-        'carga_hora_verif_tp' : 'top:(1226[0-9]|1227[0-9])px',
+        'carga_hora_verif_tp' : 'top:(1226[0-9]|1227[0-9]|1315[0-9]|1316[0-9]|1317[0-9])px',
         'carga_hora_verif_lf' : 'left:(22[0-9]|23[0-9]|24[0-9])px',
 ## TODO expressão do sul é diferente dos outros
         'carga_hist_tp' : 'top:(1226[0-9]|1227[0-9])px',
         'carga_hist_lf' : 'left:(34[0-9]|35[0-9]|36[0-9])px',
 
-#        'data_hist_tp' : 'top(1229[0-9]|1230[0-9])px',
-#        'data_hist_lf' : 'left(40[0-9]|41[0-9]|42[0-9])px'
-       
+        'data_hist_tp' : 'top:(1226[0-9]|1227[0-9]|1229[0-9]|1230[0-9])px',
+        'data_hist_lf' : 'left:(23[0-9]|35[0-9]|40[0-9]|41[0-9]|42[0-9])px'
+#       left:357px; top:12270px
         }
     
     
@@ -154,7 +154,7 @@ class DicionarioRegEx():
         'eam_lf' : 'left:(49[0-9]|50[0-9]|51[0-9]|52[0-9]|53[0-9]|54[0-9])px',
         
         # Demanda Máxima Instantânea (Página 14)
-        'carga_hora_verif_tp' : 'top:(1231[0-9]|1232[0-9])px',
+        'carga_hora_verif_tp' : 'top:(1231[0-9]|1232[0-9]|1315[0-9]|1316[0-9]|1317[0-9])px',
         'carga_hora_verif_lf' : 'left:(22[0-9]|23[0-9]|24[0-9])px',
 
         'carga_hist_tp' : 'top:(1231[0-9]|1232[0-9])px',
@@ -196,7 +196,7 @@ class DicionarioRegEx():
         'eam_lf' : 'left:(43[0-9]|44[0-9]|45[0-9]|46[0-9]|47[0-9]|48[0-9])px',
 
         # Demanda Máxima Instantânea (Página 14)
-        'carga_hora_verif_tp' : 'top:(1230[0-9]|1231[0-9])px',
+        'carga_hora_verif_tp' : 'top:(1230[0-9]|1231[0-9]|1315[0-9]|1316[0-9]|1317[0-9])px',
         'carga_hora_verif_lf' : 'left:(22[0-9]|23[0-9]|24[0-9])px',   
 
         'carga_hist_tp' : 'top:(1231[0-9]|1232[0-9])px',

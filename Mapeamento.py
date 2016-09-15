@@ -65,6 +65,7 @@ class MapeamentoBalancoDetalhado():
         
     
     
+    
     def intercambio_sistema_interligado_nacional(self, objeto_bs, regex):
         # regex -> REGular EXpression
     
@@ -140,21 +141,42 @@ class MapeamentoDemandaInstantaneaMaxima():
         
         demanda_maxima_extrair = DemandasMaximas()    
         
-        demanda_instantanea = {}
+#        demanda_instantanea = {}
 
-        energia_armazenada_maxima  = \
-                    demanda_maxima_extrair.demanda_instantanea_por_subsistema(
+        demanda_instantanea_lista  = \
+                    demanda_maxima_extrair.demanda_instantanea_verificada(
                                     objeto_bs, tag, regex['carga_hora_verif_lf'], \
                                                     regex['carga_hora_verif_tp'] 
                                                                  )
-        print "energia_armazenada_maxima"                                                          
-        print energia_armazenada_maxima
+                                                                 
+        carga_demandada_recorde  = \
+                    demanda_maxima_extrair.carga_historica_recorde(
+                                    objeto_bs, tag, regex['carga_hist_lf'], \
+                                                    regex['carga_hist_tp'] 
+                                                                 )
+                                                                 
+        data_carga_recorde  = \
+                    demanda_maxima_extrair.data_carga_recorde(
+                                    objeto_bs, tag, regex['data_hist_lf'], \
+                                                    regex['data_hist_tp'] 
+                                                                 )
+#        print "demanda_instantanea"                                                          
+#        print demanda_instantanea
         
         demanda_instantanea = {}
         
-        demanda_instantanea = { 
-                            "verificada" : float(energia_armazenada_maxima[0].replace('.',''))
+        demanda_instantanea['carga']= { 
+                            "verificada" : demanda_instantanea_lista[0].replace('.',''),
+                            "recorde" : carga_demandada_recorde
                                                         } 
+                                                        
+        demanda_instantanea['data']= { 
+                            "carga_verificada" : demanda_instantanea_lista[1].replace('.',''),
+                            "carga_recorde" : data_carga_recorde
+                                                        }                                                
+                                                        
+                                                        
+                                                        
 #        print "demanda_instantanea"                                
 #        print demanda_instantanea
         

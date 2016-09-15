@@ -94,6 +94,7 @@ class ArquivoIPDO():
             print self.log_arquivo_ipdo["imprimir_resultados"]
       
       
+      
     # Dados da página 1 
     def extrair_balanco_energetico_resumido(self):
 
@@ -149,17 +150,29 @@ class ArquivoIPDO():
             
             print dicionario.sistema_interligado[subsistema]['nome']
             
+            
             sistema_interligado_nacional[subsistema]["demanda"] = \
                                demanda_maxima_mapear.demanda_maxima_instantanea(
                                         self.objeto_bs, dicionario.sistema_interligado[subsistema]
                                         ) 
-#                                        
+#            
+                                        
+                                        
+        sistema_interligado_nacional[subsistema]["demanda"]['unidade'] = {'carga': 'MW'}
         
-        sistema_interligado_nacional['itaipu'] = {'unidade': 'MWm'}
+        
+        
+
+        sistema_interligado_nacional['itaipu'] = {'energia' : ''}        
+        sistema_interligado_nacional['itaipu'] = {'unidade' : ''}        
+        sistema_interligado_nacional['itaipu']['unidade'] = {
+                                                            'energia': 'MWm'
+                                                            }
+
         sistema_interligado_nacional['itaipu']['energia']  = \
-                mapeamento_balanco_detalhado.energia_itaipu(
+                                    mapeamento_balanco_detalhado.energia_itaipu(
                                                         self.objeto_bs, dicionario.itaipu
-                                                        )   
+                                                                                )   
                                                         
                                                         
         sistema_interligado_nacional['intercambio']  = \
@@ -256,34 +269,8 @@ class ArquivoIPDO():
                     }
         balanco_detalhado[subsistema['nome']]['ena']['verificada'] = \
                         balanco_detalhado[subsistema['nome']]['ena']['verificada'].replace(',','.')
-#        print "subsistema"                                
-#        print subsistema['nome']
-        
-        
-        
-#        energia_armazenada_reservatorio_vf = \
-#                    balanco_detalhado_extrair.energia_armazenada_reservatorio(self.objeto_bs)
-#                        
-##        print energia_armazenada_reservatorio_vf
-#        balanco_detalhado[subsistema['nome']]['ear'] = {
-#                            'verificada' : energia_armazenada_reservatorio_vf.replace('.','')
-#                            }  
-                            
-                            
-                            
-                            
-#        print "subsistema"                                
-#        print subsistema['nome']
-#        energia_armazenada_reservatorio_vf = \
-#                    balanco_detalhado_extrair.energia_armazenada_reservatorio(
-#                            self.objeto_bs, tag, subsistema['ear_lf'], subsistema['ear_tp']
-#                        )
-#                        
-##        print energia_armazenada_reservatorio_vf
-#        balanco_detalhado[subsistema['nome']]['ear'] = {
-#                            'verificada' : energia_armazenada_reservatorio_vf.replace('.','')
-#                            }  
-        
+
+
         self.valida_conteudo_numerico(balanco_detalhado)
         
         return balanco_detalhado[subsistema['nome']] 
