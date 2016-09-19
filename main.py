@@ -34,10 +34,10 @@ import fabric
 caminho = os.getcwd()
 mes = "08"
 ano = "2016"
-caminho = str(caminho) + "\Scripts-py\\" + mes +"-" + ano
+caminho = str(caminho) + "\PDFs IPDO\\" + mes +"-" + ano
 #caminho += mes  
 
-for dia in xrange(12,13):
+for dia in xrange(4,5):
     if (dia <10):
         nome_arquivo_entrada = caminho + '\IPDO-0'+str(dia)+ "-" + mes +"-" + ano
     else:
