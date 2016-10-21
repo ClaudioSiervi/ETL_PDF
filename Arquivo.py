@@ -44,8 +44,10 @@ class ArquivoIPDO():
         ferramenta.desbloqueia(nome_arquivo_entrada, nome_arquivo_saida)
 
 # Imprime no começo da execução, antes de dar qlqr erro
-        self.html_extraido = ferramenta.pdf_para_html(nome_arquivo_saida)    
+        self.html_extraido = ferramenta.pdf_para_html(nome_arquivo_saida)  
+        
         imprimir = ImprimeArquivosTexto()
+        
         imprimir.texto_em_html(self.html_extraido, 'texto_extraido.html')
         
         self.objeto_bs = BeautifulSoup(self.html_extraido, 'html.parser')
@@ -125,7 +127,7 @@ class ArquivoIPDO():
         
         variacao_energia_armazenada = MapeamentoVariacaoEnergiaArmazenada()
         
-        demanda_maxima_mapear = MapeamentoDemandaInstantaneaMaxima()
+#        demanda_maxima_mapear = MapeamentoDemandaInstantaneaMaxima()
         
         extrair = BalancoEnergeticoDetalhado()
         
@@ -151,14 +153,14 @@ class ArquivoIPDO():
             print dicionario.sistema_interligado[subsistema]['nome']
             
             
-            sistema_interligado_nacional[subsistema]["demanda"] = \
-                               demanda_maxima_mapear.demanda_maxima_instantanea(
-                                        self.objeto_bs, dicionario.sistema_interligado[subsistema]
-                                        ) 
-#            
-                                        
-                                        
-        sistema_interligado_nacional[subsistema]["demanda"]['unidade'] = {'carga': 'MW'}
+#            sistema_interligado_nacional[subsistema]["demanda"] = \
+#                               demanda_maxima_mapear.demanda_maxima_instantanea(
+#                                        self.objeto_bs, dicionario.sistema_interligado[subsistema]
+#                                        ) 
+##            
+#                                        
+#                                        
+#        sistema_interligado_nacional[subsistema]["demanda"]['unidade'] = {'carga': 'MW'}
         
         
         

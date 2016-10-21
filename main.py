@@ -10,7 +10,7 @@ from Arquivo import ArquivoIPDO
 #from ImprimeResultados import ImprimeArquivosTexto
 
 import os
-import fabric
+#import fabric
 ## TODO enviar logs no slack
 
 #def send_to_slack(user,message,emoji):
@@ -32,12 +32,12 @@ import fabric
    
    
 caminho = os.getcwd()
-mes = "08"
+mes = "04"
 ano = "2016"
-caminho = str(caminho) + "\PDFs IPDO\\" + mes +"-" + ano
+caminho = str(caminho) + "\PDF_IPDO\\" + mes +"-" + ano
 #caminho += mes  
 
-for dia in xrange(4,5):
+for dia in xrange(2,32):
     if (dia <10):
         nome_arquivo_entrada = caminho + '\IPDO-0'+str(dia)+ "-" + mes +"-" + ano
     else:
@@ -51,14 +51,23 @@ for dia in xrange(4,5):
         
 #    #    print arquivo_ipdo.dados_extraidos
     balanco_detalhado = arquivo_ipdo.dados_extraidos['balanco_detalhado']
-#    balanco_detalhado = arquivo_ipdo.balanco_detalhado.imprimir() classe balanco_detalhado
     
-    from firebase import Firebase
-    f = Firebase("https://wesee-dw.firebaseio.com/balanco_detalhado/"+ mes +"-" + ano)
-    r = f.post(balanco_detalhado)
+    
+    #https://rominirani.com/firebase-iot-tutorial-46203a92f869#.l6foxuhak
+#    https://codedump.io/share/sXt99llUbBb7/1/post-data-to-firebase-using-python
 
-import json# prettify json
-print(json.dumps(balanco_detalhado, indent = 5))
+    import json# prettify json
+
+    import requests
+    firebase_url = 'https://wesee-dw.firebaseio.com/balanco_detalhado/'+str(ano)+'/'+str(mes)+'/'+str(dia)
+    
+#    result = requests.post(firebase_url, data=json.dumps(balanco_detalhado))
+    
+    result = requests.post(firebase_url+'.json', data=json.dumps(balanco_detalhado))
+
+
+
+    print(json.dumps(balanco_detalhado, indent = 5))
  
  
 #send_to_slack('Jimi Hendrix Falastrão',balanco_detalhado,':chipmunk:')

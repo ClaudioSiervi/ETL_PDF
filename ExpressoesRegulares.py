@@ -184,9 +184,13 @@ class DicionarioRegEx():
         'carga_prog_tp' : 'top:(114[0-9]|115[0-9])px', 
         'carga_prog_lf' : 'left:(18[0-9]|19[0-9]|20[0-9]|21[0-9])px',
     
-        'ena_tp' : 'top:(115[0-9]|116[0-9]|117[0-9])px', 
-        'ena_lf' : 'left:(14[0-9]|15[0-9]|16[0-9])px',
-    
+        'ena_tp' : 'top:(116[0-9]|117[0-9])px', 
+        'ena_lf' : 'left:(13[0-9]|14[0-9]|15[0-9]|16[0-9]|17[0-9]|18[0-9])px',
+#    
+#left:165px; top:1172px; width:25px; height:8px;    
+#
+# left:176px; top:1156px; width:22px; height:8px
+#    
         'ear_tp' : 'top:(120[0-9]|121[0-9]|122[0-9]|123[0-9])px', 
         'ear_lf' : 'left:(11[0-9]|12[0-9])px',
     
